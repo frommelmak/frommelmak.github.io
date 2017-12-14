@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  From Trac to Dokuwiki
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/english.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/from-trac-to-dokuwiki.html" rel="bookmark" title="Permalink to From Trac to Dokuwiki">From Trac to&nbsp;Dokuwiki</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>This is my first post in English, so I apologize in advance for my poor&nbsp;grammar.</p>
+<p>I&#8217;ll try to explain how to export all the pages of a Trac wiki into a Dokuwiki . All the process is based in my own shell script, which uses trac-admin, wget and html2wiki to export all the content of your Trac wiki into a dokuwiki&nbsp;folders.</p>
+<p>At a glance, the main steps performed by the script are the&nbsp;following:</p>
+<ul>
+<li>Get the Trac wiki pages as a <span class="caps">HTML</span> files using <code>wget</code>.</li>
+<li>Remove all the <span class="caps">HTML</span> code belonging to the Trac page&nbsp;itself.</li>
+<li>Convert all the pages from <span class="caps">HTML</span> to Dokuwiki format (using <code>html2wiki</code>).</li>
+<li>Fix some internal/media links and transform footer attachments into dokuwiki&nbsp;format.</li>
+<li>Rename all the pages and media from upper to lower&nbsp;case.</li>
+</ul>
+<p>The output of the script are two tarball files. One with the Dokuwiki pages, and the oter one with the media&nbsp;files.</p>
+<p>As you probably know, the pages in a Dokuwiki are stored in simple text files,using the Dokuwiki format. All these pages are stored inside a folder called pages, using different subfolders for every namespace on the wiki. The same occour with the media files. All of them are stored inside folders named as the namespace they belong to, beneath the media folder. So, you just need to extract the content of the media tarball into the media folder and the content of the pages tarball inside the pages folder. And that&#8217;s all, your pages are now stored inside a&nbsp;Dokuwiki.</p>
+<p>If you want to see the script, click on the Leer ms link&nbsp;below.</p>
+<div class="codehilite"><pre><span class="c"># Marcos Martinez</span>
+<span class="c">#</span>
+<span class="c"># Dependencies: html2wiki</span>
+<span class="c"># trac-admin</span>
+<span class="c"># wget</span>
+<span class="c">#</span>
+<span class="c"># Installation of html2wiki: perl -<span class="caps">MCPAN</span> -e &#39;install <span class="caps">HTML</span>::WikiConverter::DokuWiki&#39;</span>
+<span class="c">#</span>
+
+<span class="nv">TRAC_PROJECT_ENV</span><span class="o">=</span><span class="s1">&#39;/path/to/trac/project&#39;</span>
+<span class="nv">TRAC_HOSTNAME</span><span class="o">=</span><span class="s1">&#39;x.x.x.x or <span class="caps">URL</span>&#39;</span>
+<span class="nv">TRAC_PORT</span><span class="o">=</span><span class="s1">&#39;80&#39;</span>
+
+<span class="c"># Fill up the following two lines if your trac is using basic athentication method.</span>
+<span class="nv"><span class="caps">USER</span></span><span class="o">=</span>your_trac_user
+<span class="nv"><span class="caps">PASS</span></span><span class="o">=</span>your_trac_password
+
+<span class="c"># By default, all the pages will be exported inside a dokuwiki namespace named as the Trac Project</span>
+<span class="nv">DOKUWIKI_NAMESPACE</span><span class="o">=</span><span class="k">$(</span>grep <span class="s1">&#39;^name&#39;</span> <span class="nv">$TRAC_PROJECT_ENV</span>/conf/trac.ini | gawk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+<span class="c">#DOKUWIKI_NAMESPACE=&#39;your_desired_dokuwiki_namespace&#39;</span>
+
+<span class="nv">TRAC_BASE_NAME</span><span class="o">=</span><span class="k">$(</span>grep <span class="s1">&#39;base_url =&#39;</span> <span class="nv">$TRAC_PROJECT_ENV</span>/conf/trac.ini | gawk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_URL_LOGIN</span><span class="o">=</span>http://<span class="nv">$TRAC_HOSTNAME</span>:<span class="nv">$TRAC_PORT$TRAC_BASE_NAME</span>/login
+<span class="nv">TRAC_URL_WIKI</span><span class="o">=</span>http://<span class="nv">$TRAC_HOSTNAME</span>:<span class="nv">$TRAC_PORT$TRAC_BASE_NAME</span>/wiki
+<span class="nv">TRAC_PROJECT_NAME</span><span class="o">=</span><span class="k">$(</span>grep <span class="s1">&#39;^name&#39;</span> <span class="nv">$TRAC_PROJECT_ENV</span>/conf/trac.ini | gawk <span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_INSTALL_DATE</span><span class="o">=</span><span class="k">$(</span>ls -l <span class="nv">$TRAC_PROJECT_ENV</span>/<span class="caps">README</span> |gawk <span class="s1">&#39;{print $6   $7}&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_WIKI_PAGES</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$TRAC_BASE_NAME</span>/wiki | sed <span class="s1">&#39;s/\//\\\//g&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_WIKI_ATTACHMENTS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$TRAC_BASE_NAME</span>/attachment/wiki| sed <span class="s1">&#39;s/\//\\\//g&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_WIKI_RAW_ATTACHMENTS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$TRAC_BASE_NAME</span>/raw-attachment/wiki | sed <span class="s1">&#39;s/\//\\\//g&#39;</span><span class="k">)</span>
+<span class="nv">TRAC_BS</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$TRAC_BASE_NAME</span> | sed <span class="s1">&#39;s/\//\\\//g&#39;</span><span class="k">)</span>
+
+<span class="c"># The <span class="caps">PLIST</span> var has the list of pages we want to export.</span>
+<span class="c"># By default, all the wiki pages modified after the installation date</span>
+<span class="c"># will be exported.</span>
+<span class="nv"><span class="caps">PLIST</span></span><span class="o">=</span><span class="k">$(</span>trac-admin <span class="nv">$TRAC_PROJECT_ENV</span> wiki list|grep -v <span class="nv">$TRAC_INSTALL_DATE</span> | gawk <span class="s1">&#39;{print $1}&#39;</span>|sed <span class="s1">&#39;1,3d&#39;</span><span class="k">)</span>
+
+<span class="c"># Starting authenticated session</span>
+wget --quiet --spider <span class="se">\</span>
+     --user<span class="o">=</span><span class="nv">$<span class="caps">USER</span></span> --password<span class="o">=</span><span class="nv">$<span class="caps">PASS</span></span> <span class="se">\</span>
+     --save-cookies galletitas <span class="se">\</span>
+     --keep-session-cookies <span class="nv">$TRAC_URL_LOGIN</span>
+
+mkdir <span class="nv">$DOKUWIKI_NAMESPACE</span>
+
+<span class="k">for </span><span class="caps">PAGE</span> in <span class="nv">$<span class="caps">PLIST</span></span>
+<span class="k">do</span>
+<span class="nb">echo </span>Downloading: <span class="nv">$<span class="caps">PAGE</span></span>
+  wget --load-cookies galletitas --quiet -P <span class="nv">$DOKUWIKI_NAMESPACE</span> <span class="nv">$TRAC_URL_WIKI</span>/<span class="nv">$<span class="caps">PAGE</span></span>
+<span class="k">done</span>
+
+
+<span class="k">for </span><span class="caps">FILE</span> in <span class="sb">`</span>ls <span class="nv">$DOKUWIKI_NAMESPACE</span><span class="sb">`</span>
+<span class="k">do</span>
+<span class="k">  </span><span class="nb">echo </span>Parsing <span class="nv">$<span class="caps">FILE</span></span>
+
+  <span class="c"># Removing standard <span class="caps">HTML</span> trac code (header and footer)</span>
+  sed -i <span class="s1">&#39;1,66d&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+  sed -i -n -e :a -e <span class="s1">&#39;1,45!{P;N;D;};N;ba&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+
+  <span class="c"># Removing table of contents (<span class="caps">TOC</span>) because in dokuwiki, the <span class="caps">TOC</span> is dynamically created at runtime.</span>
+  sed -i <span class="s1">&#39;/class=\wiki-toc\/d&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+
+  <span class="c"># Adding <span class="caps">HTML</span> headers</span>
+  sed -i <span class="s1">&#39;1i\html\nhead\n/head\nbody&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+  sed -i <span class="s1">&#39;$a\/body\n/html&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+  html2wiki --dialect DokuWiki <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>  <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  rm <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>
+
+  <span class="c"># Fixing internal links</span>
+  sed -i s/<span class="se">\[\[</span><span class="nv">$TRAC_WIKI_PAGES</span><span class="se">\/</span>/<span class="se">\[\[</span><span class="nv">$DOKUWIKI_NAMESPACE</span>:/g <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+
+  <span class="c"># Fixing media links</span>
+  sed -i s/<span class="se">\[\[</span><span class="nv">$TRAC_WIKI_ATTACHMENTS</span><span class="se">\/</span><span class="nv">$<span class="caps">FILE</span></span><span class="se">\/</span>/<span class="o">{{</span>:<span class="nv">$DOKUWIKI_NAMESPACE</span>:/g <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  sed -i s/<span class="o">{{</span><span class="nv">$TRAC_WIKI_RAW_ATTACHMENTS</span><span class="se">\/</span><span class="nv">$<span class="caps">FILE</span></span><span class="se">\/</span>//g <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  sed -i s/<span class="o">}}]]</span>/<span class="o">}}</span>/gDOKUWIKI_NAMESPACE/<span class="nv">$<span class="caps">FILE</span></span>.txt
+
+  <span class="c"># Removing timeline data from &#39;Attachments&#39; at the <span class="caps">EOF</span> if needed</span>
+
+  <span class="nv"><span class="caps">NUM</span></span><span class="o">=</span><span class="k">$(</span>grep -n <span class="s1">&#39;==== Attachments ====&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt | cut -d<span class="s1">&#39;:&#39;</span> -f1<span class="k">)</span>
+  grep -q <span class="s1">&#39;==== Attachments ====&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt  sed -i <span class="nv">$<span class="caps">NUM</span></span>,<span class="se">\$</span>s/<span class="se">\[\[</span><span class="nv">$TRAC_BS</span><span class="se">\/</span>timeline?from<span class="o">=</span>.*<span class="o">]]</span> ago.//g <span class="nv">$DOKUWIKI_NAME</span>            <span class="caps">SPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  <span class="c"># Formating attachments footer as Dokuwiki linkonly links</span>
+  grep -q <span class="s1">&#39;==== Attachments ====&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt  sed -i <span class="nv">$<span class="caps">NUM</span></span>,<span class="se">\$</span>s/ * <span class="o">{{</span>/<span class="o">{{</span>/ <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  grep -q <span class="s1">&#39;==== Attachments ====&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt  sed -i <span class="nv">$<span class="caps">NUM</span></span>,<span class="se">\$</span>s/|/?linkonly|/ <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+  grep -q <span class="s1">&#39;==== Attachments ====&#39;</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt  sed -i <span class="nv">$<span class="caps">NUM</span></span>,<span class="se">\$</span>s/<span class="o">]]</span>/<span class="o">}}</span>/ <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt
+
+  <span class="c"># In Dokuwiki, only lower characters are allowed in filenames</span>
+  mv -u <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>/<span class="nv">$<span class="caps">FILE</span></span>.txt| tr <span class="o">[</span>:upper:<span class="o">]</span> <span class="o">[</span>:lower:<span class="o">]</span><span class="sb">`</span> 2/dev/null
+
+<span class="k">done</span>
+
+tar -czvf <span class="nv">$DOKUWIKI_NAMESPACE</span>.tar.gz <span class="nv">$DOKUWIKI_NAMESPACE</span>
+mkdir <span class="nv">$DOKUWIKI_NAMESPACE</span>-media
+find <span class="nv">$TRAC_PROJECT_ENV</span>/attachments/wiki -type f -exec cp <span class="o">{}</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>-media <span class="se">\;</span>
+
+<span class="k">for </span><span class="caps">FILE</span> in <span class="sb">`</span>ls <span class="nv">$DOKUWIKI_NAMESPACE</span>-media<span class="sb">`</span>
+<span class="k">do</span>
+  <span class="c"># In Dokuwiki, only lower characters are allowed in media filenames</span>
+  mv -u <span class="nv">$DOKUWIKI_NAMESPACE</span>-media/<span class="nv">$<span class="caps">FILE</span></span> <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$DOKUWIKI_NAMESPACE</span>-media/<span class="nv">$<span class="caps">FILE</span></span>| tr <span class="o">[</span>:upper:<span class="o">]</span> <span class="o">[</span>:lower:<span class="o">]</span><span class="sb">`</span> 2/dev/null
+<span class="k">done</span>
+
+tar -czvf <span class="nv">$DOKUWIKI_NAMESPACE</span>-media.tar.gz <span class="nv">$DOKUWIKI_NAMESPACE</span>-media
+
+rm -rf <span class="nv">$DOKUWIKI_NAMESPACE</span>-media <span class="nv">$DOKUWIKI_NAMESPACE</span>
+rm galletitas
+</pre></div>
+  </div>
+
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="https://frommelmak.com/how-to-add-puppet-syntax-highlighting-to-dokuwiki.html">How to add Puppet syntax highlighting to&nbsp;Dokuwiki</a></li>
+      </ul>
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "from-trac-to-dokuwiki.html";
+        var disqus_title = "From Trac to Dokuwiki";
+        var disqus_url = "https://frommelmak.com/from-trac-to-dokuwiki.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2008-08-13T23:27:51"> Wed 13 August 2008</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/english.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="12 articles in this category">English</a>
+            <a href="/tag/dokuwiki.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">dokuwiki</a>
+            <a href="/tag/trac.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">trac</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/from-trac-to-dokuwiki.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/utilizar-el-lector-de-huellas-del-dell-m1330-en-gnulinux.html" title="Utilizar el lector de huellas del Dell m1330 en GNU/Linux"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html" title="De VMware Server a ESXi con VMware Converter"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/english.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

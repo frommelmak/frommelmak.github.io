@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Instalar GNU/Linux en el iPod con el iPodLinux Installer
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html" rel="bookmark" title="Permalink to Instalar GNU/Linux en el iPod con el iPodLinux Installer">Instalar <span class="caps">GNU</span>/Linux en el iPod con el iPodLinux&nbsp;Installer</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Instalar <span class="caps">GNU</span>/Linux en el iPod es cada dia más fácil. Para demostrarlo, os voy a explicar cómo utilizar la última version del instalador gráfico <a href="http://ipodlinux.org/Installer_2">iPodLinux Installer</a> bajo&nbsp;<span class="caps">GNU</span>/Linux.</p>
+<p>Antes de empezar, a seguir los sencillos pasos aquí descritos, te recomiendo que te des un paseo por <a href="ipodlinux.org">ipodlinux.org</a>, la web de referencia en esto de meter al pingüino dentro del&nbsp;iPod.</p>
+<p>Como siempre, os dejo la obligada <a href="http://nomeriasdeti.no-ip.com/index.php?top_tab=2&amp;section_type=3&amp;task=view&amp;id_album=27">galeria de imagenes</a> con todo el proceso y este&nbsp;video.</p>
+<p>
+<iframe allowfullscreen="true" frameborder="0" height="315" src="http://www.youtube.com/embed/WqcSUly6oG0" width="560"></iframe>
+</p>
+<p>El método descrito a continuación, lo he aplicado a un iPod Photo de 20GBytes (La primrea generación con pantalla a color), así que es muy probable que los problemas que te encuentres no sean los mismos que los que he tenido yo, ya que el soporte difiere bastante de un modelo de iPod a&nbsp;otro.</p>
+<p>Primer intento&nbsp;fallido</p>
+<p>El primer intento lo hice la semana pasada utilizando la version 2.0 (build 1094) del instalador gráfico para&nbsp;<span class="caps">GNU</span>/Linux:</p>
+<p><code>ipl-installer-linux-svn-1094.run</code></p>
+<p>El procedimiento para instalar el IpodLinux Installer es muy sencillo. Tan sólo hemos de descargar el fichero ipl-installer-linux-svn-1094.run, darle permisos de ejecución, y lanzarlo como&nbsp;root.</p>
+<p>Tras esto, el instalador queda ubicado en en: <code>/opt/iPodLinux/installer</code>.</p>
+<p>Para iniciar la instalación de <span class="caps">GNU</span>/Linux en el iPod, sólo has de pinchar tu iPod al <span class="caps">PC</span> y asegurarte de que ninguna aplicación monta el filesystem del iPod. En mi caso, <span class="caps">KDE</span>/SuSE lo monta por defecto nada más pincharlo, asi que hay que desmontarlo a&nbsp;mano</p>
+<div class="codehilite"><pre><span class="go">umount /media/ipod (en mi caso)</span>
+</pre></div>
+
+
+<p>Al ejecutar el installer, aparece una pantalla muy bonita de bienvenida. Tras pulsar <span class="caps">SIGUIENTE</span>, aparece otra diciendo que ha detectado tu iPod y que pulses <span class="caps">SIGUIENTE</span> para iniciar la instalación de&nbsp;<span class="caps">GNU</span>/Linux.</p>
+<p>El problema de esta versión aparece durante la copia de ficheros al iPod. Concretamente, la instalación falla con este&nbsp;mensaje:</p>
+<div class="codehilite"><pre><span class="go">/bin/podzilla not found</span>
+</pre></div>
+
+
+<p>Si intentamos volver a instalar con esta vesión del instalador, éste detecta que ya parece haber un Linux (o parte de él) instalado en el iPod, y sólo nos la la opción de actualizarlo, cambiar el orden de arraque o bien desinstalar Linux. Pues bien, da igual lo que selecciones porque ya no es capaz de realizar mucho mas. Afortunadamente, es posible seguir utilizando el firmware de Apple sin&nbsp;más.</p>
+<p>Segundo Intento&nbsp;(&#8230;casi!)</p>
+<p>Hoy me ha dado por mirar en la web del proyecto y he visto que ya habia una nueva versión 2.1 (build 1153)&nbsp;disponible. </p>
+<p><code>ipl-installer-linux-svn-1153.run</code></p>
+<p>Lo mejor de todo es que además decian en una nota que esta versión  solventaba el fallo que yo estaba&nbsp;teniendo!</p>
+<p>Bueno, he repetido el procedimiento con la nueva versión, pero al ejecutar el installer, me he encontrado con un problema de dependencias con unas librerias <code>libQt</code> que forman parte del paquete <code>qt-x11</code> y que no tenia&nbsp;isntalado.</p>
+<p>Tras instalar dichas librerias, he podido ejecutar el instalador gráfico sin&nbsp;más.</p>
+<p>Aparentemente, el proceso de instalación finaliza sin problemas, pero tras reiniciar el iPod, no hay manera de que arranque con&nbsp;Linux.</p>
+<p>A la tercera va la&nbsp;vencida</p>
+<p>Tras mirar un rato qué es lo que había copiado en el iPod, me he dado cuenta que el owner del <code>loader.bin</code> era un usuario con <span class="caps">UID</span> 1000, en lugar de root, como el&nbsp;resto.</p>
+<div class="codehilite"><pre><span class="go">chown root:root loader.bin</span>
+</pre></div>
+
+
+<p>Tras cambiar el owner a root y despues de un reboot del iPod (mantener pulsado <strong>menu + select</strong>), el iPod ha arrancado con&nbsp;Linux!</p>
+<p>Bueno, son muchas las aplicaciones con las que he de trastear aun, así que en breve ire ańadiendo mis impresiones acerca de meter al pigüino en el&nbsp;iPod.</p>
+<p><strong>Nota</strong>: En ocasiones, no queda más remedio que hacer un restore del firmware de Apple utilizando el software oficial del fabricante (sólo disponible para Windows). Por ejemplo, antes de intenar con la nueva versión del iPodLinux Installer, me vi obligado a eliminar por completo todo resto anterior de Linux (canciones incluidas), antes de volver a intentar la instalación de Linux. Así que ya sabeis, aseguraros de tener a buen recaudo vuestra bilbioteca de canciones antes de poneros a jugar con el&nbsp;intaller.</p>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html";
+        var disqus_title = "Instalar GNU/Linux en el iPod con el iPodLinux Installer";
+        var disqus_url = "https://frommelmak.com/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2006-05-02T21:00:35"> Tue 02 May 2006</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/ipod.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">ipod</a>
+            <a href="/tag/linux.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">linux</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html" title="Instalar Xgl + Compiz en SuSE 10.x con KDE"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/espana-tunez-en-ascii.html" title="España Tunez en ASCII"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

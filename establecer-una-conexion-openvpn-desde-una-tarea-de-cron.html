@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Establecer una conexion OpenVPN desde una tarea de cron
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/establecer-una-conexion-openvpn-desde-una-tarea-de-cron.html" rel="bookmark" title="Permalink to Establecer una conexion OpenVPN desde una tarea de cron">Establecer una conexion OpenVPN desde una tarea de&nbsp;cron</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Es muy típico que un script que funciona perfectamente desde una sesión de usuario normal falle al correr como un trabajo ejecutado por el&nbsp;cron.</p>
+<p>Generalmente esto es debido a que las variables de entorno bajo las que se ejecuta el script en uno y otro caso no son las&nbsp;mismas.</p>
+<p>En el caso de lanzar OpenVPN como demonio desde una tarea de cron es importante tener esto en cuenta, ya que OpenVPN tras la autenticación llamará al comando <code>ifconfig</code> para crear el dispositivo de red&nbsp;virtual.</p>
+<p>Llegado este momento, si <code>/sbin</code> no forma parte de la variable de entorno <code>PATH</code>, nuestro script&nbsp;fallará.</p>
+<p>Invocar a <code>/etc/init.d/openvpn start | stop</code> para establecer y parar la conexión requiere utilizar los ficheros de configuración ubicados en <code>/etc/openvpn</code> y jugar con <code>/etc/default/openvpn</code> para que el script de inicialización haga lo que queremos. Así, una opción más fácil puede ser llamar a openvpn con un script similar a este, evitando parar accidentalmente sesiones de vpn no&nbsp;deseadas.</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nv"><span class="caps">PATH</span></span><span class="o">=</span><span class="s1">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#39;</span>
+/usr/sbin/openvpn --daemon --writepid /var/run/myvpn --cd /root/vpn --config /root/vpn/client.conf
+/bin/sleep 16
+... <span class="o">(</span>lo que sea que hagamos por la <span class="caps">VPN</span>... acceso seguro a svn por ejemplo<span class="o">)</span>...
+/bin/kill <span class="k">$(</span>cat /var/run/myvpn<span class="k">)</span>  rm /var/run/mypid
+</pre></div>
+
+
+<ul>
+<li>Con <code>PATH</code> aseguramos que OpenVPN, al correr como hijo del cron encuentra el comando <code>ifconfig</code>.</li>
+<li>Con <code>--daemon</code>, OpenVPN corre como demonio. De lo contrario, el script nunca pasaria de esta&nbsp;lnea.</li>
+<li>Con <code>--writepid /var/run/myvpn</code> escribimos el <span class="caps">PID</span> del proceso OpenVPN en el fichero <code>/var/run/myvpn</code>. Esto nos permite matar sólo esa sessión de vpn con <code>killall</code> más&nbsp;adelante.</li>
+<li><code>sleep</code> es sálo para asegurar que el dispositovo <span class="caps">TAP</span> y las rutas existan antes de&nbsp;utilizarlas.</li>
+</ul>
+<p>Finalmente matamos sólo la conexión vpn establecida por este&nbsp;script.</p>
+<p>Por otro lado, si además de los certificados y claves necesitamos de una autenticación mediante user y password, deberemos especificar el fichero que los contiene tras la opción <code>auth-user-pass /root/vpn/up</code>. Esta opción suele estar en en fichero <code>client.conf</code> y es la responsable de que se te pregunte que introduzcas un usuairo y password en aquellas conexines que asi lo requieren. De hecho, todas las opciones que hemos pasado a openvpn por linea de comandos mediante <code>--opcion</code>, pueden ir en dicho fichero de configuración si as lo&nbsp;deseamos.</p>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "establecer-una-conexion-openvpn-desde-una-tarea-de-cron.html";
+        var disqus_title = "Establecer una conexion OpenVPN desde una tarea de cron";
+        var disqus_url = "https://frommelmak.com/establecer-una-conexion-openvpn-desde-una-tarea-de-cron.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2008-12-31T00:21:36"> Wed 31 December 2008</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/openvpn.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">openvpn</a>
+            <a href="/tag/cron.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">cron</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/establecer-una-conexion-openvpn-desde-una-tarea-de-cron.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html" title="Crear un instalable en pocos minutos con NSIS"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/crear-discos-virtuales-de-mas-de-256gb-en-vmware-esxi.html" title="Crear discos virtuales de más de 256GB en VMware ESXi"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

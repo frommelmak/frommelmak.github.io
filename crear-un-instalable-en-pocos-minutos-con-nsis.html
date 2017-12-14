@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Crear un instalable en pocos minutos con NSIS
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html" rel="bookmark" title="Permalink to Crear un instalable en pocos minutos con NSIS">Crear un instalable en pocos minutos con&nbsp;<span class="caps">NSIS</span></a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p><a href="http://nsis.sourceforge.net/"><span class="caps">NSIS</span></a> (<em>Nullsoft Scriptable Install System</em>) permite empaquetar aplicaciones en un fichero <code>.exe</code> autoinstalable. Aplicaciones como <a href="http://www.openvpn.se/download.html">OpenVPN</a> (para Windows) o <a href="http://www.videolan.org/"><span class="caps">VLC</span></a> lo utilizan para distribuir sus versiones para plataformas&nbsp;Win32.</p>
+<p>Pese a que la aplicación esta ampliamente <a href="http://nsis.sourceforge.net/Docs/">documentada</a>, he querido escribir este mini-articulo, en el que mediante un ejemplo explico los pasos a seguir para distribuir una aplicación. La idea es que dicho ejemplo sirva de base para no tener que perder mucho tiempo leyendo documentación y realizando mil y una pruebas antes de poder generar un instalable. Podeis utilizar el ejemplo como punto de partida para luego añadir lo que se os ocurra. Para ello os recomiendo dar un vistazo al <a href="http://nsis.sourceforge.net/Developer_Center">rincón de desarrolladores</a> de la wiki del proyecto&nbsp;<span class="caps">NSIS</span>.</p>
+<p>Para crear un instalable <code>.exe</code> con <span class="caps">NSIS</span> lo único que necesitamos es instalar la aplicación <span class="caps">NSIS</span> y crear un fichero de texto con extensión <code>.nsi</code>. Este fichero define -mediante un lenguaje de script propio- cómo ha de ser el instalable: apariencia, ficheros a instalar, directorio de instalación , selección de idioma, comprobaciones a realizar, modificar o leer el registro de Windows, descargar e instalar dependencias, acciones a realizar para la desinstalación. En definitiva, casi cualquier cosa que se nos pueda pasar por la&nbsp;cabeza.</p>
+<p>Una vez tengamos nuestro fichero <code>.nsi</code>, crear el instalable es tan fácil como seleccionar nuestro fichero y desplegar el menu contextual. Tras seleccionarar la opción Compile <span class="caps">NSIS</span> Scirpt, aparecerá una consola con información acerca del progreso de generación del ejecutable, o en caso de error informacin relativa al&nbsp;fallo.</p>
+<p>Pese a que <span class="caps">NSIS</span> permite personalizar el aspecto del instalador incrustando una imagen mediante las instrucciones <code>AddBrandingImage</code> y <code>SetBrandingImage</code>, es posible extender estas capacidades utilizando <a href="http://nsis.sourceforge.net/Docs/Modern%20UI%202/Readme.html"><span class="caps">NSIS</span> Modern User Interface</a> o <a href="http://ultramodernui.sourceforge.net/">Ultra Modern User Inteface</a>.</p>
+<p>El ejemplo que sigue a continuación utiliza Modern <span class="caps">UI</span> para crear un instalador resultón en un momento. Pare ser honestos, he de reconocer que pese a la fántastica documentación de <span class="caps">NSIS</span>, he perdio un buen rato intentando mejoar el look and feel del instalable mediante Modern <span class="caps">UI</span> debido a un problema que no he encontrado descrito en ningun sitio. El problema es que las imagenes de la cabecera no se muestran si no se incluye la instrucción <code>!insertmacro MUI_LANGUAGE lang</code>, que a priori no tiene nada que&nbsp;ver.</p>
+<p>El ejemplo esta cargado de comentarios por lo que será fácil adaptarlo a vuestras necesidades. Para entenderlo simplemente hay que saber que el fichero <code>.nsi</code> esta ubicado en el mismo directorio que contiene los ficheros que conforman la aplicación que queremos instalar, así como las imagenes que utilizaremos para el wizard de&nbsp;instalación.</p>
+<div class="codehilite"><pre><span class="go"> --FooApp</span>
+<span class="go">     |    `--lib</span>
+<span class="go">     |     |--file1.dll</span>
+<span class="go">     |     `--fileN.dll</span>
+<span class="go">     |-- header.bmp</span>
+<span class="go">     |-- image1.bmp</span>
+<span class="go">     |-- foo_app.ico</span>
+<span class="go">     |-- start_foo.exe </span>
+<span class="go">     |-- foo_app.nsi</span>
+<span class="go">     `-- <span class="caps">README</span>.txt</span>
+</pre></div>
+
+
+<p>El fichero <code>foo_app.nsi</code> encargado de crear el instalable para esta aplicacin podria ser&nbsp;este:</p>
+<div class="codehilite"><pre><span class="c">;----------------------------------------------------------------------------</span>
+<span class="c">; General configuration</span>
+
+<span class="c">; The name and version of the installer</span>
+
+ <span class="cp">!define</span> <span class="caps">VERSION</span> 1.0
+ <span class="k">Name</span> Foo App <span class="kp">${<span class="caps">VERSION</span>}</span>
+ <span class="k">OutFile</span> Foo App Installer <span class="o">-</span> <span class="kp">${<span class="caps">VERSION</span>}</span>.exe
+ <span class="k">InstallDir</span> <span class="nv">$<span class="caps">PROGRAMFILES</span></span><span class="p">\</span>Foo App
+
+ <span class="c">;;; Request application privileges for Windows Vista (can be user or admin)</span>
+ <span class="k">RequestExecutionLevel</span> <span class="no">admin</span>
+<span class="c">;----------------------------------------------------------------------------</span>
+
+
+<span class="c">;--------------------------------</span>
+<span class="c">;Use Modern User Interface</span>
+ <span class="cp">!include</span> <span class="caps">MUI2</span>.nsh
+<span class="c">;--------------------------------</span>
+
+
+<span class="c">;--------------------------------</span>
+<span class="c">; Interface Settings</span>
+
+ <span class="k">BrandingText</span> Foo App Installer (Powered by <span class="caps">NSIS</span>)
+ <span class="cp">!define</span> MUI_HEADERIMAGE
+ <span class="cp">!define</span> MUI_HEADERIMAGE_BITMAP header.bmp <span class="c">; size 150x57</span>
+ <span class="cp">!define</span> MUI_HEADERIMAGE_UNBITMAP header.bmp <span class="c">; size 150x57</span>
+ <span class="cp">!define</span> MUI_PAGE_HEADER_TEXT Installing Foo App
+ <span class="cp">!define</span> MUI_PAGE_HEADER_SUBTEXT Copying files...
+ <span class="cp">!define</span> MUI_ABORTWARNING
+ <span class="cp">!define</span> MUI_ICON foo_app.ico
+ <span class="cp">!define</span> MUI_UNICON foo_app.ico
+
+<span class="c">; Pages</span>
+
+ <span class="cp">!define</span> MUI_WELCOMEFINISHPAGE_BITMAP image1.bmp <span class="c">; size 164x314</span>
+ <span class="cp">!define</span> MUI_WELCOMEPAGE_TITLE_3LINES
+ <span class="cp">!define</span> MUI_WELCOMEPAGE_TITLE Welcome to the Foo App <span class="kp">${<span class="caps">VERSION</span>}</span> $<span class="p">\</span>n Setup Wizard
+ <span class="cp">!define</span> MUI_WELCOMEPAGE_TEXT This wizard will guide you through the installation of <span class="p">\</span>
+ Foo App <span class="kp">${<span class="caps">VERSION</span>}</span> $<span class="p">\</span>n$<span class="p">\</span>nClick Install to continue
+
+ <span class="cp">!define</span> MUI_INSTFILESPAGE_FINISHHEADER_TEXT Foo App Setup Complete
+ <span class="cp">!define</span> MUI_INSTFILESPAGE_COLORS f1f1f1 000000
+ <span class="cp">!define</span> MUI_FINISHPAGE_NOAUTOCLOSE
+
+ <span class="cp">!define</span> MUI_FINISHPAGE_TITLE Setup Complete
+ <span class="cp">!define</span> MUI_FINISHPAGE_TEXT Thank you for using Foo App
+ <span class="cp">!define</span> MUI_FINISHPAGE_RUN foo.exe
+ <span class="cp">!define</span> MUI_FINISHPAGE_RUN_TEXT Start Foo App
+
+ <span class="cp">!define</span> MUI_UNCONFIRMPAGE_TEXT_TOP Remove Foo App from this computer
+ <span class="cp">!define</span> MUI_UNCONFIRMPAGE_TEXT_LOCATION Installation <span class="nl">Directory</span><span class="p">:</span>
+
+ <span class="cp">!insertmacro</span> MUI_PAGE_WELCOME
+ <span class="cp">!insertmacro</span> MUI_PAGE_INSTFILES
+ <span class="cp">!insertmacro</span> MUI_PAGE_FINISH
+
+ <span class="cp">!insertmacro</span> MUI_UNPAGE_CONFIRM
+ <span class="cp">!insertmacro</span> MUI_UNPAGE_INSTFILES
+
+ <span class="k">ShowInstDetails</span> <span class="no">show</span>
+ <span class="k">ShowUninstDetails</span> <span class="no">show</span>
+<span class="c">;---------------------------------------------</span>
+
+<span class="c">;---------------------------------------------</span>
+<span class="c">; I don&#39;t know why but required to show images</span>
+
+ <span class="cp">!insertmacro</span> MUI_LANGUAGE English
+<span class="c">;---------------------------------------------</span>
+
+<span class="c">;--------------------------------</span>
+<span class="c">; The stuff to install</span>
+<span class="k">Section</span> Install
+ <span class="c">;;; Foo App will be installed for all users</span>
+ <span class="k">SetShellVarContext</span> <span class="no">all</span>
+ <span class="c">;;; Set output path to the installation directory.</span>
+ <span class="k">SetOutPath</span> <span class="vg">$<span class="caps">INSTDIR</span></span>
+ <span class="c">;;; Put *.exe file there</span>
+ <span class="k">File</span> start_foo.exe
+ <span class="k">File</span> <span class="caps">README</span>.txt
+ <span class="k">File</span> foo_app.ico
+ <span class="k">File</span> image1.bmp
+ <span class="k">File</span> header.bmp
+ <span class="k">SetOutPath</span> <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>lib
+ <span class="k">File</span> lib<span class="p">\</span>*.dll
+ <span class="k">WriteUninstaller</span> <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>uninstaller.exe
+ <span class="k">SetOutPath</span> <span class="vg">$<span class="caps">INSTDIR</span></span>
+ <span class="c">;;; Create desktop shortcut</span>
+ <span class="k">CreateShortCut</span> <span class="nb">$<span class="caps">DESKTOP</span></span><span class="p">\</span>Foo App.lnk <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>start_foo.exe  <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>foo_app.ico
+ <span class="c">;;; Create start-menu items</span>
+ <span class="k">CreateDirectory</span> <span class="nb">$<span class="caps">STARTMENU</span></span><span class="p">\</span>Foo App
+ <span class="k">CreateShortCut</span> <span class="nb">$<span class="caps">STARTMENU</span></span><span class="p">\</span>Foo App<span class="p">\</span>Foo App.lnk <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>start_foo.exe  <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>foo_app.ico
+ <span class="k">CreateShortCut</span> <span class="nb">$<span class="caps">STARTMENU</span></span><span class="p">\</span>Foo App<span class="p">\</span>Foo App Uninstaller.lnk <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>uninstaller.exe
+ <span class="c">;;; Add uninstall information to Add/Remove Programs (Control Panel)</span>
+ <span class="k">WriteRegStr</span> <span class="no"><span class="caps">HKLM</span></span> Software<span class="p">\</span>Microsoft<span class="p">\</span>Windows<span class="p">\</span>CurrentVersion<span class="p">\</span>Uninstall<span class="p">\</span>FooApp <span class="p">\</span>
+ DisplayName Foo App Bla Bla
+ <span class="k">WriteRegStr</span> <span class="no"><span class="caps">HKLM</span></span> Software<span class="p">\</span>Microsoft<span class="p">\</span>Windows<span class="p">\</span>CurrentVersion<span class="p">\</span>Uninstall<span class="p">\</span>FooApp <span class="p">\</span>
+ UninstallString <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>uninstaller.exe
+ <span class="k">WriteRegStr</span> <span class="no"><span class="caps">HKLM</span></span> Software<span class="p">\</span>Microsoft<span class="p">\</span>Windows<span class="p">\</span>CurrentVersion<span class="p">\</span>Uninstall<span class="p">\</span>FooApp <span class="p">\</span>
+ DisplayIcon <span class="vg">$<span class="caps">INSTDIR</span></span><span class="p">\</span>foo_app.ico
+ <span class="k">WriteRegStr</span> <span class="no"><span class="caps">HKLM</span></span> Software<span class="p">\</span>Microsoft<span class="p">\</span>Windows<span class="p">\</span>CurrentVersion<span class="p">\</span>Uninstall<span class="p">\</span>FooApp <span class="p">\</span>
+ Publisher Your Organization
+<span class="k">SectionEnd</span>
+<span class="c">;--------------------------------</span>
+
+<span class="c">;--------------------------------</span>
+<span class="c">; The stuff to Uninstall</span>
+<span class="k">Section</span> Uninstall
+ <span class="c">;;; Foo App will be removed for all users</span>
+ <span class="k">SetShellVarContext</span> <span class="no">all</span>
+ <span class="k">SetOutPath</span> <span class="vg">$<span class="caps">INSTDIR</span></span>
+ <span class="k">RMDir</span> <span class="na">/r</span> <span class="vg">$<span class="caps">INSTDIR</span></span>
+ <span class="k">RMDir</span> <span class="na">/r</span> <span class="nb">$<span class="caps">STARTMENU</span></span><span class="p">\</span>Foo App
+ <span class="k">Delete</span> <span class="nb">$<span class="caps">DESKTOP</span></span><span class="p">\</span>Foo App.lnk
+ <span class="c">;;; Remove Foo App info from the windows registry</span>
+ <span class="k">DeleteRegKey</span> <span class="no"><span class="caps">HKLM</span></span> Software<span class="p">\</span>Microsoft<span class="p">\</span>Windows<span class="p">\</span>CurrentVersion<span class="p">\</span>Uninstall<span class="p">\</span>FooApp
+<span class="k">SectionEnd</span>
+<span class="c">;--------------------------------</span>
+</pre></div>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "crear-un-instalable-en-pocos-minutos-con-nsis.html";
+        var disqus_title = "Crear un instalable en pocos minutos con NSIS";
+        var disqus_url = "https://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2008-12-19T00:54:42"> Fri 19 December 2008</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/installer.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">installer</a>
+            <a href="/tag/win32.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">win32</a>
+            <a href="/tag/nsis.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">nsis</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/crear-un-instalable-en-pocos-minutos-con-nsis.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html" title="Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/establecer-una-conexion-openvpn-desde-una-tarea-de-cron.html" title="Establecer una conexion OpenVPN desde una tarea de cron"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

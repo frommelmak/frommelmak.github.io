@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>frommelmak</title><link href="https://frommelmak.com/" rel="alternate"></link><link href="https://frommelmak.com/feeds/english.atom.xml" rel="self"></link><id>https://frommelmak.com/</id><updated>2015-02-26T19:03:23+01:00</updated><entry><title>Utilizar certificados SSL en Amazon ELB</title><link href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html" rel="alternate"></link><updated>2015-02-26T19:03:23+01:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2015-02-26:utilizar-certificados-ssl-en-amazon-elb.html</id><summary type="html">&lt;p&gt;En esta entrada voy a tratar de explicar cómo utilizar el servicio de balanceo de carga de Amazon (&lt;span class="caps"&gt;ELB&lt;/span&gt;) como terminador de conexiones&amp;nbsp;&lt;span class="caps"&gt;SSL&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;El escenario de partida sería&amp;nbsp;este:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ELB HTTP" src="/images/ELB_HTTP_server.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Como se observa en este diagrama, todo el tráfico va en plano. Desde el cliente &lt;span class="caps"&gt;HTTP&lt;/span&gt; del usuario/aplicación hasta las instancias que ofrecen el servicio&amp;nbsp;&lt;span class="caps"&gt;HTTP&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;El objetivo es cifrar todo el tráfico entre la aplicación y nuestros servidores. Para ello, lo más sencillo es configurar nuestro balanceador de carga como terminador de las conexiones &lt;span class="caps"&gt;SSL&lt;/span&gt;. Así, conseguimos de forma transparente el acceso cifrado a los servicios &lt;span class="caps"&gt;HTTP&lt;/span&gt;, ya que evitamos tener que añadir el certificado a cada uno de los servicios a&amp;nbsp;securizar.&lt;/p&gt;
+&lt;p&gt;Otra ventaja es que el tráfico seguirá llegando en plano a las instancias, facilitando así el debug de posibles problemas que requieran analizar el&amp;nbsp;tráfico. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="ELB" src="/images/ELB_SSL_HTTPS_server.png" /&gt;&lt;/p&gt;
+&lt;p&gt;El cifrado &lt;span class="caps"&gt;SSL&lt;/span&gt;/&lt;span class="caps"&gt;TLS&lt;/span&gt; utilizado por el protocolo &lt;span class="caps"&gt;HTTPS&lt;/span&gt;, utiliza criptografía de clave pública (o asimétrica) para autenticar la identidad del servidor con el que estamos comunicando. Esta, también se utiliza para intercambiar la clave simétrica que se utilizará para cifrar el&amp;nbsp;tráfico.&lt;/p&gt;
+&lt;p&gt;A grandes rasgos los pasos a seguir para añadir un certificado al balaceador de carga son&amp;nbsp;estos:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Obtener el certificado &lt;span class="caps"&gt;SSL&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;Generar una clave&amp;nbsp;privada.&lt;/li&gt;
+&lt;li&gt;Generar la solicitud del certificado (&lt;a href="http://en.wikipedia.org/wiki/Certificate_signing_request"&gt;&lt;span class="caps"&gt;CSR&lt;/span&gt;&lt;/a&gt;) a partir de la clave&amp;nbsp;privada.&lt;/li&gt;
+&lt;li&gt;Solicitar un certificado &lt;span class="caps"&gt;SSL&lt;/span&gt; a nuestra autoridad certificadora (&lt;a href="http://en.wikipedia.org/wiki/Certificate_authority"&gt;&lt;span class="caps"&gt;CA&lt;/span&gt;&lt;/a&gt;): &lt;a href="https://www.godaddy.com"&gt;Goodady&lt;/a&gt; en este&amp;nbsp;ejemplo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Convertir el certificado al formato soportado por&amp;nbsp;Amazon.&lt;/li&gt;
+&lt;li&gt;Subir el certificado a&amp;nbsp;Amazon. &lt;/li&gt;
+&lt;li&gt;Añadir listener &lt;span class="caps"&gt;HTTPS&lt;/span&gt; al balanceador y configurarlo con el nuevo&amp;nbsp;certificado.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;1 Obtener el certificado&amp;nbsp;&lt;span class="caps"&gt;SSL&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;Creamos una clave privada que utilizaremos para crear la solicitud de&amp;nbsp;certificado. &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;openssl genrsa -out my-private-key-file.pem 2048
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Creamos la solicitud de firma del certificado: Certificate Signing Request (&lt;span class="caps"&gt;CSR&lt;/span&gt;). La solicitud no es más que un fichero creado a partir de la clave privada que utilizaremos para solicitar un certificado &lt;a href="http://en.wikipedia.org/wiki/X.509"&gt;X.509&lt;/a&gt; a la autoridad&amp;nbsp;certificadora.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;openssl req -sha256 -new -key my-private-key-file.pem -out csr.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Este proceso nos realizará un una serie de preguntas. Hemos de prestar especial atención al valor que introducimos&amp;nbsp;para:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Common&amp;nbsp;Name&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nos aseguraremos de que corresponda con el &lt;a href="http://en.wikipedia.org/wiki/Fully_qualified_domain_name"&gt;&lt;span class="caps"&gt;FQDN&lt;/span&gt;&lt;/a&gt; que vamos a utilizar para nuestro&amp;nbsp;dominio.&lt;/p&gt;
+&lt;p&gt;Verificamos que la información que hemos introducido es&amp;nbsp;correcta:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;openssl req -in csr.pem -noout -text
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Con el fichero &lt;code&gt;csr.pem&lt;/code&gt;  generado, solicitamos el certificado a nuestra &lt;span class="caps"&gt;CA&lt;/span&gt;. GoDaddy en este&amp;nbsp;caso.&lt;/p&gt;
+&lt;h2&gt;2 Convertir el certificado al formato soportado por&amp;nbsp;Amazon&lt;/h2&gt;
+&lt;p&gt;La &lt;span class="caps"&gt;CA&lt;/span&gt; nos retorna el certificado en dos ficheros con nombres similares a&amp;nbsp;estos:&lt;/p&gt;
+&lt;p&gt;Goodady files: &lt;code&gt;a0cde33bcde324cd.crt&lt;/code&gt; + &lt;code&gt;gd_bundle-g2-g1.crt&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;El primer fichero es nuestro certificado. El segundo la certificate chain: una lista de certificados y el certificado raiz de&amp;nbsp;Godaddy.&lt;/p&gt;
+&lt;p&gt;Amazon requiere que estos fichero estén en un formato soportado por el servicio &lt;span class="caps"&gt;AWS&lt;/span&gt; &lt;span class="caps"&gt;IAM&lt;/span&gt;. Así que deberemos convertir el certificado al formato soportado: &lt;span class="caps"&gt;PEM&lt;/span&gt; X.509 en este&amp;nbsp;caso.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;openssl x509 -inform PEM -in a0cde33bcde324cd.crt &amp;gt; my-public-key-file.pem
+openssl x509 -inform PEM -in gd_bundle-g2-g1.crt &amp;gt; my-certificate-chain-file.pem
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;3 Subir el certificado a&amp;nbsp;Amazon&lt;/h2&gt;
+&lt;p&gt;Ahora, con estos tres ficheros: La clave privada, nuestro certificado y los certificados de Goodady, podemos dar de alta el certificado en&amp;nbsp;Amazon.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;iMac: frommelmak&lt;span class="nv"&gt;$ &lt;/span&gt;aws iam upload-server-certificate --server-certificate-name my-server-certificate --certificate-body file://my-public-key-file.pem --private-key file://my-private-key-file.pem --certificate-chain file://my-certificate-chain-file.pem
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;ServerCertificateMetadata&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;ServerCertificateId&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;span class="caps"&gt;ASC&lt;/span&gt;...............&lt;span class="caps"&gt;JJJ&lt;/span&gt;&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;ServerCertificateName&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;my-server-certificate&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;Expiration&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;2016-02-25T15:27:49Z&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;Path&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;Arn&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;arn:aws:iam::765165175371:server-certificate/my-server-certificate&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;UploadDate&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;2015-02-26T12:27:59.876Z&amp;quot;&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Mediante el siguiente comando, verificamos que se ha subido&amp;nbsp;correctamente:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;iMac: frommelmak&lt;span class="nv"&gt;$ &lt;/span&gt;aws iam get-server-certificate --server-certificate-name my-server-certificate
+&lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;ServerCertificate&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;CertificateChain&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;-----&lt;span class="caps"&gt;BEGIN&lt;/span&gt; &lt;span class="caps"&gt;CERTIFICATE&lt;/span&gt;-----\nMI ... JCa\n-----&lt;span class="caps"&gt;END&lt;/span&gt; &lt;span class="caps"&gt;CERTIFICATE&lt;/span&gt;-----&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;CertificateBody&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;-----&lt;span class="caps"&gt;BEGIN&lt;/span&gt; &lt;span class="caps"&gt;CERTIFICATE&lt;/span&gt;-----\nMI ... kkd\n-----&lt;span class="caps"&gt;END&lt;/span&gt; &lt;span class="caps"&gt;CERTIFICATE&lt;/span&gt;-----&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;ServerCertificateMetadata&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;ServerCertificateId&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;span class="caps"&gt;ASC&lt;/span&gt;...............&lt;span class="caps"&gt;JJJ&lt;/span&gt;&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;ServerCertificateName&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;my-server-certificate&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;Expiration&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;2016-02-25T15:27:49Z&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;Path&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;Arn&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;arn:aws:iam::76........71:server-certificate/my-server-certificate&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;UploadDate&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;2015-02-26T12:27:59Z&amp;quot;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;4 Añadir listener &lt;span class="caps"&gt;HTTPS&lt;/span&gt; al balanceador y configurarlo con el nuevo&amp;nbsp;certificado.&lt;/h2&gt;
+&lt;p&gt;Ahora ya sólo tenemos que añadir un nuevo Listener mediante la consola de&amp;nbsp;Amazon.&lt;/p&gt;
+&lt;p&gt;En &amp;#8220;Listener Configuration&amp;#8221; del load balancer&amp;nbsp;seleccionamos:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Load Balancer Protocol: &lt;span class="caps"&gt;HTTPS&lt;/span&gt;(Secure&amp;nbsp;&lt;span class="caps"&gt;HTTP&lt;/span&gt;)&lt;/li&gt;
+&lt;li&gt;Load Balancer Port:&amp;nbsp;443&lt;/li&gt;
+&lt;li&gt;Instance Protocol:&amp;nbsp;80&lt;/li&gt;
+&lt;li&gt;Instance Port:&amp;nbsp;80&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En el momento de seleccionar el certificado utilizaremos la opción: &amp;#8220;Choose an existing &lt;span class="caps"&gt;SSL&lt;/span&gt; Certificate&amp;#8221;. Veremos que ya aparece el que acabamos de&amp;nbsp;publicar.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;info: &lt;a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html"&gt;Elastic Load Balancing: &lt;span class="caps"&gt;SSL&lt;/span&gt; Server&amp;nbsp;Cert&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="amazon"></category><category term="aws"></category><category term="elb"></category><category term="ssl"></category></entry><entry><title>lsof: Practical usage examples</title><link href="https://frommelmak.com/lsof-practical-usage-examples.html" rel="alternate"></link><updated>2014-06-03T19:53:00+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2014-06-03:lsof-practical-usage-examples.html</id><summary type="html">&lt;p&gt;As you probably know, &lt;code&gt;lsof&lt;/code&gt; stands for List of Open Files. Yes, it&amp;#8217;s seems a simple description for a simple Unix command but, wait! Have you ever heard that everything in Unix is a file? Yes, right? So maybe this tool is more powerful than you&amp;nbsp;think.&lt;/p&gt;
+&lt;p&gt;Let me show you how powerful it is with a bunch of practical examples (use&amp;nbsp;root):&lt;/p&gt;
+&lt;p&gt;Lists all open files belonging to all active&amp;nbsp;processes.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shows all files opened by the &lt;code&gt;www-data&lt;/code&gt; user &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -u www-data
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists just all the PIDs of the processes opened by the &lt;code&gt;www-data&lt;/code&gt; user&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -t -u www-data
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Kills all the activity for a particular&amp;nbsp;user&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;killall -9 &lt;span class="sb"&gt;`&lt;/span&gt;lsof -t -u username&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists all the files opened by the process with the &lt;code&gt;PID&lt;/code&gt; 234&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -p 234
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists processes which are using a specific&amp;nbsp;file.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -t /var/log/auth.log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists all the log files in&amp;nbsp;use.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof +D /var/log
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists all the opened files in a &lt;span class="caps"&gt;NFS&lt;/span&gt;&amp;nbsp;folder&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof +D -N /mnt/nfsstorage
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists of the files opened by the processes whose command begins with the characters of&amp;nbsp;&amp;#8220;chrome&amp;#8221;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -c chrome
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Until here we were focused on regular files. But, what if we start listing special files like network files&amp;nbsp;?&lt;/p&gt;
+&lt;p&gt;Lists all network connections (Yes! Because everything in Unix is a&amp;nbsp;file)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists all network connections on port&amp;nbsp;80&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i:80
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists of all network connections on privileged&amp;nbsp;ports,&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i:1-1024
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Lists all IPv4 connections on the&amp;nbsp;system&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i4
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;See localhost&amp;nbsp;connections.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i 4@127.0.0.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shows all listening &lt;span class="caps"&gt;TCP&lt;/span&gt;/&lt;span class="caps"&gt;UDP&lt;/span&gt;&amp;nbsp;ports&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -Pan -i tcp -i udp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shows all connections on port 80 using a &lt;span class="caps"&gt;TCP&lt;/span&gt;&amp;nbsp;socket.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i TCP:80
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shows al &lt;span class="caps"&gt;TCP&lt;/span&gt; sockets listening on the&amp;nbsp;system.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -i -sTCP:LISTEN
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Shows all listening or established connection &lt;span class="caps"&gt;TCP&lt;/span&gt; ipv4&amp;nbsp;sockets.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -s TCP:ESTABLISHED,LISTEN -i4TCP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Check what services are still using old removed libraries and need to be&amp;nbsp;reloaded.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof -n | grep ssl | grep DEL
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Find processes that need to be restarted after updating&amp;nbsp;binaries.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo lsof -d txt | grep &lt;span class="s1"&gt;&amp;#39;(deleted)&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And now let&amp;#8217;s get stared with the device&amp;nbsp;files.&lt;/p&gt;
+&lt;p&gt;Find out what processes are using your&amp;nbsp;webcam.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof /dev/video0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Find out what processes are using your sound&amp;nbsp;card.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo lsof +D /dev/snd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The next one is one of my favorites. Displays all deleted files that are still open, and thus still occupy disk space, but are not part of any directory.
+For example if you delete a big log file while it still opened by another&amp;nbsp;process.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;lsof +L1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now the definitive one. See how &lt;code&gt;lsof&lt;/code&gt; can help you to recover a deleted&amp;nbsp;file!&lt;/p&gt;
+&lt;p&gt;Imagie you deleted the &lt;code&gt;syslog&lt;/code&gt; file accidentaly. As we said before, you can see some metadata from the deleted file using &lt;code&gt;lsof&lt;/code&gt;.
+Using the process (&lt;code&gt;PID&lt;/code&gt;), and the file descriptor (&lt;code&gt;FD&lt;/code&gt;) identifiers you can recover the&amp;nbsp;file:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;COMMAND    PID       USER   FD   TYPE DEVICE SIZE/OFF NLINK    NODE NAME
+insync    2432 frommelmak   30u   REG    8,1     9252     0 4326104 /var/tmp/etilqs_KFgJC2dGc3A3p9r &lt;span class="o"&gt;(&lt;/span&gt;deleted&lt;span class="o"&gt;)&lt;/span&gt;
+soffice.b 3377 frommelmak   23u   &lt;span class="caps"&gt;REG&lt;/span&gt;    8,1     4096     0  789414 /home/frommelmak/.execoooAMcD6a &lt;span class="o"&gt;(&lt;/span&gt;deleted&lt;span class="o"&gt;)&lt;/span&gt;
+syslog-ng 1046 root         10w   &lt;span class="caps"&gt;REG&lt;/span&gt;    8,1     278428   0   20198 /var/log/syslog &lt;span class="o"&gt;(&lt;/span&gt;deleted&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you can recover the file as&amp;nbsp;follows:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat /proc/1046/fd/10 &amp;gt; /var/log/syslog
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you really want to release the space used by the syslog file without restart the &lt;code&gt;syslog&lt;/code&gt; process, you can do something like&amp;nbsp;this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;gt; /var/log/syslog
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or&amp;nbsp;just:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt; /var/log/syslog
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally you can put the &lt;code&gt;lsof&lt;/code&gt; command in a repeat mode using &lt;code&gt;-|+r&lt;/code&gt;. The prefix &lt;code&gt;-&lt;/code&gt; puts the lsof in endless mode. You need to send a control signal to exit.
+With the &lt;code&gt;+&lt;/code&gt; prefix, &lt;code&gt;lsof&lt;/code&gt; ends when there&amp;#8217;s no output for the given&amp;nbsp;parameters.&lt;/p&gt;
+&lt;p&gt;This article just cover the basics about &lt;code&gt;lsof&lt;/code&gt;. For a complete list of features&amp;nbsp;&lt;span class="caps"&gt;RTFM&lt;/span&gt;!&lt;/p&gt;</summary><category term="lsof"></category><category term="sysadmin"></category><category term="tools"></category></entry><entry><title>How to add Puppet syntax highlighting to Dokuwiki</title><link href="https://frommelmak.com/how-to-add-puppet-syntax-highlighting-to-dokuwiki.html" rel="alternate"></link><updated>2013-07-05T12:50:40+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2013-07-05:how-to-add-puppet-syntax-highlighting-to-dokuwiki.html</id><summary type="html">&lt;p&gt;As you probably know, Dokuwiki relies on &lt;a href="http://qbnz.com/highlighter/"&gt;GeSHI&lt;/a&gt; for syntax highlighting. Unfortunately, the current version of GeSHI does not support Puppet language. Nevertheless GeSHI allows you to add new languages easily by creating new language files, so to add Puppet support you just need to get a languaje file for Puppet and copy it into the inc/geshi&amp;nbsp;folder.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve found this &lt;a href="https://github.com/jasonhancock/geshi-language-files/blob/master/puppet.php"&gt;Puppet GeSHI file&lt;/a&gt; that works fine in&amp;nbsp;Dokuwiki.&lt;/p&gt;</summary><category term="puppet"></category><category term="dokuwiki"></category></entry><entry><title>rabbitmqctl: Error unable to connect to node</title><link href="https://frommelmak.com/rabbitmqctl-error-unable-to-connect-to-node.html" rel="alternate"></link><updated>2013-01-17T15:22:47+01:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2013-01-17:rabbitmqctl-error-unable-to-connect-to-node.html</id><summary type="html">&lt;p&gt;If you are running &lt;code&gt;rabbitmqctl&lt;/code&gt; with a different user than the one used by server, you will get an error like&amp;nbsp;this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;rabbitmqctl status Status of node rabbit@foo
+Error: unable to connect to node rabbit@foo: nodedown
+- home dir: /root
+- cookie &lt;span class="nb"&gt;hash&lt;/span&gt;: &lt;span class="nv"&gt;0fWPcZtM431dRX003r6OAg&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is because the cookie stored in your home directory &lt;code&gt;.erlang.cookie&lt;/code&gt; differs from the cookie used by the server&amp;nbsp;instance.&lt;/p&gt;
+&lt;p&gt;The cookie file used by the server is inside the home dir used by the server. You can see the location of the home dir in the stdout of the rabbitmq server during the startup. Something&amp;nbsp;like:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;home dir : /opt/rabbitmq/var/lib/rabbitmq&lt;/span&gt;
+&lt;span class="go"&gt;cookie hash : NNYm39bSA1i7yB+fQjTdiOJK&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To solve the problem, just copy the &lt;code&gt;.erlang.cookie&lt;/code&gt; in the home dir of the user you are using to execute the rabbitmqclt command&amp;nbsp;line.&lt;/p&gt;</summary><category term="rabbitmq"></category></entry><entry><title>Couchdb: How to continue the replication processes after restart</title><link href="https://frommelmak.com/couchdb-how-to-continue-the-replication-processes-after-restart.html" rel="alternate"></link><updated>2012-08-30T12:58:45+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2012-08-30:couchdb-how-to-continue-the-replication-processes-after-restart.html</id><summary type="html">&lt;p&gt;As you probably know, the replication in couchdb is triggered by sending a &lt;span class="caps"&gt;JSON&lt;/span&gt; doc to the &lt;code&gt;_replicate&lt;/code&gt; &lt;span class="caps"&gt;URL&lt;/span&gt; using a &lt;span class="caps"&gt;POST&lt;/span&gt; request. Something like&amp;nbsp;that:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;curl -X &lt;span class="caps"&gt;POST&lt;/span&gt; http://localhost:5984/_replicate -d &amp;#39;{source:http://src_ip:5984/src_db, target:dst_db, continuous:true}&amp;#39; -H &amp;#39;Content-Type: application/json&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The problem using this approach is that the replication process does not continue after a CouchDB restart. Since CouchDB 1.1.0, you can use the &lt;code&gt;_replicator&lt;/code&gt; database to ensure that the replication processes are triggered again after a service restart. Just fill up the &lt;code&gt;_replicator&lt;/code&gt; database with a documment defining the replication process in the same way that you did using the &lt;code&gt;_replicate&lt;/code&gt; &lt;span class="caps"&gt;API&lt;/span&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;curl -X &lt;span class="caps"&gt;POST&lt;/span&gt; -d &amp;#39;{source:http://src_ip:5984/source_db, target:dst_db, continuous:true}&amp;#39; -H &amp;#39;Content-Type: application/json&amp;#39; http://localhost:5984/_replicator&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you don&amp;#8217;t need to worry about the replication processes after a service&amp;nbsp;restart.&lt;/p&gt;
+&lt;p&gt;more info: &lt;a href="http://wiki.apache.org/couchdb/Replication"&gt;http://wiki.apache.org/couchdb/Replication&lt;/a&gt;&lt;/p&gt;</summary><category term="couchdb"></category></entry><entry><title>How to mount a ZFS drive in Linux</title><link href="https://frommelmak.com/how-to-mount-a-zfs-drive-in-linux.html" rel="alternate"></link><updated>2012-02-08T14:39:12+01:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2012-02-08:how-to-mount-a-zfs-drive-in-linux.html</id><summary type="html">&lt;p&gt;First: Plug the &lt;span class="caps"&gt;HDD&lt;/span&gt; into a &lt;span class="caps"&gt;SATA&lt;/span&gt; to &lt;span class="caps"&gt;USB&lt;/span&gt; adapter (obvious).
+Then find the&amp;nbsp;device:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;sfdisk -l&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In my case the device was &lt;code&gt;/dev/sdb1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Install zfs-fuse for your&amp;nbsp;distro:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Debian&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;apt-get install zfs-fuse&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;OpenSUSE&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;zypper install zfs-fuse&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Start the zfs fuse&amp;nbsp;daemon:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/etc/init.d/zfs-fuse start
+super8:~ &lt;span class="c"&gt;# zpool import&lt;/span&gt;
+ pool: mypool
+ id: 16911161038176216381
+state: &lt;span class="caps"&gt;ONLINE&lt;/span&gt;
+status: The pool was last accessed by another system.
+action: The pool can be imported using its name or numeric identifier and
+    the &lt;span class="s1"&gt;&amp;#39;-f&amp;#39;&lt;/span&gt; flag.
+   see: http://www.sun.com/msg/&lt;span class="caps"&gt;ZFS&lt;/span&gt;-8000-&lt;span class="caps"&gt;EY&lt;/span&gt;
+config:
+    mypool  &lt;span class="caps"&gt;ONLINE&lt;/span&gt;
+      disk/by-id/ata-ST3500418AS_5VM4KPXB-part2 &lt;span class="caps"&gt;ONLINE&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Force the command using the -f flag and the pool&amp;nbsp;identifier&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;super8:~ &lt;span class="c"&gt;# zpool -f import 16911161038176216381&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Verify that everithing look&amp;nbsp;normal:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;super8:~ &lt;span class="c"&gt;# zpool list&lt;/span&gt;
+&lt;span class="caps"&gt;NAME&lt;/span&gt; &lt;span class="caps"&gt;SIZE&lt;/span&gt; &lt;span class="caps"&gt;ALLOC&lt;/span&gt; &lt;span class="caps"&gt;FREE&lt;/span&gt; &lt;span class="caps"&gt;CAP&lt;/span&gt; &lt;span class="caps"&gt;DEDUP&lt;/span&gt; &lt;span class="caps"&gt;HEALTH&lt;/span&gt; &lt;span class="caps"&gt;ALTROOT&lt;/span&gt;
+mypool  460G 2.97G 457G 0% 1.00x &lt;span class="caps"&gt;ONLINE&lt;/span&gt; -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And mount the filesystem in your desired&amp;nbsp;mountpoint.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;zfs &lt;span class="nb"&gt;set &lt;/span&gt;&lt;span class="nv"&gt;mountpoint&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/mnt/zfs mypool
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Thats all, you are done! Your disk is available at &lt;code&gt;/mnt/zfs&lt;/code&gt; mountpoint
+Do whatever you need to do and finaly umount the device with this&amp;nbsp;command:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;zfs umount mypool
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="zfs"></category><category term="mount"></category></entry><entry><title>How to convert your server into a video streaming server</title><link href="https://frommelmak.com/how-to-convert-your-server-into-a-video-streaming-server.html" rel="alternate"></link><updated>2012-01-30T19:15:34+01:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2012-01-30:how-to-convert-your-server-into-a-video-streaming-server.html</id><summary type="html">&lt;p&gt;Dependencies:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;apt-get install vlc-nox&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;File to&amp;nbsp;stream:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;cvlc -v file.mp4 --sout &amp;#39;#standard{access=http,mux=asf,dst=0.0.0.0:8080}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Authenticated Stream to Stream (without&amp;nbsp;audio)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;cvlc -v http://x.x.x.x:pppp/test --no-sout-audio --sout-http-user foo --sout-http-pwd foopass --sout &amp;#39;#standard{access=http,mux=asf,dst=0.0.0.0:8080}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;More&amp;nbsp;options:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;vlc -H&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;More&amp;nbsp;info:&lt;/p&gt;
+&lt;p&gt;&lt;a href=""&gt;http://www.videolan.org/doc/streaming-howto/en/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=""&gt;http://www.videolan.org/doc/streaming-howto/en/ch04.html&lt;/a&gt;&lt;/p&gt;</summary><category term="video"></category><category term="streaming"></category><category term="vlc"></category></entry><entry><title>How to migrate from LAMP to Nginx + PHP-FPM</title><link href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html" rel="alternate"></link><updated>2011-11-03T14:26:49+01:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2011-11-03:how-to-migrate-from-lamp-to-nginx-php-fpm.html</id><summary type="html">&lt;p&gt;This blog has been migrated from Apache2 + mod_php to Nginx + &lt;span class="caps"&gt;PHP&lt;/span&gt;-&lt;span class="caps"&gt;FPM&lt;/span&gt;. In this entry I&amp;#8217;m going to explain the whole process (just for&amp;nbsp;fun).&lt;/p&gt;
+&lt;p&gt;The easiest way is just install the precompiled packages from &lt;a href=""&gt;www.dotdeb.org&lt;/a&gt; as explained &lt;a href="http://www.codernotes.com/2011/7/install-nginx-and-php-fpm-on-debian-6-squeeze-2/"&gt;here&lt;/a&gt;.
+Unfortunatelly my blog isn&amp;#8217;t compatible with the latest &lt;span class="caps"&gt;PHP&lt;/span&gt; versions provided by dotdeb, so I&amp;#8217;ve had to compile my own version of&amp;nbsp;&lt;span class="caps"&gt;PHP&lt;/span&gt;-&lt;span class="caps"&gt;FPM&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Firts of all, we need to install&amp;nbsp;Nginx:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;apt-get install nginx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then I downloaded the source code of &lt;span class="caps"&gt;PHP&lt;/span&gt; 5.4.3 from &lt;a href=""&gt;http://www.php.net/releases/&lt;/a&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;cd /var/tmp &lt;/span&gt;
+&lt;span class="go"&gt;wget http://museum.php.net/php5/php-5.3.4.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;tar zxvf php-5.3.4.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;cd php-5.3.4&lt;/span&gt;
+&lt;span class="go"&gt;./configure --prefix=/opt/php-5.3.4 --enable-fpm --with-mcrypt --with-zlib --enable-mbstring --disable-pdo --with-mysql --with-curl --disable-debug --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --with-mhash --enable-zip --with-pcre-regex&lt;/span&gt;
+&lt;span class="go"&gt;make all&lt;/span&gt;
+&lt;span class="go"&gt;make install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, the required &lt;span class="caps"&gt;PHP&lt;/span&gt; version, including the &lt;span class="caps"&gt;PHP&lt;/span&gt;-&lt;span class="caps"&gt;FPM&lt;/span&gt; service are installed here: &lt;code&gt;/opt/php5-3.4&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to get the &lt;span class="caps"&gt;PHP&lt;/span&gt;-&lt;span class="caps"&gt;FPM&lt;/span&gt; service running is by using the init script and the config files contained in the php5-fpm dotdeb&amp;nbsp;package.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;wget http://packages.dotdeb.org/dists/squeeze/php5/binary-i386/php5-fpm_5.3.8-1~dotdeb.2_i386.deb&lt;/span&gt;
+&lt;span class="go"&gt;dpkg-deb -x php5-fpm_5.3.8-1~dotdeb.2_i386.deb /tmp/php5-fpm&lt;/span&gt;
+&lt;span class="go"&gt;cp /tmp/php5-fpm/etc/init.d/php5-fpm /etc/init.d/php5-fpm&lt;/span&gt;
+&lt;span class="go"&gt;cp -R /tmp/php5-fpm/etc/fpm /etc/php5/&lt;/span&gt;
+&lt;span class="go"&gt;ln -s /opt/php-5.3.4/sbin/php-fpm /usr/sbin/php5-fpm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now you should copy your previous php.ini file into the correct place: Use &lt;code&gt;phpinfo ()&lt;/code&gt; to know the correct path for the php.ini&amp;nbsp;file: &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;/opt/php-5.3.4/bin/php -i|grep php.ini&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this case, the &lt;span class="caps"&gt;PHP&lt;/span&gt;-&lt;span class="caps"&gt;FPM&lt;/span&gt; will look for php.ini here &lt;code&gt;/opt/php-5.3.4/lib&lt;/code&gt;, so just drop your previous file&amp;nbsp;here.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;cp /etc/php5/apache2/php.ini /opt/php-5.3.4/lib&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="php"></category></entry><entry><title>VPN using SSH</title><link href="https://frommelmak.com/vpn-using-ssh.html" rel="alternate"></link><updated>2011-09-12T19:29:21+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2011-09-12:vpn-using-ssh.html</id><summary type="html">&lt;p&gt;Las versiones recientes del servidor OpenSSH permiten montar una &lt;span class="caps"&gt;VPN&lt;/span&gt; utilizando una conexinSSH. Esto nos permite, por ejemplo, tener acceso a todos los puertos del servidor incluso en aquellos casos en los que sólo nos dan acceso al puerto de&amp;nbsp;&lt;span class="caps"&gt;SSH&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Para montar una &lt;span class="caps"&gt;VPN&lt;/span&gt; utilizando el servidorSSHen Debian haremos lo&amp;nbsp;siguiente&amp;#8230;        &lt;/p&gt;
+&lt;h2&gt;&lt;span class="caps"&gt;SERVER&lt;/span&gt;:&lt;/h2&gt;
+&lt;p&gt;Aadimos en &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;PermitTunnel point-to-point&lt;/span&gt;
+&lt;span class="go"&gt;PermitRootLogin yes&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para crear el dispositivo &lt;span class="caps"&gt;TUN&lt;/span&gt; es necesario ejecutar algunos comandos como root, por eso utilizamos la directiva &lt;code&gt;PermiRootLogin&lt;/code&gt; a yes. Si no queremos dar acceso de login al usuario root, podemos utilizar otras soluciones ms elegantes como: &lt;code&gt;forzed-commands-only&lt;/code&gt; o  &lt;code&gt;without-password&lt;/code&gt; que no comprometen tanto la seguridad como &lt;code&gt;PermitRootLogin yes&lt;/code&gt;. Ver enlaces relaccionados al final del&amp;nbsp;documento.&lt;/p&gt;
+&lt;p&gt;Finalmente, recuerda que es necesario reiniciar el servidorSSHpara que los cambios tengan&amp;nbsp;efecto.&lt;/p&gt;
+&lt;p&gt;Editamos: &lt;code&gt;/etc/network/interfaces&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;allow-hotplug tun0&lt;/span&gt;
+&lt;span class="go"&gt;iface tun0 inet static&lt;/span&gt;
+&lt;span class="go"&gt;      address 10.0.0.1&lt;/span&gt;
+&lt;span class="go"&gt;      netmask 255.255.255.0&lt;/span&gt;
+&lt;span class="go"&gt;      pointopoint 10.0.0.2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Es vital utilizar &lt;code&gt;allow-hotplug tun0&lt;/code&gt;para que se creen automticamente los dispositivos tun con udev, de lo contrario deberemos utilizar herramientas como &lt;code&gt;tunctl&lt;/code&gt;para crear los dispositivos, lo cual puede darnos problemas de permisos al intentar abrir/crear los&amp;nbsp;dispositivos.&lt;/p&gt;
+&lt;h2&gt;&lt;span class="caps"&gt;CLIENT&lt;/span&gt;:&lt;/h2&gt;
+&lt;p&gt;Editamos: &lt;code&gt;/etc/network/interfaces&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;allow-hotplug tun0&lt;/span&gt;
+&lt;span class="go"&gt;iface tun0 inet static&lt;/span&gt;
+&lt;span class="go"&gt;      pre-up ssh -vv -i /root/.ssh/id_rsa -S /var/run/ssh-vpn-tunnel-control -M -f -w 0:0 root@ssh_server true&lt;/span&gt;
+&lt;span class="go"&gt;      pre-up sleep 5&lt;/span&gt;
+&lt;span class="go"&gt;      address 10.0.0.2&lt;/span&gt;
+&lt;span class="go"&gt;      pointopoint 10.0.0.1&lt;/span&gt;
+&lt;span class="go"&gt;      netmask 255.255.255.0&lt;/span&gt;
+&lt;span class="go"&gt;      #up route add -net 192.168.1.0 netmask 255.255.255.0 tun0 #creating optional route&lt;/span&gt;
+&lt;span class="go"&gt;      #down route del -net 192.168.1.0 netmask 255.255.255.0 tun0 #creating optional route&lt;/span&gt;
+&lt;span class="go"&gt;      post-down ssh -i/root/.ssh/id_rsa -S /var/run/ssh-vpn-tunnel-control -O exit root@ssh_server&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Con esto conseguimos establecer una conexin punto a punto con el servidor ssh remoto, si bien, en ocasiones querremos ir un poco ms all. Por ejemplog. Si queremos llegar a otoros equipos ubicados en la red remota, o al reves, cuando varios equipos de nuestra red han de poder llegar al servidor&amp;nbsp;remoto.&lt;/p&gt;
+&lt;p&gt;Se asume que hemos creado el par de claves privada/publica &lt;code&gt;id_rsa/id_rsa.pub&lt;/code&gt;y que hemos copiado la publica al servidor &lt;span class="caps"&gt;SSH&lt;/span&gt; remoto para poder autenticar sin necesidad de proporcionar&amp;nbsp;password.&lt;/p&gt;
+&lt;h3&gt;Arrancar y detener la&amp;nbsp;&lt;span class="caps"&gt;VPN&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;Para iniciar la conexin punto a punto utilizaremos los comandos &lt;code&gt;ifup tun0&lt;/code&gt; e &lt;code&gt;ifdown tun0&lt;/code&gt; respectivamente.&lt;/p&gt;
+&lt;p&gt;Ahora ya ponemos alcanzar el servidor remoto en&amp;nbsp;10.0.0.1.&lt;/p&gt;
+&lt;p&gt;Tras establecer la conexin punto a punto, y en base a nuestras necesidades, podemos encontrarnos diferentes escenarios. Por&amp;nbsp;ejemplo:&lt;/p&gt;
+&lt;h3&gt;Acceso a otros equipos de la red&amp;nbsp;remota&lt;/h3&gt;
+&lt;p&gt;Activamos el forwarding en el servidorSSH y&amp;nbsp;ejecutamos:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;iptables -t nat -A &lt;span class="caps"&gt;POSTROUTING&lt;/span&gt; -s 10.0.0.0/24 -o eth0 -j &lt;span class="caps"&gt;MASQUERADE&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Acceso al servidor remoto desde varios equipos de nuestra&amp;nbsp;red&lt;/h3&gt;
+&lt;p&gt;Activamos el forwarding en el cliente de ssh y&amp;nbsp;ejecutamos:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;iptables -t nat -A &lt;span class="caps"&gt;POSTROUTING&lt;/span&gt; -o tun0 -j &lt;span class="caps"&gt;MASQUERADE&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;En cada uno de los equipos de red que deseamos que tengan acceso al servidor, deberemos configurar la ruta&amp;nbsp;correspondiente:&lt;/p&gt;
+&lt;p&gt;Por ejemplo en&amp;nbsp;windows:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;route add 10.0.0.0 mask 255.255.255.0 IP_SSH_CLIENT&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Nota&lt;/strong&gt;: Para activar el forwarding en ambos casos: &lt;code&gt;sysctl -w net.ipv4.ip_forward=1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Fuentes: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=""&gt;bodhizazen.net/Tutorials/&lt;span class="caps"&gt;VPN&lt;/span&gt;-Over-&lt;span class="caps"&gt;SSH&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=""&gt;www.debian-administration.org/articles/539&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="ssh"></category><category term="vpn"></category></entry><entry><title>How to use Gmail POP/SMTP services from unsecure clients</title><link href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html" rel="alternate"></link><updated>2011-05-23T22:15:55+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2011-05-23:how-to-use-gmail-popsmtp-services-from-unsecure-clients.html</id><summary type="html">&lt;p&gt;Sometimes you may need to send or retrieve email notifications using &lt;span class="caps"&gt;SMTP&lt;/span&gt; or &lt;span class="caps"&gt;POP&lt;/span&gt; Gmail services, but your client does not support &lt;span class="caps"&gt;SSL&lt;/span&gt; connections. In such cases you can use a &lt;span class="caps"&gt;SSL&lt;/span&gt; proxy tunnel such as&amp;nbsp;stunnel.&lt;/p&gt;
+&lt;p&gt;stunnel is available as a Debian package, and probably in other modern Linux distributions. It is also available as Win32 binary.
+The installation in debian is as simple as&amp;nbsp;type:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;apt-get install stunnel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Since stunnel relies on OpenSSL libraries, the first thing is create a x509&amp;nbsp;cert.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;cd /etc/ssl/certs&lt;/span&gt;
+&lt;span class="go"&gt;openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then you need to configure stunnel in order to forward all the traffic in the 110 (&lt;span class="caps"&gt;POP&lt;/span&gt;) and 25 (&lt;span class="caps"&gt;SMPT&lt;/span&gt;) to the Gmail 995 and 465 ports&amp;nbsp;respectively.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;/etc/stunnel/stunnel.conf&lt;/span&gt;
+&lt;span class="go"&gt;[pop3s]&lt;/span&gt;
+&lt;span class="go"&gt;accept = server_ip_address:110 &lt;/span&gt;
+&lt;span class="go"&gt;connect = pop.gmail.com:995&lt;/span&gt;
+
+&lt;span class="go"&gt;[ssmtp] &lt;/span&gt;
+&lt;span class="go"&gt;accept = server_ip_address:25&lt;/span&gt;
+&lt;span class="go"&gt;connect = smtp.gmail.com:465&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The server_ip_address could be the &lt;span class="caps"&gt;LAN&lt;/span&gt; interface &lt;span class="caps"&gt;IP&lt;/span&gt; address or the localhost, depending if the client program is running localy or in some other host in your&amp;nbsp;&lt;span class="caps"&gt;LAN&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Finaly, just start de&amp;nbsp;service:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;/etc/init.d/stunnel4 start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And test the&amp;nbsp;service:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;telnet server_ip_address 110&lt;/span&gt;
+&lt;span class="go"&gt;Trying ...&lt;/span&gt;
+&lt;span class="go"&gt;Connected to somehost.&lt;/span&gt;
+&lt;span class="go"&gt;Escape character is &amp;#39;^]&amp;#39;.&lt;/span&gt;
+&lt;span class="go"&gt;+&lt;span class="caps"&gt;OK&lt;/span&gt; Gpop ready for requests from xx.xx.xx.xx dewf14449283wbe.15&lt;/span&gt;
+&lt;span class="go"&gt;&lt;span class="caps"&gt;USER&lt;/span&gt; your_user@gmail.com&lt;/span&gt;
+&lt;span class="go"&gt;+&lt;span class="caps"&gt;OK&lt;/span&gt; send &lt;span class="caps"&gt;PASS&lt;/span&gt;&lt;/span&gt;
+&lt;span class="go"&gt;&lt;span class="caps"&gt;PASS&lt;/span&gt; your_gmail_pass&lt;/span&gt;
+&lt;span class="go"&gt;+&lt;span class="caps"&gt;OK&lt;/span&gt; Welcome.&lt;/span&gt;
+&lt;span class="go"&gt;&lt;span class="caps"&gt;LIST&lt;/span&gt;&lt;/span&gt;
+&lt;span class="go"&gt;+&lt;span class="caps"&gt;OK&lt;/span&gt; 2 messages (23782 bytes)&lt;/span&gt;
+&lt;span class="go"&gt;1 3124&lt;/span&gt;
+&lt;span class="go"&gt;2 2758&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you can connect with telnet, your client can do it&amp;nbsp;too.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://twitter.com/oriolrius"&gt;@oriolrius&lt;/a&gt;, thanks for telling me about this&amp;nbsp;tool.&lt;/p&gt;
+&lt;p&gt;For more info visit: &lt;a href="http://www.stunnel.org"&gt;www.stunnel.org&lt;/a&gt;.&lt;/p&gt;</summary><category term="ssl"></category><category term="pop"></category><category term="smtp"></category><category term="gmail"></category><category term="google"></category></entry><entry><title>Building CouchDB from sources in RHEL6</title><link href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html" rel="alternate"></link><updated>2011-04-18T19:00:48+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2011-04-18:building-couchdb-from-sources-in-rhel6.html</id><summary type="html">&lt;p&gt;Install Erlang from&amp;nbsp;sources:&lt;/p&gt;
+&lt;p&gt;Prerequisites: &lt;code&gt;unixODBC-devel-2.2.14-11.el6.i686.rpm&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;wget http://www.erlang.org/download/otp_src_R14B02.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;tar zxvf otp_src_R14B02.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;cd otp_src_R14B02 &lt;span class="caps"&gt;LANG&lt;/span&gt;=C; export &lt;span class="caps"&gt;LANG&lt;/span&gt;&lt;/span&gt;
+&lt;span class="go"&gt;./configure --prefix=/opt/erlang&lt;/span&gt;
+&lt;span class="go"&gt;make&lt;/span&gt;
+&lt;span class="go"&gt;make install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Install Mozilla SpiderMonkey from&amp;nbsp;sources:&lt;/p&gt;
+&lt;p&gt;Prerequisties: &lt;code&gt;libicu-devel-4.2.1-9.el6.i686.rpm&lt;/code&gt;, &lt;code&gt;libicu-4.2.1-7.el6.i686.rpm&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;wget http://ftp.mozilla.org/pub/mozilla.org/js/js-1.7.0.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;tar zxvf js-1.7.0.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;cd js/srcmkdir /opt/js-devel&lt;/span&gt;
+&lt;span class="go"&gt;make BUILD_OPT=1 JS_DIST=/opt/js-devel -f Makefile.ref export&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And finally install Couchdb from&amp;nbsp;sources:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;&lt;span class="caps"&gt;ERL&lt;/span&gt;=&amp;#39;/opt/erlang/bin/erl&amp;#39; ;&lt;/span&gt;
+&lt;span class="go"&gt;export &lt;span class="caps"&gt;ERLERLC&lt;/span&gt;=&amp;#39;/opt/erlang/bin/erlc&amp;#39; ;&lt;/span&gt;
+&lt;span class="go"&gt;export ERLCwget http://apache.rediris.es//couchdb/1.0.2/apache-couchdb-1.0.2.tar.gz&lt;/span&gt;
+&lt;span class="go"&gt;tar zxvf apache-couchdb-1.0.2.tar.gzcd apache-couchdb-1.0.2./configure --prefix=/opt/couchdb \&lt;/span&gt;
+&lt;span class="go"&gt;--with-erlang=/opt/erlang/lib/erlang/usr/include/ \&lt;/span&gt;
+&lt;span class="go"&gt;--with-js-include=/opt/js-devel/include/js \&lt;/span&gt;
+&lt;span class="go"&gt;--with-js-lib=/opt/js-devel/lib&lt;/span&gt;
+&lt;span class="go"&gt;make&lt;/span&gt;
+&lt;span class="go"&gt;make install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="couchdb"></category><category term="rhel"></category><category term="erlang"></category></entry><entry><title>From Trac to Dokuwiki</title><link href="https://frommelmak.com/from-trac-to-dokuwiki.html" rel="alternate"></link><updated>2008-08-13T23:27:51+02:00</updated><author><name>frommelmak</name></author><id>tag:https://frommelmak.com,2008-08-13:from-trac-to-dokuwiki.html</id><summary type="html">&lt;p&gt;This is my first post in English, so I apologize in advance for my poor&amp;nbsp;grammar.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ll try to explain how to export all the pages of a Trac wiki into a Dokuwiki . All the process is based in my own shell script, which uses trac-admin, wget and html2wiki to export all the content of your Trac wiki into a dokuwiki&amp;nbsp;folders.&lt;/p&gt;
+&lt;p&gt;At a glance, the main steps performed by the script are the&amp;nbsp;following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Get the Trac wiki pages as a &lt;span class="caps"&gt;HTML&lt;/span&gt; files using &lt;code&gt;wget&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Remove all the &lt;span class="caps"&gt;HTML&lt;/span&gt; code belonging to the Trac page&amp;nbsp;itself.&lt;/li&gt;
+&lt;li&gt;Convert all the pages from &lt;span class="caps"&gt;HTML&lt;/span&gt; to Dokuwiki format (using &lt;code&gt;html2wiki&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Fix some internal/media links and transform footer attachments into dokuwiki&amp;nbsp;format.&lt;/li&gt;
+&lt;li&gt;Rename all the pages and media from upper to lower&amp;nbsp;case.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The output of the script are two tarball files. One with the Dokuwiki pages, and the oter one with the media&amp;nbsp;files.&lt;/p&gt;
+&lt;p&gt;As you probably know, the pages in a Dokuwiki are stored in simple text files,using the Dokuwiki format. All these pages are stored inside a folder called pages, using different subfolders for every namespace on the wiki. The same occour with the media files. All of them are stored inside folders named as the namespace they belong to, beneath the media folder. So, you just need to extract the content of the media tarball into the media folder and the content of the pages tarball inside the pages folder. And that&amp;#8217;s all, your pages are now stored inside a&amp;nbsp;Dokuwiki.&lt;/p&gt;
+&lt;p&gt;If you want to see the script, click on the Leer ms link&amp;nbsp;below.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Marcos Martinez&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Dependencies: html2wiki&lt;/span&gt;
+&lt;span class="c"&gt;# trac-admin&lt;/span&gt;
+&lt;span class="c"&gt;# wget&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Installation of html2wiki: perl -&lt;span class="caps"&gt;MCPAN&lt;/span&gt; -e &amp;#39;install &lt;span class="caps"&gt;HTML&lt;/span&gt;::WikiConverter::DokuWiki&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+
+&lt;span class="nv"&gt;TRAC_PROJECT_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/path/to/trac/project&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_HOSTNAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x.x.x.x or &lt;span class="caps"&gt;URL&lt;/span&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_PORT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;80&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Fill up the following two lines if your trac is using basic athentication method.&lt;/span&gt;
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;USER&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_trac_user
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;PASS&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_trac_password
+
+&lt;span class="c"&gt;# By default, all the pages will be exported inside a dokuwiki namespace named as the Trac Project&lt;/span&gt;
+&lt;span class="nv"&gt;DOKUWIKI_NAMESPACE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;grep &lt;span class="s1"&gt;&amp;#39;^name&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt;/conf/trac.ini | gawk &lt;span class="s1"&gt;&amp;#39;{print $3}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;#DOKUWIKI_NAMESPACE=&amp;#39;your_desired_dokuwiki_namespace&amp;#39;&lt;/span&gt;
+
+&lt;span class="nv"&gt;TRAC_BASE_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;grep &lt;span class="s1"&gt;&amp;#39;base_url =&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt;/conf/trac.ini | gawk &lt;span class="s1"&gt;&amp;#39;{print $3}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_URL_LOGIN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;http://&lt;span class="nv"&gt;$TRAC_HOSTNAME&lt;/span&gt;:&lt;span class="nv"&gt;$TRAC_PORT$TRAC_BASE_NAME&lt;/span&gt;/login
+&lt;span class="nv"&gt;TRAC_URL_WIKI&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;http://&lt;span class="nv"&gt;$TRAC_HOSTNAME&lt;/span&gt;:&lt;span class="nv"&gt;$TRAC_PORT$TRAC_BASE_NAME&lt;/span&gt;/wiki
+&lt;span class="nv"&gt;TRAC_PROJECT_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;grep &lt;span class="s1"&gt;&amp;#39;^name&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt;/conf/trac.ini | gawk &lt;span class="s1"&gt;&amp;#39;{print $3}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_INSTALL_DATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ls -l &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt;/&lt;span class="caps"&gt;README&lt;/span&gt; |gawk &lt;span class="s1"&gt;&amp;#39;{print $6   $7}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_WIKI_PAGES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_BASE_NAME&lt;/span&gt;/wiki | sed &lt;span class="s1"&gt;&amp;#39;s/\//\\\//g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_WIKI_ATTACHMENTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_BASE_NAME&lt;/span&gt;/attachment/wiki| sed &lt;span class="s1"&gt;&amp;#39;s/\//\\\//g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_WIKI_RAW_ATTACHMENTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_BASE_NAME&lt;/span&gt;/raw-attachment/wiki | sed &lt;span class="s1"&gt;&amp;#39;s/\//\\\//g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;TRAC_BS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_BASE_NAME&lt;/span&gt; | sed &lt;span class="s1"&gt;&amp;#39;s/\//\\\//g&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# The &lt;span class="caps"&gt;PLIST&lt;/span&gt; var has the list of pages we want to export.&lt;/span&gt;
+&lt;span class="c"&gt;# By default, all the wiki pages modified after the installation date&lt;/span&gt;
+&lt;span class="c"&gt;# will be exported.&lt;/span&gt;
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;PLIST&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;trac-admin &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt; wiki list|grep -v &lt;span class="nv"&gt;$TRAC_INSTALL_DATE&lt;/span&gt; | gawk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;|sed &lt;span class="s1"&gt;&amp;#39;1,3d&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# Starting authenticated session&lt;/span&gt;
+wget --quiet --spider &lt;span class="se"&gt;\&lt;/span&gt;
+     --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$&lt;span class="caps"&gt;USER&lt;/span&gt;&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$&lt;span class="caps"&gt;PASS&lt;/span&gt;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+     --save-cookies galletitas &lt;span class="se"&gt;\&lt;/span&gt;
+     --keep-session-cookies &lt;span class="nv"&gt;$TRAC_URL_LOGIN&lt;/span&gt;
+
+mkdir &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;
+
+&lt;span class="k"&gt;for &lt;/span&gt;&lt;span class="caps"&gt;PAGE&lt;/span&gt; in &lt;span class="nv"&gt;$&lt;span class="caps"&gt;PLIST&lt;/span&gt;&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="nb"&gt;echo &lt;/span&gt;Downloading: &lt;span class="nv"&gt;$&lt;span class="caps"&gt;PAGE&lt;/span&gt;&lt;/span&gt;
+  wget --load-cookies galletitas --quiet -P &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt; &lt;span class="nv"&gt;$TRAC_URL_WIKI&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;PAGE&lt;/span&gt;&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+
+
+&lt;span class="k"&gt;for &lt;/span&gt;&lt;span class="caps"&gt;FILE&lt;/span&gt; in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo &lt;/span&gt;Parsing &lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+
+  &lt;span class="c"&gt;# Removing standard &lt;span class="caps"&gt;HTML&lt;/span&gt; trac code (header and footer)&lt;/span&gt;
+  sed -i &lt;span class="s1"&gt;&amp;#39;1,66d&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+  sed -i -n -e :a -e &lt;span class="s1"&gt;&amp;#39;1,45!{P;N;D;};N;ba&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+
+  &lt;span class="c"&gt;# Removing table of contents (&lt;span class="caps"&gt;TOC&lt;/span&gt;) because in dokuwiki, the &lt;span class="caps"&gt;TOC&lt;/span&gt; is dynamically created at runtime.&lt;/span&gt;
+  sed -i &lt;span class="s1"&gt;&amp;#39;/class=\wiki-toc\/d&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+
+  &lt;span class="c"&gt;# Adding &lt;span class="caps"&gt;HTML&lt;/span&gt; headers&lt;/span&gt;
+  sed -i &lt;span class="s1"&gt;&amp;#39;1i\html\nhead\n/head\nbody&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+  sed -i &lt;span class="s1"&gt;&amp;#39;$a\/body\n/html&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+  html2wiki --dialect DokuWiki &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;  &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  rm &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;
+
+  &lt;span class="c"&gt;# Fixing internal links&lt;/span&gt;
+  sed -i s/&lt;span class="se"&gt;\[\[&lt;/span&gt;&lt;span class="nv"&gt;$TRAC_WIKI_PAGES&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;/&lt;span class="se"&gt;\[\[&lt;/span&gt;&lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;:/g &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+
+  &lt;span class="c"&gt;# Fixing media links&lt;/span&gt;
+  sed -i s/&lt;span class="se"&gt;\[\[&lt;/span&gt;&lt;span class="nv"&gt;$TRAC_WIKI_ATTACHMENTS&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;/&lt;span class="o"&gt;{{&lt;/span&gt;:&lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;:/g &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  sed -i s/&lt;span class="o"&gt;{{&lt;/span&gt;&lt;span class="nv"&gt;$TRAC_WIKI_RAW_ATTACHMENTS&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;//g &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  sed -i s/&lt;span class="o"&gt;}}]]&lt;/span&gt;/&lt;span class="o"&gt;}}&lt;/span&gt;/gDOKUWIKI_NAMESPACE/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+
+  &lt;span class="c"&gt;# Removing timeline data from &amp;#39;Attachments&amp;#39; at the &lt;span class="caps"&gt;EOF&lt;/span&gt; if needed&lt;/span&gt;
+
+  &lt;span class="nv"&gt;&lt;span class="caps"&gt;NUM&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;grep -n &lt;span class="s1"&gt;&amp;#39;==== Attachments ====&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt | cut -d&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; -f1&lt;span class="k"&gt;)&lt;/span&gt;
+  grep -q &lt;span class="s1"&gt;&amp;#39;==== Attachments ====&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt  sed -i &lt;span class="nv"&gt;$&lt;span class="caps"&gt;NUM&lt;/span&gt;&lt;/span&gt;,&lt;span class="se"&gt;\$&lt;/span&gt;s/&lt;span class="se"&gt;\[\[&lt;/span&gt;&lt;span class="nv"&gt;$TRAC_BS&lt;/span&gt;&lt;span class="se"&gt;\/&lt;/span&gt;timeline?from&lt;span class="o"&gt;=&lt;/span&gt;.*&lt;span class="o"&gt;]]&lt;/span&gt; ago.//g &lt;span class="nv"&gt;$DOKUWIKI_NAME&lt;/span&gt;            &lt;span class="caps"&gt;SPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  &lt;span class="c"&gt;# Formating attachments footer as Dokuwiki linkonly links&lt;/span&gt;
+  grep -q &lt;span class="s1"&gt;&amp;#39;==== Attachments ====&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt  sed -i &lt;span class="nv"&gt;$&lt;span class="caps"&gt;NUM&lt;/span&gt;&lt;/span&gt;,&lt;span class="se"&gt;\$&lt;/span&gt;s/ * &lt;span class="o"&gt;{{&lt;/span&gt;/&lt;span class="o"&gt;{{&lt;/span&gt;/ &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  grep -q &lt;span class="s1"&gt;&amp;#39;==== Attachments ====&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt  sed -i &lt;span class="nv"&gt;$&lt;span class="caps"&gt;NUM&lt;/span&gt;&lt;/span&gt;,&lt;span class="se"&gt;\$&lt;/span&gt;s/|/?linkonly|/ &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+  grep -q &lt;span class="s1"&gt;&amp;#39;==== Attachments ====&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt  sed -i &lt;span class="nv"&gt;$&lt;span class="caps"&gt;NUM&lt;/span&gt;&lt;/span&gt;,&lt;span class="se"&gt;\$&lt;/span&gt;s/&lt;span class="o"&gt;]]&lt;/span&gt;/&lt;span class="o"&gt;}}&lt;/span&gt;/ &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt
+
+  &lt;span class="c"&gt;# In Dokuwiki, only lower characters are allowed in filenames&lt;/span&gt;
+  mv -u &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;.txt| tr &lt;span class="o"&gt;[&lt;/span&gt;:upper:&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;:lower:&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; 2/dev/null
+
+&lt;span class="k"&gt;done&lt;/span&gt;
+
+tar -czvf &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;.tar.gz &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;
+mkdir &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media
+find &lt;span class="nv"&gt;$TRAC_PROJECT_ENV&lt;/span&gt;/attachments/wiki -type f -exec cp &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media &lt;span class="se"&gt;\;&lt;/span&gt;
+
+&lt;span class="k"&gt;for &lt;/span&gt;&lt;span class="caps"&gt;FILE&lt;/span&gt; in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="c"&gt;# In Dokuwiki, only lower characters are allowed in media filenames&lt;/span&gt;
+  mv -u &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt; &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media/&lt;span class="nv"&gt;$&lt;span class="caps"&gt;FILE&lt;/span&gt;&lt;/span&gt;| tr &lt;span class="o"&gt;[&lt;/span&gt;:upper:&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;:lower:&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt; 2/dev/null
+&lt;span class="k"&gt;done&lt;/span&gt;
+
+tar -czvf &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media.tar.gz &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media
+
+rm -rf &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;-media &lt;span class="nv"&gt;$DOKUWIKI_NAMESPACE&lt;/span&gt;
+rm galletitas
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="trac"></category><category term="dokuwiki"></category></entry></feed>

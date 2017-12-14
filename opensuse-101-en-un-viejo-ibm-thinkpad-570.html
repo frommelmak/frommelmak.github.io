@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  OpenSUSE 10.1 en un viejo IBM ThinkPad 570
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/opensuse-101-en-un-viejo-ibm-thinkpad-570.html" rel="bookmark" title="Permalink to OpenSUSE 10.1 en un viejo IBM ThinkPad 570">OpenSUSE 10.1 en un viejo <span class="caps">IBM</span> ThinkPad&nbsp;570</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Hace ya algún tiempo llego a mis manos un viejo <span class="caps">IBM</span> ThinkPad 570 (gracias Lluis !) que había caído en el olvido , hasta que hoy mi hermano me ha pedido que le instalara una distro <span class="caps">GNU</span>/Linux para salir de un apuro. Sí! Lo has adivinado, este post explica el proceso para instalar OpenSUSE 10.1 en un <span class="caps">IBM</span> ThinkPad 570. La gracia del tema, es que el portátil en cuestión carece de lector de <span class="caps">CD</span>/<span class="caps">DVD</span> ni tarjeta de <span class="caps">RED</span>. El único dispositivo de entrada/salida disponible es una disquetera externa del siglo&nbsp;pasado.</p>
+<p>El procedimiento que he seguido ha consistido en pinchar el disco duro del <span class="caps">IBM</span> en mi actual portatil, que sí que dispone de lector de <span class="caps">DVD</span>, e instalar entonces la OpenSuse sobre el disco del <span class="caps">IBM</span> desde el&nbsp;<span class="caps">DVD</span>.</p>
+<p>Hasta aquí todo perfecto, el problema ha sido que tras volver a poner el disco duro al <span class="caps">IBM</span>, este no arrancaba, ya que no encontraba el boot loader (grub) por ningún sitio. Tras googlear un rato, he encontrado esta&nbsp;solución:</p>
+<p>He arracado una knoppix en el ordenador de mi padre, ya que mi flamante portatil carece de disquetera. Una vez allí, he hecho lo&nbsp;siguiente:</p>
+<div class="codehilite"><pre><span class="go">mk2efs -m 0 /dev/fd0</span>
+<span class="go">mkdir /mnt/floppy</span>
+<span class="go">mount /dev/fd0 /mnt/floppy</span>
+<span class="go">grub-install --force-lba --root-directory=/mnt/floppy fd0</span>
+</pre></div>
+
+
+<p>Esto crea el <code>/boot/grub</code> con todos los ficheros necesarios en el floppy (básicamente los mismos que hay en <code>/lib/grub/i386-pc</code>).</p>
+<p>El fichero que no copia es el <code>menu.lst</code>, así que lo que creado basándome en el de mi portatil. Ha quedado&nbsp;así: </p>
+<div class="codehilite"><pre><span class="go">default 0</span>
+<span class="go">timeout 8</span>
+<span class="go">title <span class="caps">SUSE</span> Linux 10.1</span>
+<span class="go">      root (hd0,1)</span>
+<span class="go">      kernel /boot/vmlinuz</span>
+<span class="go">      boot=/dev/hda2</span>
+<span class="go">      initrd /boot/initrd</span>
+</pre></div>
+
+
+<p>Finalmente, desmontamos el floppy: <code>umount /mny/floppy</code></p>
+<p>Esto ha sido suficiente para poder arrancar el sistema desde el floppy. Tras esto, ya sólo he tenido que instalar el <em>grub</em> en el disco duro de la siguiente&nbsp;manera:</p>
+<div class="codehilite"><pre><span class="go">grub-install /dev/hda</span>
+</pre></div>
+
+
+<p>Los últimos retoques han consistido en configurar las X vía Yast2 (en modo texto, runlevel3)y deshabilitar algunos servicios inútiles, ya que el portatil es muy pero que muy justo para mover un <span class="caps">KDE</span>.De todo el proceso, lo más complicado ha sido encontrar un disquete que poder meter en la&nbsp;disquetera.</p>
+  </div>
+
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="https://frommelmak.com/freecom-dvb-t-usb-stick-en-opensuse-112.html">Freecom <span class="caps">DVB</span>-T <span class="caps">USB</span> Stick en Opensuse&nbsp;11.2</a></li>
+        <li><a href="https://frommelmak.com/opensuse-103-gm-liberada.html">Opensuse 10.3 <span class="caps">GM</span>&nbsp;Liberada!</a></li>
+      </ul>
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "opensuse-101-en-un-viejo-ibm-thinkpad-570.html";
+        var disqus_title = "OpenSUSE 10.1 en un viejo IBM ThinkPad 570";
+        var disqus_url = "https://frommelmak.com/opensuse-101-en-un-viejo-ibm-thinkpad-570.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2006-10-11T21:10:13"> Wed 11 October 2006</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/opensuse.html" rel="tooltip" class="label" data-placement="right" data-original-title="3 articles with this tag">opensuse</a>
+            <a href="/tag/grub.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">grub</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/opensuse-101-en-un-viejo-ibm-thinkpad-570.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/rpms-y-srpms-de-kxdocker-para-suse-101.html" title="RPMS y SRPMS de KXDocker para SuSE 10.1"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/anadir-fuentes-truetype-en-opensuse-10x.html" title="Añadir fuentes Truetype en OpenSuSE 10.x"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

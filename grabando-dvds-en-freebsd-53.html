@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Grabando DVDs en FreeBSD 5.3
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/grabando-dvds-en-freebsd-53.html" rel="bookmark" title="Permalink to Grabando DVDs en FreeBSD 5.3">Grabando DVDs en FreeBSD&nbsp;5.3</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Hace tiempo que el backup de los ficheros sensibles de mi server no cabe en un único <span class="caps">CDROM</span>. El resultado práctico de esto es que el proceso automatico de backup requiere ahora de intervención humana, por lo que hace tiempo que no hago backups a soportes&nbsp;fisicos.</p>
+<p>Hoy por fin, me he decidido a solventar el problema. Para ello he sustituido la actual unidad de CDs, por una de DVDs. Concretamente una regrabadora de DVDs/CDs 16x de <strong><span class="caps">LG</span> <span class="caps">GSA</span>-4167B</strong>.</p>
+<p>A continuación explico como instalar una grabadora de DVDs/CDs en <strong>FreeBSD 5.3</strong> y como utilizar <code>growisofs</code> para quemar&nbsp;DVDs.</p>
+<p>Grabando CDs en&nbsp;FreeBSD:</p>
+<p>Actualmente, utilizaba un sencillo script que metia todos los datos sensibles del server (las webs básicamente) en en tarball, creaba la imagen mediante <code>mkisofs</code> y lo volcaba todo al <span class="caps">CD</span> mediante <code>burncd</code>.</p>
+<p>Esta tool forma parte de la base del sistema FreeBSD, por lo que suele funcionar sin problemas si tienes las suerte de que tu grabadora este entre las soportadas. Si no lo está, simpre te queda la opción de tratar de acceder al dispositivo a traves del subsistema <span class="caps">SCSI</span>. Para ello, hemos de recompilar el kernel y ańadir soporte&nbsp;<span class="caps">ATAPI</span>/<span class="caps">CAM</span>.</p>
+<p>Una vez hecho esto, deberiamos poder utilizar el programa <code>cdrecord</code> para para quemar nuestros&nbsp;CDs.</p>
+<h2>Grabando DVDs en&nbsp;FreeBSD:</h2>
+<p>Para trabajar con DVDs, utilizaremos <code>growisofs</code>.</p>
+<p>Esta tool es en realidad un frontend a <code>mkisofs</code> pero además nos brinda la posibilidad de quemar directamente los DVDs. De esta manera, con <code>growisofs</code> podemos crear la imagen <span class="caps">ISO</span> y quemarla al <span class="caps">DVD</span> en un sólo&nbsp;paso. </p>
+<p><code>growisofs</code> es parte del paquete <code>dvd+rw-tools</code>, y accede a la grabadora utilizando el subsistema <span class="caps">SCSI</span>. Así pues necesitaremos un kernel con soporte&nbsp;<span class="caps">ATAPI</span>/<span class="caps">CAM</span>.</p>
+<p>En primer lugar, instalaremos las <code>dvd+rw-tools</code> en nuestros&nbsp;sistema:</p>
+<div class="codehilite"><pre><span class="go">cd /usr/ports/sysutils/dvd+rw-tools</span>
+<span class="go">make install &amp;&amp; make clean</span>
+</pre></div>
+
+
+<p>Ahora necesitamos compilar un kernel con soporte&nbsp;<span class="caps">ATAPI</span>/<span class="caps">CAM</span>:</p>
+<div class="codehilite"><pre><span class="go">cd /usr/src/sys/i386/conf/</span>
+<span class="go">cp <span class="caps">GENERIC</span> GENERIC_wtih_ATAPI_CAM</span>
+</pre></div>
+
+
+<p>Editamos el fichero <code>GENERIC_wtih_ATAPI_CAM</code> y ańadimos&nbsp;esto:</p>
+<div class="codehilite"><pre><span class="go">device          atapicam        # <span class="caps">ATAPI</span>/<span class="caps">CAM</span> Support using the <span class="caps">SCSI</span> subsystem</span>
+
+<span class="go">config GENERIC_wtih_ATAPI_CAM</span>
+<span class="go">cd ../compile/GENERIC_wtih_ATAPI_CAM/</span>
+<span class="go">make depend</span>
+<span class="go">make</span>
+<span class="go">make install</span>
+</pre></div>
+
+
+<p>Ahora, tras rebotar deberiamos tener acceso a nuestra grabadora utilizando el subsistema&nbsp;<span class="caps">SCSI</span>:</p>
+<p>Antes de rebotar vemos&nbsp;esto:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> camcontrol devlist
+<span class="go"><span class="caps">QUANTUM</span> <span class="caps">ATLAS10K2</span>-<span class="caps">TY184L</span> <span class="caps">DA40</span>    at scbus0 target 0 lun 0 (pass0,da0)</span>
+
+<span class="gp">root@patxi:~#</span> cdrecord --scanbus
+<span class="go">Cdrecord 2.00.3 (i386-unknown-freebsd5.3) Copyright (C) 1995-2002 Jg Schilling </span>
+<span class="go">Using libscg version &#39;schily-0.7&#39;</span>
+<span class="go">        0,0,0     0) &#39;<span class="caps">QUANTUM</span> &#39; &#39;<span class="caps">ATLAS10K2</span>-<span class="caps">TY184L</span>&#39; &#39;<span class="caps">DA40</span>&#39; Disk</span>
+<span class="go">        0,1,0     1) *</span>
+<span class="go">        0,2,0     2) *</span>
+<span class="go">        0,3,0     3) *</span>
+<span class="go">        0,4,0     4) *</span>
+<span class="go">        0,5,0     5) *</span>
+<span class="go">        0,6,0     6) *</span>
+<span class="go">        0,7,0     7) *</span>
+</pre></div>
+
+
+<p>Si todo va bien, tras reiniciar el sistema deberiamos ver algo asi&nbsp;como:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> cdrecord --scanbus
+<span class="go">Cdrecord 2.00.3 (i386-unknown-freebsd5.3) Copyright (C) 1995-2002 Jg Schilling</span>
+<span class="go">Using libscg version &#39;schily-0.7&#39;</span>
+<span class="go">scsibus0:</span>
+<span class="go">        0,0,0     0) &#39;<span class="caps">QUANTUM</span> &#39; &#39;<span class="caps">ATLAS10K2</span>-<span class="caps">TY184L</span>&#39; &#39;<span class="caps">DA40</span>&#39; Disk</span>
+<span class="go">        0,1,0     1) *</span>
+<span class="go">        0,2,0     2) *</span>
+<span class="go">        0,3,0     3) *</span>
+<span class="go">        0,4,0     4) *</span>
+<span class="go">        0,5,0     5) *</span>
+<span class="go">        0,6,0     6) *</span>
+<span class="go">        0,7,0     7) *</span>
+<span class="go">scsibus1:</span>
+<span class="go">        1,0,0   100) &#39;<span class="caps">HL</span>-<span class="caps">DT</span>-<span class="caps">ST</span>&#39; &#39;<span class="caps">CD</span>-<span class="caps">RW</span> <span class="caps">GCE</span>-8400B &#39; &#39;1.02&#39; Removable <span class="caps">CD</span>-<span class="caps">ROM</span></span>
+<span class="go">        1,1,0   101) *</span>
+<span class="go">        1,2,0   102) *</span>
+<span class="go">        1,3,0   103) *</span>
+<span class="go">        1,4,0   104) *</span>
+<span class="go">        1,5,0   105) *</span>
+<span class="go">        1,6,0   106) *</span>
+<span class="go">        1,7,0   107) *</span>
+</pre></div>
+
+
+<p>Bien! Ya tenemos soporte. Ahora sólo hemos de pinchar la grabadora de DVDs y ver si el sistema también es capaz de&nbsp;detectarla.</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> cdrecord --scanbus
+<span class="go">Cdrecord 2.00.3 (i386-unknown-freebsd5.3) Copyright (C) 1995-2002 Jg Schilling</span>
+<span class="go">Using libscg version &#39;schily-0.7&#39;</span>
+<span class="go">scsibus0:</span>
+<span class="go">       0,0,0     0) &#39;<span class="caps">QUANTUM</span> &#39; &#39;<span class="caps">ATLAS10K2</span>-<span class="caps">TY184L</span>&#39; &#39;<span class="caps">DA40</span>&#39; Disk</span>
+<span class="go">       0,1,0     1) *</span>
+<span class="go">       0,2,0     2) *</span>
+<span class="go">       0,3,0     3) *</span>
+<span class="go">       0,4,0     4) *</span>
+<span class="go">       0,5,0     5) *</span>
+<span class="go">       0,6,0     6) *</span>
+<span class="go">       0,7,0     7) *</span>
+<span class="go">scsibus1:</span>
+<span class="go">       1,0,0   100) &#39;<span class="caps">HL</span>-<span class="caps">DT</span>-<span class="caps">ST</span>&#39; &#39;<span class="caps">CD</span>-<span class="caps">RW</span> <span class="caps">GCE</span>-8400B &#39; &#39;1.02&#39; Removable <span class="caps">CD</span>-<span class="caps">ROM</span></span>
+<span class="go">       1,1,0   101) *</span>
+<span class="go">       1,2,0   102) *</span>
+<span class="go">       1,3,0   103) *</span>
+<span class="go">       1,4,0   104) *</span>
+<span class="go">       1,5,0   105) *</span>
+<span class="go">       1,6,0   106) *</span>
+<span class="go">       1,7,0   107) *</span>
+</pre></div>
+
+
+<p>Bueno, parece que vamos por el buen camino. A ver si además de verlo somos capaces de leer y/o grabar algo.
+En primer lugar hemos de saber a traves de qué dispositivo accederemos a la unidad. Para ello, el comando camcontrol puede sernos de&nbsp;utilidad:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> camcontrol devlist
+<span class="go"><span class="caps">QUANTUM</span> <span class="caps">ATLAS10K2</span>-<span class="caps">TY184L</span> <span class="caps">DA40</span>    at scbus0 target 0 lun 0 (pass0,da0)</span>
+<span class="go"><span class="caps">HL</span>-<span class="caps">DT</span>-<span class="caps">ST</span> <span class="caps">DVDRAM</span> <span class="caps">GSA</span>-4167B <span class="caps">DL12</span>   at scbus1 target 0 lun 0 (pass1,cd0)</span>
+</pre></div>
+
+
+<p>Ahora ya lo sabemos (<code>/dev/cd0</code>) introducimos un <span class="caps">DVD</span> en la unidad y utilizando el siguiente comando veremos si somos capaces de reconocer el <span class="caps">DVD</span> que hemos&nbsp;introducido:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> dvd+rw-mediainfo /dev/cd0
+<span class="go"><span class="caps">INQUIRY</span>:                [<span class="caps">HL</span>-<span class="caps">DT</span>-<span class="caps">ST</span>][<span class="caps">DVDRAM</span> <span class="caps">GSA</span>-4167B][<span class="caps">DL12</span>]</span>
+<span class="go"><span class="caps">GET</span> [<span class="caps">CURRENT</span>] <span class="caps">CONFIGURATION</span>:</span>
+<span class="go"> Mounted Media:         10h, <span class="caps">DVD</span>-<span class="caps">ROM</span></span>
+<span class="go"> Speed Descriptor#0:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@6.1x1385=<span class="caps">8467KB</span>/s</span>
+<span class="go"> Speed Descriptor#1:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@5.1x1385=<span class="caps">7056KB</span>/s</span>
+<span class="go"> Speed Descriptor#2:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@4.1x1385=<span class="caps">5645KB</span>/s</span>
+<span class="go"> Speed Descriptor#3:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@3.1x1385=<span class="caps">4234KB</span>/s</span>
+<span class="go"> Speed Descriptor#4:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@2.0x1385=<span class="caps">2822KB</span>/s</span>
+<span class="go"> Speed Descriptor#5:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@1.0x1385=<span class="caps">1411KB</span>/s</span>
+<span class="go"> Speed Descriptor#6:    02/404849 R@2.5x1385=<span class="caps">3503KB</span>/s W@0.5x1385=<span class="caps">706KB</span>/s</span>
+<span class="go"><span class="caps">READ</span> <span class="caps">DVD</span> <span class="caps">STRUCTURE</span>[#0h]:</span>
+<span class="go"> Media Book Type:       01h, <span class="caps">DVD</span>-<span class="caps">ROM</span> book [revision 1]</span>
+<span class="go"> Legacy lead-out at:    2080080*<span class="caps">2KB</span>=4260003840</span>
+<span class="go"><span class="caps">READ</span> <span class="caps">DISC</span> <span class="caps">INFORMATION</span>:</span>
+<span class="go"> Disc status:           complete</span>
+<span class="go"> Number of Sessions:    1</span>
+<span class="go"> State of Last Session: complete</span>
+<span class="go"> Number of Tracks:      1</span>
+<span class="go"><span class="caps">READ</span> <span class="caps">TRACK</span> <span class="caps">INFORMATION</span>[#1]:</span>
+<span class="go"> Track State:           complete</span>
+<span class="go"> Track Start Address:   0*<span class="caps">2KB</span></span>
+<span class="go"> Free Blocks:           0*<span class="caps">2KB</span></span>
+<span class="go"> Track Size:            2080080*<span class="caps">2KB</span></span>
+<span class="go"><span class="caps">FABRICATED</span> <span class="caps">TOC</span>:</span>
+<span class="go"> Track#1  :             14@0</span>
+<span class="go"> Track#<span class="caps">AA</span> :             14@2080080</span>
+<span class="go"> Multi-session Info:    #1@0</span>
+<span class="go"><span class="caps">READ</span> <span class="caps">CAPACITY</span>:          2080080*2048=4260003840</span>
+</pre></div>
+
+
+<p>Vale, ahora metemos el primer <span class="caps">DVD</span> que tengamos a mano e intentaremos&nbsp;montarlo:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> mount_cd9660 /dev/cd0 /mnt
+<span class="gp">root@patxi:~#</span> ls /mnt
+</pre></div>
+
+
+<p>Bueno, la prueba final es tratar de grabar algo en un&nbsp;<span class="caps">DVD</span>:</p>
+<div class="codehilite"><pre><span class="gp">root@patxi:~#</span> growisofs -dvd-compat -Z /dev/cd0 -J -R /home/melmak/backup.tar
+<span class="go">Executing &#39;/usr/local/bin/mkisofs -J -R /home/melmak/backup.tar | builtin_dd of=/dev/pass1 obs=32k seek=0&#39;</span>
+<span class="go">/dev/pass1: &quot;Current Write Speed&quot; is 8.2x1385KBps.</span>
+<span class="go">  1.13% done, estimate finish Thu Feb  2 23:32:49 2006</span>
+<span class="go">  2.27% done, estimate finish Thu Feb  2 23:17:23 2006</span>
+<span class="go">  3.40% done, estimate finish Thu Feb  2 23:12:15 2006</span>
+<span class="go">  .</span>
+<span class="go">  .</span>
+<span class="go">  .</span>
+<span class="go">  98.48% done, estimate finish Thu Feb  2 23:02:22 2006</span>
+<span class="go">  99.62% done, estimate finish Thu Feb  2 23:02:21 2006</span>
+<span class="go">Total translation table size: 0</span>
+<span class="go">Total rockridge attributes bytes: 251</span>
+<span class="go">Total directory bytes: 0</span>
+<span class="go">Path table size(bytes): 10</span>
+<span class="go">Max brk space used bac4</span>
+<span class="go">441712 extents written (862 Mb)</span>
+<span class="go">builtin_dd: 441712*<span class="caps">2KB</span> out @ average 6.5x1385KBps</span>
+<span class="go">/dev/pass1: flushing cache</span>
+<span class="go">/dev/pass1: updating <span class="caps">RMA</span></span>
+<span class="go">/dev/pass1: closing disc</span>
+</pre></div>
+
+
+<p>Ahora podemos montar el <span class="caps">DVD</span> para comprobar que los datos se han grabado&nbsp;correctamente.</p>
+<p>En el caso de utilizar un <span class="caps">DVD</span> regrabable, antes de quemarlo deberemos formatearlo. Pata ello utilizaremos la herramienta&nbsp;dvd+rw-format:</p>
+<div class="codehilite"><pre><span class="go">dvd+rw-format -blank /dev/cd0</span>
+</pre></div>
+
+
+<p>Esto es todo. Os dejo unas fotos de todo el proceso <a href="http://nomeriasdeti.no-ip.com/index.php?top_tab=2&amp;section_type=3&amp;num=&amp;task=view&amp;id_album=24">aquí</a>.</p>
+<p>Más info en el Freebsd&nbsp;Handbook:</p>
+<p><a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/creating-cds.html">Creating and Using Optical Media&nbsp;(CDs)</a></p>
+<p><a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/creating-dvds.html">Creating and Using Optical Media&nbsp;(DVDs)</a></p>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "grabando-dvds-en-freebsd-53.html";
+        var disqus_title = "Grabando DVDs en FreeBSD 5.3";
+        var disqus_url = "https://frommelmak.com/grabando-dvds-en-freebsd-53.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2006-02-02T23:13:12"> Thu 02 February 2006</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/burn.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">burn</a>
+            <a href="/tag/dvd.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">dvd</a>
+            <a href="/tag/freebsd.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">freebsd</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/grabando-dvds-en-freebsd-53.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/disponible-el-audio-de-codigo-libre-hombres-libres.html" title="Disponible el audio de Código libre, hombres libres"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html" title="Como mover un sistema GNU/Linux ya instalado a un HDD mayor"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

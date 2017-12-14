@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Unificar el contenido de varios wikis en uno solo
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/unificar-el-contenido-de-varios-wikis-en-uno-solo.html" rel="bookmark" title="Permalink to Unificar el contenido de varios wikis en uno solo">Unificar el contenido de varios wikis en uno&nbsp;solo</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>El objetivo de esta entrada en el blog es describir el método que he seguido para fusionar varios Wikis en uno sólo. La poca documentación que he encontrado al respecto, me ha animado a explicar mis experiencias al respecto en este&nbsp;mini-howto.</p>
+<p>El escenario inicial es el siguiente: Disponemos de varios wikis basados en diferentes versiones de MediaWiki. Uno utiliza <em>MediaWiki 1.3.9</em> (wiki2 en este ejemplo), y el resto <em>MediaWiki 1.5.8</em> (wiki1 en este ejemplo). El contenido de todos los wikies será migrado a un nuevo wiki basado en <em>MediaWiki 1.6.10</em>.</p>
+<p>Empezamos!</p>
+<h2>Descripción general del&nbsp;proceso.</h2>
+<p>A grandes rasgos, el proceso consiste en volcar por un lado el contenido de los wikis (páginas) a un fichero <span class="caps">XML</span>, y por el otro las images y demás ficheros adjuntos. Para lo primero utilizaremos las herramientas facilitadas por MediaWiki y para lo segundo bastará con copiar el contenido del directorio images y extraer unas tablas de la base de&nbsp;datos.</p>
+<p>Antes de importar los <span class="caps">XML</span> de cada wiki, procesaremos los ficheros <span class="caps">XML</span> para incluir una etiqueta de categoria a cada página. Si bien esto es opcional, el proposito es no perder la pista del origen de cada una de las páginas. De esta manera, cada una de las páginas de los wikis que importemos estarán agrupadas bajo una categoria en el wiki de&nbsp;destino.</p>
+<h2>Exportar el contenido de los&nbsp;wikis:</h2>
+<p>Tanto en la versión 1.3.9 como 1.5.8 de MediaWiki es posible exportar el contenido completo del wiki a un fichero de texto <span class="caps">XML</span>. La idea es que luego este fichero pueda ser importado en el wiki de&nbsp;destino.</p>
+<p>Si bien es posible exportar e importar el contenido del wiki via web, es recomendable hacerlo mediante el script <span class="caps">PHP</span> que viene con MediaWiki siempre que sea posible.  Por qué ? Bueno, el motivo principal es porque si el contenido del wiki es muy extenso, probablemente los settings del fichero <code>php.ini</code> no sean suficiente generoros como para realizar el <em>import</em> con éxito. Esto es especialmente cierto cuando además el <span class="caps">XML</span> generado incluye las diferentes revisiones de cada página, ya que entos casos el tamao del <span class="caps">XML</span> puede ser&nbsp;considerable.</p>
+<h3>En MediaWiki&nbsp;1.5.8</h3>
+<p>En esta versión no hay ningun secreto, tan sólo será necesario ejecutar el script <code>dumpBackup.php</code> que se encuentra en la carpeta&nbsp;maintenance.</p>
+<p>Antes de ejecutar los scripts de la carpeta maintenance deberemos editar el fichero <code>AdminSettings.php</code> con el un usuario y password con permisos sobre la base de datos MySQL del&nbsp;wiki.</p>
+<div class="codehilite"><pre><span class="go">cd /your_wiki_path/maintenance</span>
+<span class="go">cp AdminSettings.sample AdminSettings.php</span>
+<span class="go">vi AdminSettings.php</span>
+<span class="go">php dumpBackup.php --full  wiki-backup.xml</span>
+</pre></div>
+
+
+<p>Para importar las imágenes, necesitaremos además extraer el contenido de las tablas: image, imagelinks y&nbsp;oldimage.</p>
+<div class="codehilite"><pre><span class="go">mysqldump -u root -p wikidatabase image  wiki1-image.sql</span>
+<span class="go">mysqldump -u root -p wikidatabase imagelinks  wiki1-imagelinks.sql</span>
+<span class="go">mysqldump -u root -p wikidatabase oldimage  wiki1-oldimage.sql</span>
+</pre></div>
+
+
+<p>Deberemos repetir estos pasos para cada uno de los wikis con versión&nbsp;1.5.8.</p>
+<h3>En MediaWiki&nbsp;1.3.9</h3>
+<p>En esta versión de MediaWiki no existe el script <code>dumpBackup.php</code>, por lo que nos veremos obligados a extraer el <span class="caps">XML</span> via web, lo cual es un poco ms&nbsp;engorroso.</p>
+<p>En primer lugar necesitamos la lista de páginas que queremos exportar, ya que deberemos introducirla a lo largo del&nbsp;proceso.</p>
+<p>Si nuestro wiki tiene unas pocas páginas, lo mas rápido es ir a: <em>Special pages -&gt; All pages</em> y hacer un cut <span class="amp">&amp;</span>  paste. En cambio, si nuestro wiki dispone de muchas páginas, estas aparecern ordenadas en columnas y la tarea de copiar y pegar se tornará muy&nbsp;tediosa.</p>
+<p>La solucin más rapida y segura que he encontrado es&nbsp;esta:</p>
+<p>Vamos a:  <em>Special pages -&gt; All&nbsp;pages</em></p>
+<p>Utilizaremos entonces la opción <em>view-source</em> (de nuestro navegador), seleccionareos todo el código de la página y lo copiaremos a un fichero llamado <code>all_pages.txt</code>.</p>
+<p>Luego ejecutamos sobre ese fichero este comando y&nbsp;listos:</p>
+<div class="codehilite"><pre><span class="go">sed -n &#39;/-- start content --/,/-- end content --/p&#39; all_pages.txt |sed &#39;s/\/td/\n/g&#39;| sed -e &#39;s#[^]*##g&#39;| sed &#39;/^$/d&#39; |less</span>
+</pre></div>
+
+
+<p>Ahora ya podemos ir a: <em>Special pages -&gt; Export&nbsp;pages</em></p>
+<p>Introducimos la lista de páginas a exportar (obtenida anteriormente) teniendo cuidado de desmarcar además la&nbsp;casilla:</p>
+<p><em>Include only the current revision, not de full&nbsp;history</em></p>
+<p>Finalmente le damos a: <em>Submit query</em>  y obtendreos en el browser el cdigo <span class="caps">XML</span> con todo el contenido de nuestro&nbsp;wiki.</p>
+<p>Ya sólo hemos de copiar el código y pegarlo en un fichero de texto: <code>wiki2-backup.xml</code>, por&nbsp;ejemplo.</p>
+<p>De igual modo que para la versión 1.5.8, de cara a exportar las imgenes necesitaremos también el contenido de las tabas: image, imagelinks y&nbsp;oldimage.</p>
+<div class="codehilite"><pre><span class="go">mysqldump -u root -p wikidatabase image  wiki2-image.sql</span>
+<span class="go">mysqldump -u root -p wikidatabase imagelinks  wiki2-imagelinks.sql</span>
+<span class="go">mysqldump -u root -p wikidatabase oldimage  wiki2-oldimage.sql</span>
+</pre></div>
+
+
+<h2>Importar el contenido de los&nbsp;wikies:</h2>
+<p>Como este manual no pretende ser una guia de instalacin y configuracin de MediaWiki, voy a asumir que ya tenemos instalado y configurado el wiki de destino (recordemos, MediaWiki&nbsp;1.6.10).</p>
+<p>Llegados a este punto, lo que haremos ser ir importando el contenido (<code>ficheros.xml</code>) y las imagenes y/o archivos adjuntos que tubieran nuestros wikis de origen (ficheros + tablas de&nbsp;imagenes).</p>
+<p>En primer lugar importaremos el contenido del wiki con la versin ms vieja (MediaWiki 1.3.9), más adelante veremos por&nbsp;qué.</p>
+<h3>Importar el <span class="caps">XML</span> generado por MediaWiki&nbsp;1.3.9</h3>
+<p>Dado que necesitaremos ejecutar varios de los scripts de la carpeta maintenance de nuestro wiki de destino, antes de nada, deberemos editar el <code>ficheroAdminSettings.php</code> para que estos scripts puedan acceder a la base de&nbsp;datos.</p>
+<div class="codehilite"><pre><span class="go">cp AdminSettings.sample AdminSettings.php</span>
+<span class="go">vi AdminSettings.php</span>
+</pre></div>
+
+
+<p>Edit the file <code>AdminSettings.php</code> with the mysql&nbsp;user/password)</p>
+<p>Ahora ya podriamos importar el contenido del wiki con el script <code>importDump.php</code>, si bien antes de hacerlo podrá interesaros, como en mi caso, añadir una etiqueta de categoria a cada una de las páginas del wiki. Esto nos permitir poder separar la informacin de cada uno de los wikis en función de su procedencia. Así todas las páginas de la categoria wiki2 s que vienen del&nbsp;wiki2.</p>
+<p>Para hacer esto, podeis utilizar un script como el&nbsp;siguiente:</p>
+<div class="codehilite"><pre><span class="gp">#</span>!/bin/bash
+
+<span class="go"><span class="caps">IFILE</span>=$1</span>
+<span class="go"><span class="caps">OFILE</span>=P_$1</span>
+<span class="go">CATEGORY_STRING=$2</span>
+
+<span class="go">echo Output file is: $<span class="caps">OFILE</span></span>
+<span class="gp">&gt;</span> <span class="nv">$<span class="caps">OFILE</span></span>
+
+<span class="go"><span class="caps">UPC</span>=<span class="caps">FALSE</span></span>
+<span class="go"><span class="caps">PAGES</span>=0</span>
+
+<span class="go">while read <span class="caps">LINE</span></span>
+<span class="go">do</span>
+<span class="go">echo $<span class="caps">LINE</span> | grep title.*/title | grep -qv -e MediaWiki:.* -e MediaWiki talk:.* -e Image:.* -e Image talk:.* -e Talk:.* -e User:.* -e User talk:.* -e Category:.* -e Category talk:.* -e Template:.* -e Template talk:.*  <span class="caps">UCP</span>=&#39;<span class="caps">TRUE</span>&#39;  let <span class="caps">PAGES</span>=$<span class="caps">PAGES</span>+1</span>
+<span class="go">echo $<span class="caps">LINE</span> | grep -q &#39;/text&#39;</span>
+<span class="go">TEXT_TAG=$?</span>
+<span class="go">if [[ $<span class="caps">UCP</span> = <span class="caps">TRUE</span>  $TEXT_TAG -eq 0 ]]</span>
+<span class="go">then</span>
+<span class="go">echo -n .</span>
+<span class="go">echo $<span class="caps">LINE</span> | sed s/\/text/$CATEGORY_STRING\/text/g  $<span class="caps">OFILE</span></span>
+<span class="go">else echo $<span class="caps">LINE</span>  $<span class="caps">OFILE</span>  echo $<span class="caps">LINE</span> | grep -q &#39;/page&#39;  <span class="caps">UCP</span>=<span class="caps">FALSE</span></span>
+<span class="go">fi</span>
+<span class="go">done  $<span class="caps">IFILE</span></span>
+<span class="go">echo</span>
+
+<span class="go">echo Processed pages: $<span class="caps">PAGES</span></span>
+
+
+<span class="go">echo Done!</span>
+</pre></div>
+
+
+<p>Para procesar el <span class="caps">XML</span>, llamaremos al script con algo parecido a&nbsp;esto:</p>
+<div class="codehilite"><pre><span class="go">./xwp.sh wiki2-backup.xml [[Category:wiki2]]</span>
+</pre></div>
+
+
+<p>Y finalmente importaremos el contenido del fichero resultante (P_wiki2-backup.xml) a nuestro nuevo&nbsp;wiki:</p>
+<div class="codehilite"><pre><span class="go">php maintenance/importDump.php P_wiki2-backup.xml</span>
+</pre></div>
+
+
+<p>Una vez importado el fichero <span class="caps">XML</span> al nuevo wiki tendremos a nuestra disposicin todas y cada una de las pginas que contenia el viejo&nbsp;wiki.</p>
+<p>Podemos listarlas todas si vamos&nbsp;a:</p>
+<p><em>Special pages-&gt;All&nbsp;pages</em></p>
+<p>Del mismo modo, si nuestro viejo wiki disponía de categorias, estas aparecerán bajo: <em>Special pages-&gt;Categories</em>, después de ejecutar este&nbsp;script.</p>
+<div class="codehilite"><pre><span class="go">php maintenance/refreshLinks.php</span>
+</pre></div>
+
+
+<p>Lamentablemente, si importamos desde un wiki basado en MediaWiki 1.3.9, las pginas que describen las categorias, asi como los templates no se importan correctamente y hay que importarlos via cut <span class="amp">&amp;</span>&nbsp;paste.</p>
+<h2>Importar las imagenes y documentos adjuntos desde MediaWiki&nbsp;1.3.9</h2>
+<p>La sincronización de las imágenes y los ficheros adjuntos se compone de 3&nbsp;pasos.</p>
+<ul>
+<li>Copia de los&nbsp;ficheros</li>
+<li>Importar las tablas image de la base de datos (implica borrar las&nbsp;actuales)</li>
+<li>Actualizar las tablas de imagenes a las de la version&nbsp;1.6.10</li>
+</ul>
+<p>Llevamos a la consola, quedaría&nbsp;asi:</p>
+<div class="codehilite"><pre><span class="go">cd /your_wiki_path/images</span>
+<span class="go">rsync -avz wiki2host:/path/to/old/wiki2/images/ .</span>
+<span class="go">chown -R apache:apache *</span>
+<span class="go">cd /path/to/your/database_files</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki2-image.sql</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki2-imagelinks.sql</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki2-oldimage.sql</span>
+</pre></div>
+
+
+<p>Dado que no hemos modificado los ficheros <span class="caps">SQL</span> obtenidos mediante el volcado con <code>mysqldump</code>, las tablas actuales han sido substituidas por las viejas. Estas tablas no son exactamente igual en la version 1.3.9 y la 1.6.10 por lo que deberemos añadir los nuevos campos que se introducen a partir de la versin&nbsp;1.5.8.</p>
+<p>Afortunadamente, disponemos de un script que actualiza esta tabla sin eliminar su&nbsp;contenido.</p>
+<div class="codehilite"><pre><span class="go">php maintenance/update.php</span>
+<span class="go">php rebuildImages.php</span>
+</pre></div>
+
+
+<p>Y este es básicamente el motivo por el cual hemos elegido el wiki movido por MediaWiki 1.3.9 en primer&nbsp;lugar.</p>
+<h2>Importar el <span class="caps">XML</span> generado por MediaWiki&nbsp;1.5.8</h2>
+<p>En este punto, apenas hay diferencias con la versin 1.3.9 y el proceso es prácticamente idéntico. Es decir: procesamos el <span class="caps">XML</span> antes de importarlo y luego importamos las imágenes y documentos&nbsp;adjuntos.</p>
+<p>La única diferencia en este punto es que si importamos el contenido de un <span class="caps">XML</span> generado con la versin 1.5.8 de MediaWiki, es que las pginas de descripción de las categorias y los templates en esta ocasión, se crean&nbsp;correctamente.</p>
+<div class="codehilite"><pre><span class="go">cd /your_wiki_path</span>
+<span class="go">./xwp.sh wiki1-backup.xml [[Category:wiki1]]</span>
+<span class="go">cd /your_wiki_path/maintenance </span>
+<span class="go">php importDump.php P_wiki1-backup.xml</span>
+</pre></div>
+
+
+<h2>Importar las imagenes y documentos adjuntos desde MediaWiki&nbsp;1.5.8</h2>
+<p>De nuevo en esencia la idea es la misma, por un lado copiaremos los ficheros de imagenes y documentos adjuntos para posteriormente reflejar estos en la base de datos. Si bien en esta ocasión, los campos de las tablas son idénticos para ambas versiones de MediaWiki, deberemos editar los ficheros <span class="caps">SQL</span> antes de&nbsp;importarlos.</p>
+<p>Lo que haremos es borrar la sentencias <code>CREATE TABLE</code> que crean las tablas image, imagelinks y oldimage. Si no lo hacemos, perderemos que habiamos importado del anterior&nbsp;wiki.</p>
+<div class="codehilite"><pre><span class="go">cd /your_wiki_path/images</span>
+<span class="go">rsync -avz wiki1host:/path/to/old/wiki1/images/ .</span>
+<span class="go">chown -R apache:apache *</span>
+</pre></div>
+
+
+<p>Ahora, deberemos editar los ficheros <span class="caps">SQL</span> borrando las sentencias <code>CREATE TABLE</code> que preceden a los <code>INSERT</code> de cada tabla. En otras palabras, borraremos las lineas que preceden a&nbsp;cada:</p>
+<div class="codehilite"><pre><span class="go">--</span>
+<span class="go">-- Dumping data for table</span>
+<span class="go">--</span>
+</pre></div>
+
+
+<p><strong>Nota</strong>: En mi caso también he tenido que eliminar la siguiente línea de cada archivo. Sino, el <code>import</code> me daba un&nbsp;warning.</p>
+<div class="codehilite"><pre><span class="go">/*!40101 <span class="caps">SET</span> SQL_MODE=@OLD_SQL_MODE */;</span>
+
+<span class="go">:::console</span>
+<span class="go">vi wiki1-image.sql</span>
+<span class="go">vi wiki1-imagelinks.sql</span>
+<span class="go">vi wiki1-oldimage.sql</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki1-image.sql</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki1-imagelinks.sql</span>
+<span class="go">mysql -u root -p new_wikidatabase  wiki1-oldimage.sql</span>
+<span class="go">cd /your_wiki_path/maintenance</span>
+<span class="go">php refreshLinks.php</span>
+</pre></div>
+
+
+<h3>Retoques&nbsp;finales:</h3>
+<p>Una vez hayamos repetido esto para cada uno de los wikis a fusionar, nos queda ejecutar estos&nbsp;scritps:</p>
+<div class="codehilite"><pre><span class="go">php maintenance/initStats.php</span>
+<span class="go">php maintenance/updateSearchIndex.php</span>
+<span class="go">php maintenance/rebuildtextindex.php</span>
+</pre></div>
+
+
+<p>El primero de ellos pondrá al día la página de estadisticas <em>Special pages-&gt;Stats</em>, mientras que los dos últimos rehacen los indices que permiten hacer búsquedas en nuestro nuevo, enorme y flamante&nbsp;wiki.</p>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "unificar-el-contenido-de-varios-wikis-en-uno-solo.html";
+        var disqus_title = "Unificar el contenido de varios wikis en uno solo";
+        var disqus_url = "https://frommelmak.com/unificar-el-contenido-de-varios-wikis-en-uno-solo.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2007-07-12T22:34:00"> Thu 12 July 2007</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/mediawiki.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">mediawiki</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/unificar-el-contenido-de-varios-wikis-en-uno-solo.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/incoherencias-entre-los-comandos-df-y-du.html" title="Incoherencias entre los comandos df y du"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/xqde-screenshot.html" title="XQDE screenshot"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

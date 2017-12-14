@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  How to use Gmail POP/SMTP services from unsecure clients
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/english.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html" rel="bookmark" title="Permalink to How to use Gmail POP/SMTP services from unsecure clients">How to use Gmail <span class="caps">POP</span>/<span class="caps">SMTP</span> services from unsecure&nbsp;clients</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Sometimes you may need to send or retrieve email notifications using <span class="caps">SMTP</span> or <span class="caps">POP</span> Gmail services, but your client does not support <span class="caps">SSL</span> connections. In such cases you can use a <span class="caps">SSL</span> proxy tunnel such as&nbsp;stunnel.</p>
+<p>stunnel is available as a Debian package, and probably in other modern Linux distributions. It is also available as Win32 binary.
+The installation in debian is as simple as&nbsp;type:</p>
+<div class="codehilite"><pre><span class="go">apt-get install stunnel</span>
+</pre></div>
+
+
+<p>Since stunnel relies on OpenSSL libraries, the first thing is create a x509&nbsp;cert.</p>
+<div class="codehilite"><pre><span class="go">cd /etc/ssl/certs</span>
+<span class="go">openssl req -new -x509 -days 3650 -nodes -out stunnel.pem -keyout stunnel.pem</span>
+</pre></div>
+
+
+<p>Then you need to configure stunnel in order to forward all the traffic in the 110 (<span class="caps">POP</span>) and 25 (<span class="caps">SMPT</span>) to the Gmail 995 and 465 ports&nbsp;respectively.</p>
+<div class="codehilite"><pre><span class="go">/etc/stunnel/stunnel.conf</span>
+<span class="go">[pop3s]</span>
+<span class="go">accept = server_ip_address:110 </span>
+<span class="go">connect = pop.gmail.com:995</span>
+
+<span class="go">[ssmtp] </span>
+<span class="go">accept = server_ip_address:25</span>
+<span class="go">connect = smtp.gmail.com:465</span>
+</pre></div>
+
+
+<p>The server_ip_address could be the <span class="caps">LAN</span> interface <span class="caps">IP</span> address or the localhost, depending if the client program is running localy or in some other host in your&nbsp;<span class="caps">LAN</span>.</p>
+<p>Finaly, just start de&nbsp;service:</p>
+<div class="codehilite"><pre><span class="go">/etc/init.d/stunnel4 start</span>
+</pre></div>
+
+
+<p>And test the&nbsp;service:</p>
+<div class="codehilite"><pre><span class="go">telnet server_ip_address 110</span>
+<span class="go">Trying ...</span>
+<span class="go">Connected to somehost.</span>
+<span class="go">Escape character is &#39;^]&#39;.</span>
+<span class="go">+<span class="caps">OK</span> Gpop ready for requests from xx.xx.xx.xx dewf14449283wbe.15</span>
+<span class="go"><span class="caps">USER</span> your_user@gmail.com</span>
+<span class="go">+<span class="caps">OK</span> send <span class="caps">PASS</span></span>
+<span class="go"><span class="caps">PASS</span> your_gmail_pass</span>
+<span class="go">+<span class="caps">OK</span> Welcome.</span>
+<span class="go"><span class="caps">LIST</span></span>
+<span class="go">+<span class="caps">OK</span> 2 messages (23782 bytes)</span>
+<span class="go">1 3124</span>
+<span class="go">2 2758</span>
+</pre></div>
+
+
+<p>If you can connect with telnet, your client can do it&nbsp;too.</p>
+<p><a href="https://twitter.com/oriolrius">@oriolrius</a>, thanks for telling me about this&nbsp;tool.</p>
+<p>For more info visit: <a href="http://www.stunnel.org">www.stunnel.org</a>.</p>
+  </div>
+
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html">Utilizar certificados <span class="caps">SSL</span> en Amazon&nbsp;<span class="caps">ELB</span></a></li>
+      </ul>
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "how-to-use-gmail-popsmtp-services-from-unsecure-clients.html";
+        var disqus_title = "How to use Gmail POP/SMTP services from unsecure clients";
+        var disqus_url = "https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2011-05-23T22:15:55"> Mon 23 May 2011</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/english.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="12 articles in this category">English</a>
+            <a href="/tag/ssl.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">ssl</a>
+            <a href="/tag/google.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">google</a>
+            <a href="/tag/gmail.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">gmail</a>
+            <a href="/tag/pop.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">pop</a>
+            <a href="/tag/smtp.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">smtp</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/how-to-use-gmail-popsmtp-services-from-unsecure-clients.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html" title="Building CouchDB from sources in RHEL6"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/redis-cli-basics.html" title="redis-cli basics"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/english.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

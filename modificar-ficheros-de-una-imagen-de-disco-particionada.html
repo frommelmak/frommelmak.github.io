@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  Modificar ficheros de una imagen de disco particionada
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/spanish.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/modificar-ficheros-de-una-imagen-de-disco-particionada.html" rel="bookmark" title="Permalink to Modificar ficheros de una imagen de disco particionada">Modificar ficheros de una imagen de disco&nbsp;particionada</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>En ocasiones disponemos de una imagen <span class="caps">RAW</span> de disco sobre la que queremos realizar cambios, pero queremos ahorrarnos el proceso&nbsp;de: </p>
+<ul>
+<li>Copiar el fichero de imagen a un dispositivo con&nbsp;&#8221;dd&#8221;.</li>
+<li>Montar el dispositivo para tener acceso a los filesystems del&nbsp;mismo.</li>
+<li>Realizar cambios sobre los&nbsp;ficheros.</li>
+<li>Volver a generar el fichero de imagen volcando el contenido de device con&nbsp;dd.</li>
+</ul>
+<p>Si dispones de una RaspberryPi, seguro que estás cansado de tener que realizar todo este proceso cada vez que quieres hacer cambios sobre algun fichero de la imagen&nbsp;fuente. </p>
+<p>Seguro que has escuchado mil veces que en Linux todo es un fichero, incluidos los dispositivos. Pues bien, gracias a esto podemos ahorrarnos el proceso de tener que recurrir a un dispositivo físico, ya que vamos a utilizar un fichero en su&nbsp;lugar.</p>
+<p>El procedimiento es tan simple como hacer&nbsp;esto:</p>
+<p>Listamos las particiones que contiene el fichero de&nbsp;imagen:</p>
+<div class="codehilite"><pre>fdisk -l image-file.img
+
+Disk image-file.img: 16.0 GB, 16012804096 bytes
+255 heads, 63 sectors/track, 1946 cylinders, total 31275008 sectors
+<span class="nv">Units</span> <span class="o">=</span> sectors of 1 * <span class="nv">512</span> <span class="o">=</span> 512 bytes
+Sector size <span class="o">(</span>logical/physical<span class="o">)</span>: 512 bytes / 512 bytes
+I/O size <span class="o">(</span>minimum/optimal<span class="o">)</span>: 512 bytes / 512 bytes
+Disk identifier: 0x0009bf4f
+
+                            Device Boot      Start         End      Blocks   Id  System
+image-file.img1                               8192      122879       57344    c  W95 <span class="caps">FAT32</span> <span class="o">(</span><span class="caps">LBA</span><span class="o">)</span>
+image-file.img2                             122880    31275007    15576064   83  Linux
+</pre></div>
+
+
+<p>Multiplicamos el tamaño del bloque (512 bytes) por el número de sectores en el que empieza la partición&nbsp;linux.</p>
+<p>Utilizaremos este número para montar sólo el filesystem que nos&nbsp;interesa.</p>
+<div class="codehilite"><pre>sudo mount -o loop,offset<span class="o">=</span>62914560 image-file.img <span class="caps">IMG</span>/
+</pre></div>
+
+
+<p>Hacemos los cambios y&nbsp;desmontamos.</p>
+<p>Ahora la próxima vez que volquemos la imagen a un dispositivo, los nuevos cambios estarán&nbsp;reflejados.</p>
+  </div>
+
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="https://frommelmak.com/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html">Como mover un sistema <span class="caps">GNU</span>/Linux ya instalado a un <span class="caps">HDD</span>&nbsp;mayor</a></li>
+        <li><a href="https://frommelmak.com/how-to-mount-a-zfs-drive-in-linux.html">How to mount a <span class="caps">ZFS</span> drive in&nbsp;Linux</a></li>
+      </ul>
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "modificar-ficheros-de-una-imagen-de-disco-particionada.html";
+        var disqus_title = "Modificar ficheros de una imagen de disco particionada";
+        var disqus_url = "https://frommelmak.com/modificar-ficheros-de-una-imagen-de-disco-particionada.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2015-06-12T11:28:00"> Fri 12 June 2015</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
+            <a href="/tag/dd.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">dd</a>
+            <a href="/tag/mount.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">mount</a>
+            <a href="/tag/fdisk.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">fdisk</a>
+            <a href="/tag/raspberrypi.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">raspberrypi</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/modificar-ficheros-de-una-imagen-de-disco-particionada.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html" title="Utilizar certificados SSL en Amazon ELB"  rel="prev">← Older</a></li>
+        <li class="next  disabled "><a  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/spanish.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

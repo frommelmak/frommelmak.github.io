@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  lsof: Practical usage examples
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/english.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/lsof-practical-usage-examples.html" rel="bookmark" title="Permalink to lsof: Practical usage examples">lsof: Practical usage&nbsp;examples</a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>As you probably know, <code>lsof</code> stands for List of Open Files. Yes, it&#8217;s seems a simple description for a simple Unix command but, wait! Have you ever heard that everything in Unix is a file? Yes, right? So maybe this tool is more powerful than you&nbsp;think.</p>
+<p>Let me show you how powerful it is with a bunch of practical examples (use&nbsp;root):</p>
+<p>Lists all open files belonging to all active&nbsp;processes.</p>
+<div class="codehilite"><pre>lsof
+</pre></div>
+
+
+<p>Shows all files opened by the <code>www-data</code> user </p>
+<div class="codehilite"><pre>lsof -u www-data
+</pre></div>
+
+
+<p>Lists just all the PIDs of the processes opened by the <code>www-data</code> user</p>
+<div class="codehilite"><pre>lsof -t -u www-data
+</pre></div>
+
+
+<p>Kills all the activity for a particular&nbsp;user</p>
+<div class="codehilite"><pre>killall -9 <span class="sb">`</span>lsof -t -u username<span class="sb">`</span>
+</pre></div>
+
+
+<p>Lists all the files opened by the process with the <code>PID</code> 234</p>
+<div class="codehilite"><pre>lsof -p 234
+</pre></div>
+
+
+<p>Lists processes which are using a specific&nbsp;file.</p>
+<div class="codehilite"><pre>lsof -t /var/log/auth.log
+</pre></div>
+
+
+<p>Lists all the log files in&nbsp;use.</p>
+<div class="codehilite"><pre>lsof +D /var/log
+</pre></div>
+
+
+<p>Lists all the opened files in a <span class="caps">NFS</span>&nbsp;folder</p>
+<div class="codehilite"><pre>lsof +D -N /mnt/nfsstorage
+</pre></div>
+
+
+<p>Lists of the files opened by the processes whose command begins with the characters of&nbsp;&#8220;chrome&#8221;.</p>
+<div class="codehilite"><pre>lsof -c chrome
+</pre></div>
+
+
+<p>Until here we were focused on regular files. But, what if we start listing special files like network files&nbsp;?</p>
+<p>Lists all network connections (Yes! Because everything in Unix is a&nbsp;file)</p>
+<div class="codehilite"><pre>lsof -i
+</pre></div>
+
+
+<p>Lists all network connections on port&nbsp;80</p>
+<div class="codehilite"><pre>lsof -i:80
+</pre></div>
+
+
+<p>Lists of all network connections on privileged&nbsp;ports,</p>
+<div class="codehilite"><pre>lsof -i:1-1024
+</pre></div>
+
+
+<p>Lists all IPv4 connections on the&nbsp;system</p>
+<div class="codehilite"><pre>lsof -i4
+</pre></div>
+
+
+<p>See localhost&nbsp;connections.</p>
+<div class="codehilite"><pre>lsof -i 4@127.0.0.1
+</pre></div>
+
+
+<p>Shows all listening <span class="caps">TCP</span>/<span class="caps">UDP</span>&nbsp;ports</p>
+<div class="codehilite"><pre>lsof -Pan -i tcp -i udp
+</pre></div>
+
+
+<p>Shows all connections on port 80 using a <span class="caps">TCP</span>&nbsp;socket.</p>
+<div class="codehilite"><pre>lsof -i TCP:80
+</pre></div>
+
+
+<p>Shows al <span class="caps">TCP</span> sockets listening on the&nbsp;system.</p>
+<div class="codehilite"><pre>lsof -i -sTCP:LISTEN
+</pre></div>
+
+
+<p>Shows all listening or established connection <span class="caps">TCP</span> ipv4&nbsp;sockets.</p>
+<div class="codehilite"><pre>lsof -s TCP:ESTABLISHED,LISTEN -i4TCP
+</pre></div>
+
+
+<p>Check what services are still using old removed libraries and need to be&nbsp;reloaded.</p>
+<div class="codehilite"><pre>lsof -n | grep ssl | grep DEL
+</pre></div>
+
+
+<p>Find processes that need to be restarted after updating&nbsp;binaries.</p>
+<div class="codehilite"><pre>sudo lsof -d txt | grep <span class="s1">&#39;(deleted)&#39;</span>
+</pre></div>
+
+
+<p>And now let&#8217;s get stared with the device&nbsp;files.</p>
+<p>Find out what processes are using your&nbsp;webcam.</p>
+<div class="codehilite"><pre>lsof /dev/video0
+</pre></div>
+
+
+<p>Find out what processes are using your sound&nbsp;card.</p>
+<div class="codehilite"><pre>sudo lsof +D /dev/snd
+</pre></div>
+
+
+<p>The next one is one of my favorites. Displays all deleted files that are still open, and thus still occupy disk space, but are not part of any directory.
+For example if you delete a big log file while it still opened by another&nbsp;process.</p>
+<div class="codehilite"><pre>lsof +L1
+</pre></div>
+
+
+<p>Now the definitive one. See how <code>lsof</code> can help you to recover a deleted&nbsp;file!</p>
+<p>Imagie you deleted the <code>syslog</code> file accidentaly. As we said before, you can see some metadata from the deleted file using <code>lsof</code>.
+Using the process (<code>PID</code>), and the file descriptor (<code>FD</code>) identifiers you can recover the&nbsp;file:</p>
+<div class="codehilite"><pre>COMMAND    PID       USER   FD   TYPE DEVICE SIZE/OFF NLINK    NODE NAME
+insync    2432 frommelmak   30u   REG    8,1     9252     0 4326104 /var/tmp/etilqs_KFgJC2dGc3A3p9r <span class="o">(</span>deleted<span class="o">)</span>
+soffice.b 3377 frommelmak   23u   <span class="caps">REG</span>    8,1     4096     0  789414 /home/frommelmak/.execoooAMcD6a <span class="o">(</span>deleted<span class="o">)</span>
+syslog-ng 1046 root         10w   <span class="caps">REG</span>    8,1     278428   0   20198 /var/log/syslog <span class="o">(</span>deleted<span class="o">)</span>
+</pre></div>
+
+
+<p>Now you can recover the file as&nbsp;follows:</p>
+<div class="codehilite"><pre>cat /proc/1046/fd/10 &gt; /var/log/syslog
+</pre></div>
+
+
+<p>If you really want to release the space used by the syslog file without restart the <code>syslog</code> process, you can do something like&nbsp;this:</p>
+<div class="codehilite"><pre>&gt; /var/log/syslog
+</pre></div>
+
+
+<p>Or&nbsp;just:</p>
+<div class="codehilite"><pre><span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt; /var/log/syslog
+</pre></div>
+
+
+<p>Finally you can put the <code>lsof</code> command in a repeat mode using <code>-|+r</code>. The prefix <code>-</code> puts the lsof in endless mode. You need to send a control signal to exit.
+With the <code>+</code> prefix, <code>lsof</code> ends when there&#8217;s no output for the given&nbsp;parameters.</p>
+<p>This article just cover the basics about <code>lsof</code>. For a complete list of features&nbsp;<span class="caps">RTFM</span>!</p>
+  </div>
+
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "lsof-practical-usage-examples.html";
+        var disqus_title = "lsof: Practical usage examples";
+        var disqus_url = "https://frommelmak.com/lsof-practical-usage-examples.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2014-06-03T19:53:00"> Tue 03 June 2014</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/english.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="12 articles in this category">English</a>
+            <a href="/tag/tools.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">tools</a>
+            <a href="/tag/lsof.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">lsof</a>
+            <a href="/tag/sysadmin.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">sysadmin</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/lsof-practical-usage-examples.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/how-to-add-puppet-syntax-highlighting-to-dokuwiki.html" title="How to add Puppet syntax highlighting to Dokuwiki"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html" title="Utilizar certificados SSL en Amazon ELB"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/english.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>

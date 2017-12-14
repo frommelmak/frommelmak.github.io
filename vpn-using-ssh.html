@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>  VPN using SSH
+ | frommelmak</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content=""/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+
+
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+
+    <!-- Feeds -->
+      <link href="https://frommelmak.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Full Atom Feed"/>
+      <link href="https://frommelmak.com/feeds/english.atom.xml" type="application/atom+xml" rel="alternate" title="frommelmak Categories Atom Feed"/>
+
+
+  </head>
+
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="page-header">
+            <a href="https://frommelmak.com" class="avatar-container">
+              <div class="avatar  animate ">
+                <div class="side"><img src="images/avatar.png"/></div>
+                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
+              </div>
+            </a>
+          <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        </div>
+
+        <div class="navbar">
+          <div class="navbar-inner">
+            <a class="brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+            <ul class="nav">
+<li ><a href="/">Home</a></li>
+<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
+<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
+                  <li ><a href="https://frommelmak.com/pages/about.html">About</a></li>
+            </ul>
+              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
+                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
+                <i class="fa fa-search fa-fw"></i>
+                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
+                <input type="hidden" name="ie" value="UTF-8" />
+              </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+
+        <div class="row">
+          <div class=" span9  ">
+  <h1>
+    <a href="https://frommelmak.com/vpn-using-ssh.html" rel="bookmark" title="Permalink to VPN using SSH"><span class="caps">VPN</span> using&nbsp;<span class="caps">SSH</span></a>
+  </h1>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class=" span9 " id="content" role="main">
+  
+
+  <div>
+    <p>Las versiones recientes del servidor OpenSSH permiten montar una <span class="caps">VPN</span> utilizando una conexinSSH. Esto nos permite, por ejemplo, tener acceso a todos los puertos del servidor incluso en aquellos casos en los que sólo nos dan acceso al puerto de&nbsp;<span class="caps">SSH</span>.</p>
+<p>Para montar una <span class="caps">VPN</span> utilizando el servidorSSHen Debian haremos lo&nbsp;siguiente&#8230;        </p>
+<h2><span class="caps">SERVER</span>:</h2>
+<p>Aadimos en <code>/etc/ssh/sshd_config</code></p>
+<div class="codehilite"><pre><span class="go">PermitTunnel point-to-point</span>
+<span class="go">PermitRootLogin yes</span>
+</pre></div>
+
+
+<p>Para crear el dispositivo <span class="caps">TUN</span> es necesario ejecutar algunos comandos como root, por eso utilizamos la directiva <code>PermiRootLogin</code> a yes. Si no queremos dar acceso de login al usuario root, podemos utilizar otras soluciones ms elegantes como: <code>forzed-commands-only</code> o  <code>without-password</code> que no comprometen tanto la seguridad como <code>PermitRootLogin yes</code>. Ver enlaces relaccionados al final del&nbsp;documento.</p>
+<p>Finalmente, recuerda que es necesario reiniciar el servidorSSHpara que los cambios tengan&nbsp;efecto.</p>
+<p>Editamos: <code>/etc/network/interfaces</code></p>
+<div class="codehilite"><pre><span class="go">allow-hotplug tun0</span>
+<span class="go">iface tun0 inet static</span>
+<span class="go">      address 10.0.0.1</span>
+<span class="go">      netmask 255.255.255.0</span>
+<span class="go">      pointopoint 10.0.0.2</span>
+</pre></div>
+
+
+<p>Es vital utilizar <code>allow-hotplug tun0</code>para que se creen automticamente los dispositivos tun con udev, de lo contrario deberemos utilizar herramientas como <code>tunctl</code>para crear los dispositivos, lo cual puede darnos problemas de permisos al intentar abrir/crear los&nbsp;dispositivos.</p>
+<h2><span class="caps">CLIENT</span>:</h2>
+<p>Editamos: <code>/etc/network/interfaces</code></p>
+<div class="codehilite"><pre><span class="go">allow-hotplug tun0</span>
+<span class="go">iface tun0 inet static</span>
+<span class="go">      pre-up ssh -vv -i /root/.ssh/id_rsa -S /var/run/ssh-vpn-tunnel-control -M -f -w 0:0 root@ssh_server true</span>
+<span class="go">      pre-up sleep 5</span>
+<span class="go">      address 10.0.0.2</span>
+<span class="go">      pointopoint 10.0.0.1</span>
+<span class="go">      netmask 255.255.255.0</span>
+<span class="go">      #up route add -net 192.168.1.0 netmask 255.255.255.0 tun0 #creating optional route</span>
+<span class="go">      #down route del -net 192.168.1.0 netmask 255.255.255.0 tun0 #creating optional route</span>
+<span class="go">      post-down ssh -i/root/.ssh/id_rsa -S /var/run/ssh-vpn-tunnel-control -O exit root@ssh_server</span>
+</pre></div>
+
+
+<p>Con esto conseguimos establecer una conexin punto a punto con el servidor ssh remoto, si bien, en ocasiones querremos ir un poco ms all. Por ejemplog. Si queremos llegar a otoros equipos ubicados en la red remota, o al reves, cuando varios equipos de nuestra red han de poder llegar al servidor&nbsp;remoto.</p>
+<p>Se asume que hemos creado el par de claves privada/publica <code>id_rsa/id_rsa.pub</code>y que hemos copiado la publica al servidor <span class="caps">SSH</span> remoto para poder autenticar sin necesidad de proporcionar&nbsp;password.</p>
+<h3>Arrancar y detener la&nbsp;<span class="caps">VPN</span></h3>
+<p>Para iniciar la conexin punto a punto utilizaremos los comandos <code>ifup tun0</code> e <code>ifdown tun0</code> respectivamente.</p>
+<p>Ahora ya ponemos alcanzar el servidor remoto en&nbsp;10.0.0.1.</p>
+<p>Tras establecer la conexin punto a punto, y en base a nuestras necesidades, podemos encontrarnos diferentes escenarios. Por&nbsp;ejemplo:</p>
+<h3>Acceso a otros equipos de la red&nbsp;remota</h3>
+<p>Activamos el forwarding en el servidorSSH y&nbsp;ejecutamos:</p>
+<div class="codehilite"><pre><span class="go">iptables -t nat -A <span class="caps">POSTROUTING</span> -s 10.0.0.0/24 -o eth0 -j <span class="caps">MASQUERADE</span></span>
+</pre></div>
+
+
+<h3>Acceso al servidor remoto desde varios equipos de nuestra&nbsp;red</h3>
+<p>Activamos el forwarding en el cliente de ssh y&nbsp;ejecutamos:</p>
+<div class="codehilite"><pre><span class="go">iptables -t nat -A <span class="caps">POSTROUTING</span> -o tun0 -j <span class="caps">MASQUERADE</span></span>
+</pre></div>
+
+
+<p>En cada uno de los equipos de red que deseamos que tengan acceso al servidor, deberemos configurar la ruta&nbsp;correspondiente:</p>
+<p>Por ejemplo en&nbsp;windows:</p>
+<div class="codehilite"><pre><span class="go">route add 10.0.0.0 mask 255.255.255.0 IP_SSH_CLIENT</span>
+</pre></div>
+
+
+<p><strong>Nota</strong>: Para activar el forwarding en ambos casos: <code>sysctl -w net.ipv4.ip_forward=1</code></p>
+<p>Fuentes: </p>
+<ul>
+<li><a href="">bodhizazen.net/Tutorials/<span class="caps">VPN</span>-Over-<span class="caps">SSH</span></a></li>
+<li><a href="">www.debian-administration.org/articles/539</a></li>
+</ul>
+  </div>
+
+    <h3>Related content</h3>
+    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <ul>
+        <li><a href="https://frommelmak.com/sftp-jail-en-openssh.html"><span class="caps">SFTP</span> jail en&nbsp;OpenSSH</a></li>
+        <li><a href="https://frommelmak.com/midpssh-cliente-java-de-ssh-para-el-movil.html">MidpSSH cliente Java de <span class="caps">SSH</span> para el&nbsp;movil</a></li>
+      </ul>
+
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "vpn-using-ssh.html";
+        var disqus_title = "VPN using SSH";
+        var disqus_url = "https://frommelmak.com/vpn-using-ssh.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
+
+          </div>
+
+            <div class="span3">
+  <div class="well">
+
+    <p><abbr class="fa fa-calendar" title="2011-09-12T19:29:21"> Mon 12 September 2011</abbr></p>
+
+      <p><address class="fa fa-user"> By <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+
+    <hr/>
+
+      <p>
+              <a href="https://frommelmak.com/category/english.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="12 articles in this category">English</a>
+            <a href="/tag/ssh.html" rel="tooltip" class="label" data-placement="right" data-original-title="3 articles with this tag">ssh</a>
+            <a href="/tag/vpn.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">vpn</a>
+      </p>
+      <hr/>
+
+      <p>Found a typo ? Want to fix it ?</p>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/vpn-using-ssh.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <hr/>
+
+      <ul class="pager">
+        <li class="previous "><a  href="https://frommelmak.com/redis-cli-basics.html" title="redis-cli basics"  rel="prev">← Older</a></li>
+        <li class="next "><a  href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html" title="How to migrate from LAMP to Nginx + PHP-FPM"  rel="next">Newer →</a></li>
+      </ul>
+
+  </div>
+              
+            </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TODO: make footer sticky -->
+    <footer class="container-fluid">
+      <div class="container">
+        <div class="row">
+
+            <div class="span2">
+                <h5>Social</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://twitter.com/frommelmak">
+      <i class="fa fa-twitter"></i>
+    @frommelmak
+  </a></li>
+                </ul>
+            </div>
+            <div class="span2">
+                <h5>Links</h5>
+                <ul class="unstyled">
+                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
+      <i class="fa fa-linkedin-square"></i>
+    LinkedIn
+  </a></li>
+                  <li>  <a href="http://github.com/frommelmak">
+      <i class="fa fa-github"></i>
+    GitHub
+  </a></li>
+                  <li>  <a href="http://www.youtube.com/user/melmak">
+      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+    Youtube
+  </a></li>
+                </ul>
+            </div>
+
+          <div class="span2">
+            <h5>Browse content by</h5>
+            <ul class="fa-ul">
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
+
+                <li><a href="https://frommelmak.com/feeds/english.atom.xml"><i class="fa-li fa fa-rss"></i> Feed</a></li>
+            </ul>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Copyright notice</h5>
+            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+          </div>
+
+          <div class="span2 muted">
+            <h5>Disclaimer</h5>
+              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
+          </div>
+
+          <div class="span2">
+            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row span12 muted text-center">
+          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        </div>
+      </div>
+
+    </footer>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
+
+  </body>
+</html>
