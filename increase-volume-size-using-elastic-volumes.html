@@ -114,12 +114,12 @@
   
 
   <div>
-    <p>On February 2017, <span class="caps">AWS</span> <a href="https://aws.amazon.com/blogs/aws/amazon-ebs-update-new-elastic-volumes-change-everything/">announced</a> the availability of a new <span class="caps">EBS</span> feature called Elastic Volumes. The new feature allows you to increase the size, performance and type and of your <span class="caps">EBS</span> volumes while in use. In order to take adantage of this great featrue some requisites needs to be&nbsp;done.</p>
+    <p>On February 2017, <span class="caps">AWS</span> <a href="https://aws.amazon.com/blogs/aws/amazon-ebs-update-new-elastic-volumes-change-everything/">announced</a> the availability of a new <span class="caps">EBS</span> feature called Elastic Volumes. The new feature allows you to increase the size, performance and type and of your <span class="caps">EBS</span> volumes while in use. In order to take adantage of this great feature some requisites needs to be&nbsp;done.</p>
 <ul>
-<li>The volume needs to be attached to a compatible instane: C1, C3, <span class="caps">CC2</span>, <span class="caps">CR1</span>, G2, I2, M1, M3 y R3 and&nbsp;later. </li>
+<li>The volume needs to be attached to a compatible instance: C1, C3, <span class="caps">CC2</span>, <span class="caps">CR1</span>, G2, I2, M1, M3 y R3 and&nbsp;later. </li>
 <li>The volume was attached to the instance after the November 1 of&nbsp;2016.</li>
 </ul>
-<p>To modify the volumen size just modify the volumen size using the Modify Volume action on the <span class="caps">AWS</span>&nbsp;Console.</p>
+<p>To modify the volumen size just type the new volumen size using the &#8220;Modify Volume&#8221; action on the <span class="caps">AWS</span>&nbsp;Console.</p>
 <p><img alt="EBS volume resize" src="/images/ebs-resize.png"></p>
 <p>Note: depending on the new size the action can takes several&nbsp;hours.</p>
 <p>Once the action completes, log into the instance and expand de filesystem. In my case since I&#8217;m using <span class="caps">LVM</span> I need to expand the physical and logical&nbsp;volumes.</p>
