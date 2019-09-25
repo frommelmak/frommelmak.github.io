@@ -116,8 +116,14 @@
   <div>
     <p>I&#8217;ll try to show you how to use nginx&#8217;s log and map modules to put different header values from the http requests into the same place in the log&nbsp;files.</p>
 <p>Imagine you have two kind of http request. One provides some info in an optional http header (like referer), since the other put the same info in a custom header (like&nbsp;client).</p>
-<p>curl &#8212;referer client-xxx http://someserver/some_resource
-curl &#8212;header &#8220;client: client-xxx&#8221;&nbsp;http://someserver/someresource</p>
+<div class="highlight"><pre><span></span>curl --referer client-xxx http://someserver/some_resource
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>curl --header &quot;client: client-xxx&quot; http://someserver/someresource
+</pre></div>
+
+
 <p>Nginx sets incoming headers to variables so you can use $http_referer and $http_client in the log_format&nbsp;definition</p>
 <div class="highlight"><pre><span></span>log_format my_format &#39;$msec|$bytes_sent|$http_referer|$remote_addr|$uri&#39;;
 </pre></div>
@@ -147,10 +153,11 @@ curl &#8212;header &#8220;client: client-xxx&#8221;&nbsp;http://someserver/somer
     ~^client-* $http_referer;
     default $http_client;
   }
+
+log_format my_format &#39;$msec|$bytes_sent|$client|$remote_addr|$uri&#39;;
 </pre></div>
 
 
-<p>log_format my_format&nbsp;&#8216;$msec|$bytes_sent|$client|$remote_addr|$uri&#8217;;</p>
 <p>If the referer exists and starts with the pattern &#8220;client-&#8220;, then the value is assigned to a new var called $client if not, the client header will be used as the value of the new $client&nbsp;var.</p>
 <p>The new $client var will be used in our log_format&nbsp;definition.</p>
 <p>Beatifull and powerfull right&nbsp;?</p>
