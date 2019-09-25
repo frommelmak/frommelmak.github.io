@@ -2,31 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>  Instalar Xgl + Compiz en SuSE 10.x con KDE
+    <title>  Instalar Xgl + Compiz en SuSE 10.x con KDE
  | frommelmak</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Marcos Martinez"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -34,52 +34,83 @@
   </head>
 
   <body>
+
     <div class="container">
 
-      <header>
-        <div class="page-header">
-            <a href="" class="avatar-container">
-              <div class="avatar  animate ">
-                <div class="side"><img src="images/avatar.png"/></div>
-                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
-              </div>
-            </a>
-          <h1><a href="">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      <div class="page-header">
+          <a href="http://frommelmak.com" class="avatar-container pull-left">
+            <div class="avatar  animate ">
+              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
+                <div class="side back"><p class="text-center">Alien Life Form</p></div>
+            </div>
+          </a>
+        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+
+        <!-- Hamburger menu for mobile -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="" title="Yet another Melmacian interested in technology...">frommelmak</a>
-            <ul class="nav">
-<li ><a href="/">Home</a></li>
-<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
-<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
-                  <li ><a href="/pages/about.html">About</a></li>
-            </ul>
-              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
-                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
-                <i class="fa fa-search fa-fw"></i>
+        <!-- Menus and search forms -->
+        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+          <ul class="nav navbar-nav">
+<li >
+                <a href="/">Home</a>
+              </li>
+<li >
+                <a href="http://wiki.frommelmak.com">Wiki</a>
+              </li>
+<li >
+                <a href="http://old.frommelmak.com">Old Blog</a>
+              </li>
+          </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
+                  </span>
+                </div>
                 <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
                 <input type="hidden" name="ie" value="UTF-8" />
-              </form>
-          </div>
+              </div>
+            </form>
+
+
         </div>
-      </header>
 
-      <section>
+      </nav>
 
-        <div class="row">
-          <div class=" span9  ">
+    </div>
+
+
+    <div class="container main">
+
+
+      <div class="row">
+        <div class=" col-md-9  ">
   <h1>
-    <a href="/instalar-xgl-compiz-en-suse-10x-con-kde.html" rel="bookmark" title="Permalink to Instalar Xgl + Compiz en SuSE 10.x con KDE">Instalar Xgl + Compiz en SuSE 10.x con&nbsp;<span class="caps">KDE</span></a>
+    <a href="http://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html" rel="bookmark" title="Permalink to Instalar Xgl + Compiz en SuSE 10.x con KDE">Instalar Xgl + Compiz en SuSE 10.x con <span class="caps">KDE</span></a>
   </h1>
-          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
 
-          <div class=" span9 " id="content" role="main">
+        <div class=" col-md-9 " id="content" role="main">
   
 
   <div>
@@ -88,7 +119,7 @@
 <p>La última información referente a Xgl en SuSE la encontrareis siempre aquí: <a href="http://en.opensuse.org/Xgl">http://en.opensuse.org/Xgl</a></p>
 <p>Desde allí, llegareis a esta otra pagina en la que explican cómo instalar y utilizar Xgl en SuSE. Tanto si utilizas <span class="caps">KDE</span> o Gnome: <a href="http://en.opensuse.org/Using_Xgl_on_SUSE_Linux">http://en.opensuse.org/Using_Xgl_on_SUSE_Linux</a> A continuación os detallo el procedimiento que he seguido en ambos casos, y los resultados obtenidos. De esta manera podreis haceros una idea de lo que podeis esperar de vuestros sistemas. Os dejo también <a href="http://nomeriasdeti.no-ip.com/index.php?top_tab=2&amp;section_type=3&amp;num=&amp;task=view&amp;id_album=26">esta</a> galería de imagenes con algunas&nbsp;capturas.</p>
 <p><strong>Actualización</strong>: He actualizado Xgl, Compiz y algunas librerias a la versión de la Release Candidate 1 de SuSE 10.1. No he encontrado mejoras radicales, slo alguna mejora con las knotes asi que habrá que esperar a la version 10.1 y ver si el kernel y los nuevos drivers solventan los problemas con&nbsp;Intel.</p>
-<p>Por otro lado, he encontrado <a href="http://www.tuxpan.com/fcatrin/es/comments.php?guid=20060311">este</a> interesantisimo articulo que aclara conceptos a veces confusos sobre los nuevos composite manager versus los windown-managers tradicionales. <span class="caps">MUY</span>&nbsp;<span class="caps">RECOMENDABLE</span>!</p>
+<p>Por otro lado, he encontrado <a href="http://www.tuxpan.com/fcatrin/es/comments.php?guid=20060311">este</a> interesantisimo articulo que aclara conceptos a veces confusos sobre los nuevos composite manager versus los windown-managers tradicionales. <span class="caps">MUY</span> <span class="caps">RECOMENDABLE</span>!</p>
 <p><strong>Actualización 2</strong>: Me comentan desde Mexico que algunos de los <span class="caps">RPM</span> referenciados en este articulo ya no se encuentran disponibles. Si es tu caso mira a ver si es uno de los que he podido rescatar de mi portatil y poner en este tarball <a href="http://nomeriasdeti.no-ip.com/files/Xgl-SuSE-10.x-RPMS.tar.gz">Xgl-SuSE-10.x-<span class="caps">RPMS</span>.tar.gz</a></p>
 <h1>Instalación en SuSE 10.1 (Beta&nbsp;9)</h1>
 <p>La instalación sobre una SuSE 10.1 no tiene ningun misterio. Los Pasos a seguir serian&nbsp;estos:</p>
@@ -96,17 +127,17 @@
 <p>Si dispones de una tarjeta de video NVidia, SuSE 10.1 cargar por defecto el módulo de NVidia que viene con el kernel (<code>nv</code>). Sin embargo para hacer funcionar Xgl es necesario instalar los drivers oficiales de NVidia. Por otro lado, es importante hacer esto antes de instalar el paquete&nbsp;Xgl.</p>
 <p>Antes de bajarte e instalar el driver oficial de NVidia, asegurate que has instalado las fuentes del kernel y el compilador gcc, ya que son necesarias para compilar el modulo nvidia, pues no viene uno precompilado en el paquete oficial y ser necesario compilar uno especifico para nuestro&nbsp;kernel.</p>
 <p>La forma más sencialla de instalar las fuentes es via YaST. Para instalar el driver oficial de Nvidia haz&nbsp;esto:</p>
-<div class="codehilite"><pre><span class="go">init 3</span>
-<span class="go">wget http://download.nvidia.com/XFree86/Linux-x86/ 1.0-8756/<span class="caps">NVIDIA</span>-Linux-x86-1.0-8756-pkg1.run</span>
-<span class="go">chmod u+x <span class="caps">NVIDIA</span>-Linux-x86-1.0-8756-pkg1.run</span>
-<span class="go">./<span class="caps">NVIDIA</span>-Linux-x86-1.0-8756-pkg1.run</span>
+<div class="highlight"><pre><span></span><span class="go">init 3</span>
+<span class="go">wget http://download.nvidia.com/XFree86/Linux-x86/ 1.0-8756/NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
+<span class="go">chmod u+x NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
+<span class="go">./NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
 </pre></div>
 
 
 <p>El proceso de instalación de NVidia nos informar de que no existe un módulo precompilado para nuestra distribución y nos preguntará si queremos compilar uno. Le decimos que&nbsp;sí.</p>
 <p>Finalmente nos pregunta si queremos modificar el fichero <code>xorg.conf</code> para que cargue el nuevo módulo. Le diremos tambin que&nbsp;sí.</p>
 <p>Ahora volvemos a lanzar el entorno gráfico, tras lo cual podremos seguir con la instalación del server gráfico OpenGL&nbsp;Xgl.</p>
-<div class="codehilite"><pre><span class="go">init 5</span>
+<div class="highlight"><pre><span></span><span class="go">init 5</span>
 </pre></div>
 
 
@@ -116,7 +147,7 @@
 <h2>Configurar Xgl como servidor de X&nbsp;principal</h2>
 <p>Ahora ya sólo queda configurar el sistema para ejecutar Xgl y cargar los plugins de Compiz con los efectos que&nbsp;queramos.</p>
 <p>Para ejecutar Xgl deberemos decirle a kdm que ejecute Xgl en lugar del servidor de X. En SuSE 10.1 esto es muy fácil, ya que disponemos de una variable en <code>/etc/sysconfig/displaymanager</code> que nos permite hacerlo. Así, pondremos el valor de la variable <code>DISPLAYMANAGER_XSERVER</code> a <code>Xgl</code>. Hecho esto,&nbsp;ejecutaremos:</p>
-<div class="codehilite"><pre><span class="go">SuSEconfig --module xdm</span>
+<div class="highlight"><pre><span></span><span class="go">SuSEconfig --module xdm</span>
 </pre></div>
 
 
@@ -126,28 +157,28 @@
 <p>Todas las funcionalizades de Xgl, se explotan via plugins del composite manager Compiz. Tan slo has de cargar los que quieras para porder utilizarlos.
 Por ejemplo, para conseguir el efecto de elasticidad en las ventanas cargariamos los plugins bsicos (decoration move resize place minimize) y además el wobbly.
 Para cargar todas las opciones utilizariamos un comando como&nbsp;este:</p>
-<div class="codehilite"><pre><span class="go">compiz --replace gconf decoration wobbly fade minimize cube rotate zoom scale move resize</span>
-<span class="go">place switcher  &amp;</span>
-<span class="go">gnome-window-decorator &amp;</span>
+<div class="highlight"><pre><span></span><span class="go">compiz --replace gconf decoration wobbly fade minimize cube rotate zoom scale move resize</span>
+<span class="go">place switcher  &amp;amp;</span>
+<span class="go">gnome-window-decorator &amp;amp;</span>
 </pre></div>
 
 
 <p><strong><span class="caps">NOTA</span></strong>:Cuando cargamos el plugin gconf por primera vez, Gconf guarda un registro con los plugins cargados. De esta manera, en posteriores llamadas a&nbsp;Compiz</p>
-<div class="codehilite"><pre><span class="go">compiz --replace gconf decoration wobbly...</span>
+<div class="highlight"><pre><span></span><span class="go">compiz --replace gconf decoration wobbly...</span>
 </pre></div>
 
 
 <p>Los módulos que aparecen tras <code>gconf</code> son ignorados, ya que la configuracin de los modulos a cargar se lee de un registro que guarda <code>gconf</code>.</p>
 <p>Posteriormente los cambios deberiamos realizarlos mediante el editor gconf-editor. Lamentablemente, este <strong><span class="caps">NO</span></strong> esta disponible para <span class="caps">KDE</span>, por lo que para arrancar Compiz al arranque editaremos el archivo <code>~/.kde/Autostart/compiz.desktop</code>:</p>
-<div class="codehilite"><pre><span class="go">[Desktop Entry]</span>
-<span class="go">Encoding=<span class="caps">UTF</span>-8</span>
-<span class="go">Exec=compiz --replace decoration wobbly fade minimize cube rotate zoom scale move resize place switcher <span class="amp">&amp;</span>  gnome-window-decorator &amp;</span>
+<div class="highlight"><pre><span></span><span class="go">[Desktop Entry]</span>
+<span class="go">Encoding=UTF-8</span>
+<span class="go">Exec=compiz --replace decoration wobbly fade minimize cube rotate zoom scale move resize place switcher &amp;amp;  gnome-window-decorator &amp;amp;</span>
 <span class="go">GenericName[en_US]=</span>
 <span class="go">StartupNotify=false</span>
 <span class="go">Terminal=false</span>
 <span class="go">TerminalOptions=</span>
 <span class="go">Type=Application</span>
-<span class="go">X-<span class="caps">KDE</span>-autostart-after=kdesktop</span>
+<span class="go">X-KDE-autostart-after=kdesktop</span>
 </pre></div>
 
 
@@ -161,11 +192,11 @@ Dado que la targeta gráfica del Compaq es una Intel <span class="caps">GMA900</
 <li>libdrm</li>
 </ul>
 <p>Instalamos via YaST el <code>control-center2</code> y luego descargamos e instalamos los siguientes&nbsp;paquetes:</p>
-<div class="codehilite"><pre><span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/<span class="caps">SL</span>-<span class="caps">OSS</span>-factory/ inst-source/suse/i586/xgl-cvs_060405-4.i586.rpm</span>
-<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/<span class="caps">SL</span>-<span class="caps">OSS</span>-factory/ inst-source/suse/i586/compiz-cvs_060407-3.i586.rpm</span>
-<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/<span class="caps">SL</span>-<span class="caps">OSS</span>-factory/ inst-source/suse/i586/libsvg-0.1.4-11.i586.rpm</span>
-<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/<span class="caps">SL</span>-<span class="caps">OSS</span>-factory/ inst-source/suse/i586/libsvg-cairo-0.1.6-11.i586.rpm</span>
-<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/<span class="caps">SL</span>-<span class="caps">OSS</span>-factory/ inst-source/suse/i586/libwnck-2.12.2-19.i586.rpm</span>
+<div class="highlight"><pre><span></span><span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/xgl-cvs_060405-4.i586.rpm</span>
+<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/compiz-cvs_060407-3.i586.rpm</span>
+<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libsvg-0.1.4-11.i586.rpm</span>
+<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libsvg-cairo-0.1.6-11.i586.rpm</span>
+<span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libwnck-2.12.2-19.i586.rpm</span>
 <span class="go">rpm -ivh xgl-cvs_060405-4.i586.rpm compiz-cvs_060407-3.i586.rpm libsvg-0.1.4-11.i586.rpm libsvg-cairo-0.1.6-11.i586.rpm libwnck-2.12.2-19.i586.rpm</span>
 </pre></div>
 
@@ -173,12 +204,12 @@ Dado que la targeta gráfica del Compaq es una Intel <span class="caps">GMA900</
 <p>Vamos ahora con la&nbsp;configuración.</p>
 <h2>Configurar Xgl como servidor de X&nbsp;principal</h2>
 <p>En SuSE 10.0 no existe la variable <code>DISPLAYMANAGER_XSERVER</code> en el fichero <code>/etc/sysconfig/displaymanager</code>. En su lugar editaremos el fichero <code>/etc/opt/kde3/share/config/kdm/kdmrc</code> modificando el valor de la variable <code>ServerCmd</code>.</p>
-<div class="codehilite"><pre><span class="go">ServerCmd=/usr/<span class="caps">X11R6</span>/bin/Xgl -br</span>
+<div class="highlight"><pre><span></span><span class="go">ServerCmd=/usr/X11R6/bin/Xgl -br</span>
 </pre></div>
 
 
 <p>Tras esto&nbsp;ejecutamos:</p>
-<div class="codehilite"><pre><span class="go">SuSEconfig --module xdm</span>
+<div class="highlight"><pre><span></span><span class="go">SuSEconfig --module xdm</span>
 </pre></div>
 
 
@@ -187,9 +218,9 @@ Dado que la targeta gráfica del Compaq es una Intel <span class="caps">GMA900</
 <p>Para cargar los plugins de Compiz al arrancar <span class="caps">KDE</span>, podemos seguir un proceso anlogo al descrito para&nbsp;10.1.</p>
 <h1>Jugando con&nbsp;Compiz</h1>
 <p>Muchos de los plugins de Compiz se activan intrinsecamente con tan solo cargarlos. Por ejemplo, el efecto <strong>Wobbly</strong> deformar sin ms nuestras ventanas cada vez que movamos una de ellas. Por el contrario, hay una serie de funcionalidades ocultas que se activan mediante la combinacin de teclas y/o la accin del mouse. A continuacin os muestro las que me han parecido ms&nbsp;interesantes:</p>
-<p><img alt="Cube" src="/images/old_blog/hsm54_botton.png" /></p>
-<p><img alt="Cube" src="/images/old_blog/hsm52_botton.png" /></p>
-<p><img alt="Cube" src="/images/old_blog/compiz_water02.png" /></p>
+<p><img alt="Cube" src="/images/old_blog/hsm54_botton.png"></p>
+<p><img alt="Cube" src="/images/old_blog/hsm52_botton.png"></p>
+<p><img alt="Cube" src="/images/old_blog/compiz_water02.png"></p>
 <h2>Scale (el Expose de&nbsp;MacOSX)</h2>
 <p>Esta función redimensiona todas las ventanas que tengamos en pantalla de manera que quepan todas en pantalla. Esta funcion es extremadamente útil, sobretodo en portatiles con poca área de visualización, ya que nos permite ver de una vez el contenido de todas las ventanas que tengamos abierta. Luego al hacer click sobre una de las ventanas, esta pasa a primer plano. <span class="caps">IMHO</span>, el efecto mejora bastante el de&nbsp;MacOSX.</p>
 <p>Activación: F11 Combinable con el Switcher una vez escladas las&nbsp;ventanas.</p>
@@ -232,27 +263,51 @@ La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy re
   </div>
 
     <h3>Related content</h3>
-    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
-        <li><a href="/compiz-fusion-sobre-aiglx-en-intel-gma900.html">Compiz Fusion sobre <span class="caps">AIGLX</span> en Intel&nbsp;<span class="caps">GMA900</span></a></li>
+        <li><a href="http://frommelmak.com/compiz-fusion-sobre-aiglx-en-intel-gma900.html">Compiz Fusion sobre <span class="caps">AIGLX</span> en Intel <span class="caps">GMA900</span></a></li>
       </ul>
 
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "instalar-xgl-compiz-en-suse-10x-con-kde.html";
+        var disqus_title = "Instalar Xgl + Compiz en SuSE 10.x con KDE";
+        var disqus_url = "http://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
 
-          </div>
+        </div>
 
-            <div class="span3">
+          <div class="col-md-3">
   <div class="well">
 
-    <p><abbr class="fa fa-calendar" title="2006-04-10T20:54:30"> Mon 10 April 2006</abbr></p>
+    <p><abbr title="2006-04-10T20:54:30+02:00"><i class="fa fa-calendar"></i> Mon 10 April 2006</abbr></p>
 
-      <p><address class="fa fa-user"> By <a href="/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+      <p><address>
+        <i class="fa fa-user"></i> By
+          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+      </address></p>
 
     <hr/>
 
       <p>
-              <a href="/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
-            <a href="/tag/compiz.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">compiz</a>
-            <a href="/tag/xgl.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">xgl</a>
+              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+                  data-toggle="tooltip" class="label label-info"
+                  title="56 articles in this category">Spanish</a>
+            <a href="/tag/compiz.html" data-toggle="tooltip"
+      class="label label-default"
+      title="2 articles with this tag">compiz</a>
+            <a href="/tag/xgl.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">xgl</a>
       </p>
       <hr/>
 
@@ -260,17 +315,26 @@ La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy re
       <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/instalar-xgl-compiz-en-suse-10x-con-kde.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
-      <ul class="pager">
-        <li class="previous "><a  href="/apple-computers-cumple-30-anos.html" title="Apple Computers cumple 30 años"  rel="prev">← Older</a></li>
-        <li class="next "><a  href="/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html" title="Instalar GNU/Linux en el iPod con el iPodLinux Installer"  rel="next">Newer →</a></li>
-      </ul>
+      <nav>
+        <ul class="pager">
+          <li class="previous ">
+            <a  href="http://frommelmak.com/apple-computers-cumple-30-anos.html" title="Apple Computers cumple 30 años"  rel="prev">
+              <span aria-hidden="true">←</span> Older
+            </a>
+          </li>
+          <li class="next ">
+            <a  href="http://frommelmak.com/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html" title="Instalar GNU/Linux en el iPod con el iPodLinux Installer"  rel="next">
+              Newer <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
   </div>
-              
-            </div>
+            
+          </div>
 
-        </div>
-      </section>
+      </div>
 
     </div>
 
@@ -279,18 +343,18 @@ La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy re
       <div class="container">
         <div class="row">
 
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Social</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://twitter.com/frommelmak">
       <i class="fa fa-twitter"></i>
     @frommelmak
   </a></li>
                 </ul>
             </div>
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Links</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
       <i class="fa fa-linkedin-square"></i>
     LinkedIn
@@ -300,55 +364,55 @@ La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy re
     GitHub
   </a></li>
                   <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
     Youtube
   </a></li>
                 </ul>
             </div>
 
-          <div class="span2">
+          <div class="col-md-2">
             <h5>Browse content by</h5>
-            <ul class="fa-ul">
-                <li><a href="/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
-                <li><a href="/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
-                <li><a href="/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
-
+            <ul class="list-unstyled">
+                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+            <p>© Copyright 2005-2019 Marcos Martinez.</p>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Disclaimer</h5>
               <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
           </div>
 
-          <div class="span2">
-            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          <div class="col-md-2">
           </div>
 
         </div>
       </div>
 
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+
       <div class="container">
-        <div class="row span12 muted text-center">
-          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        <div class="row col-md-12 text-muted text-center">
+          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
         </div>
       </div>
 
     </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="/theme/js/jquery.mglass.js"></script>
-    <script src="/theme/js/application.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="http://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

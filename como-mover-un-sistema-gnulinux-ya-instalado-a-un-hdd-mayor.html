@@ -2,31 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>  Como mover un sistema GNU/Linux ya instalado a un HDD mayor
  | frommelmak</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Marcos Martinez"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -34,83 +34,114 @@
   </head>
 
   <body>
+
     <div class="container">
 
-      <header>
-        <div class="page-header">
-            <a href="" class="avatar-container">
-              <div class="avatar  animate ">
-                <div class="side"><img src="images/avatar.png"/></div>
-                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
-              </div>
-            </a>
-          <h1><a href="">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      <div class="page-header">
+          <a href="http://frommelmak.com" class="avatar-container pull-left">
+            <div class="avatar  animate ">
+              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
+                <div class="side back"><p class="text-center">Alien Life Form</p></div>
+            </div>
+          </a>
+        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+
+        <!-- Hamburger menu for mobile -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="" title="Yet another Melmacian interested in technology...">frommelmak</a>
-            <ul class="nav">
-<li ><a href="/">Home</a></li>
-<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
-<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
-                  <li ><a href="/pages/about.html">About</a></li>
-            </ul>
-              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
-                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
-                <i class="fa fa-search fa-fw"></i>
+        <!-- Menus and search forms -->
+        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+          <ul class="nav navbar-nav">
+<li >
+                <a href="/">Home</a>
+              </li>
+<li >
+                <a href="http://wiki.frommelmak.com">Wiki</a>
+              </li>
+<li >
+                <a href="http://old.frommelmak.com">Old Blog</a>
+              </li>
+          </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
+                  </span>
+                </div>
                 <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
                 <input type="hidden" name="ie" value="UTF-8" />
-              </form>
-          </div>
+              </div>
+            </form>
+
+
         </div>
-      </header>
 
-      <section>
+      </nav>
 
-        <div class="row">
-          <div class=" span9  ">
+    </div>
+
+
+    <div class="container main">
+
+
+      <div class="row">
+        <div class=" col-md-9  ">
   <h1>
-    <a href="/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html" rel="bookmark" title="Permalink to Como mover un sistema GNU/Linux ya instalado a un HDD mayor">Como mover un sistema <span class="caps">GNU</span>/Linux ya instalado a un <span class="caps">HDD</span>&nbsp;mayor</a>
+    <a href="http://frommelmak.com/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html" rel="bookmark" title="Permalink to Como mover un sistema GNU/Linux ya instalado a un HDD mayor">Como mover un sistema <span class="caps">GNU</span>/Linux ya instalado a un <span class="caps">HDD</span>&nbsp;mayor</a>
   </h1>
-          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
 
-          <div class=" span9 " id="content" role="main">
+        <div class=" col-md-9 " id="content" role="main">
   
 
   <div>
     <p>En ocasiones el Norton Ghost falla inesperadamente al intentar clonar un sistema <span class="caps">GNU</span>/Linux a un disco de mayor&nbsp;tamańo.</p>
 <p>Cuando esto sucede, o bien cuando simplemente no queremos recurrir a soluciones propietarias, es posible utilizar el método descrito a&nbsp;continuación.</p>
-<p><img alt="HDD" src="images/old_blog/harddisk.jpg" /></p>
-<p>Para seguir este método , es necesario utilizar una version Live de <span class="caps">GNU</span>/Linux. La más popular de ellas es Knoppix, la cual esta disponible tanto en imágenes para <span class="caps">CD</span>-<span class="caps">ROM</span> como para&nbsp;<span class="caps">DVD</span>.</p>
+<p><img alt="HDD" src="images/old_blog/harddisk.jpg"></p>
+<p>Para seguir este método , es necesario utilizar una version Live de <span class="caps">GNU</span>/Linux. La más popular de ellas es Knoppix, la cual esta disponible tanto en imágenes para <span class="caps">CD</span>-<span class="caps">ROM</span> como para  <span class="caps">DVD</span>.</p>
 <p>Puedes utilizar cualquier de los sitios que aparecen en este enlace para descargar la&nbsp;imagen:</p>
 <p><a href="http://www.knopper.net/knoppix-mirrors/">http://www.knopper.net/knoppix-mirrors/</a></p>
 <p>A grandes rasgos, el proceso que seguiremos es&nbsp;este:</p>
 <ul>
-<li>Pincharemos los dos discos en el sistema y lo arrancaremos con el&nbsp;Live-<span class="caps">CD</span>/<span class="caps">DVD</span></li>
+<li>Pincharemos los dos discos en el sistema y lo arrancaremos con el Live-<span class="caps">CD</span>/<span class="caps">DVD</span></li>
 <li>Volcaremos el contenido del primer disco en el&nbsp;segundo.</li>
 <li>Recreamos la tabla de&nbsp;particiones</li>
 <li>Expandimos el filesytem para ajustarse a la nueva&nbsp;particion</li>
 <li>Recreamos el area de swap (en caso de que sea&nbsp;necesario)</li>
 </ul>
 <p>Prerequisitos</p>
-<p>En este ejemplo, vamos a suponer que las particiones de datos de nuestro sistema utilizan el sistema de ficheros ext2/ext3 y discos duros&nbsp;<span class="caps">SCSI</span>.</p>
+<p>En este ejemplo, vamos a suponer que las particiones de datos de nuestro sistema utilizan el sistema de ficheros ext2/ext3 y discos duros <span class="caps">SCSI</span>.</p>
 <p>Por otro lado, la partición que deseamos expandir, ha de ser la última con datos del disco duro. Si la última particiaon no tiene datos, como la de swap, entonces la podemos eliminar sin más, ya que la podemos volver a crear al final del disco duro sin&nbsp;problemas.</p>
 <p>Todo esto, se basa en el hecho de que es posible eliminar una partición y volver a crearla sin perder los datos que contiene. Para ello, el único requisito es que la nueva partición empiece en el mismo punto que la anterior, haciendo que el final esté más lejos (aprovechando el espacio adicional del nuevo&nbsp;disco.)</p>
 <p>Sigue los siguientes&nbsp;pasos:</p>
 <ul>
 <li>Conecta el nuevo disco duro al sistema. Quizás necesites modificar el identificador <span class="caps">SCSI</span> para evitar conflictos con el disco duro&nbsp;existente.</li>
-<li>Arranca el sistema con el&nbsp;Live-<span class="caps">CD</span>/<span class="caps">DVD</span></li>
+<li>Arranca el sistema con el Live-<span class="caps">CD</span>/<span class="caps">DVD</span></li>
 <li>Abre un terminal y conviertete en root ( con el comando <code>su</code> sin password en&nbsp;Knoppix)</li>
 <li>Ahora necesitamos saber los ficheros de dispositivo asociados a cada disco duro (<code>/dev/sda</code> y <code>/dev/sdb</code> probablemente si son <span class="caps">SCSI</span>). Puedes utilizar el comando <code>sfdisk -s</code> para&nbsp;ello.</li>
 <li>Suponiendo que tienes el disco viejo en <code>/dev/sda</code> y el nuevo en <code>/dev/sdb</code>, utiliza el commando <code>dd</code> para volcar el contenido del disco viejo en el&nbsp;nuevo:</li>
 </ul>
 <p>Ejemplo:</p>
-<div class="codehilite"><pre><span class="go">dd if=/dev/sda of=/dev/sdb</span>
+<div class="highlight"><pre><span></span><span class="go">dd if=/dev/sda of=/dev/sdb</span>
 </pre></div>
 
 
@@ -119,7 +150,7 @@
 <p>Para ello podemos recurrir a este <code>truco</code> que consiste en eviarle al proceso <code>dd</code> la seńal <code>USR1</code>.</p>
 <p>Esto provoca que el comando <code>dd</code> saque por pantalla la cantidad de bytes transmitidos hasta el&nbsp;momento.</p>
 <p>De esta manera, podermos ir viendo la progresión del&nbsp;volcado.</p>
-<div class="codehilite"><pre><span class="go">kill <span class="caps">USR1</span> `ps -C dd -o pid=`</span>
+<div class="highlight"><pre><span></span><span class="go">kill USR1 `ps -C dd -o pid=`</span>
 </pre></div>
 
 
@@ -127,7 +158,7 @@
 <li>Cuando el comando <code>dd</code> finaliza, hemos de recrear la tabla de particiones del nuevo disco duro. Esto nos permitirá ampliar el filesystem de la partición primaria de nuestro nuevo&nbsp;sistema.</li>
 </ul>
 <p>Para reparticionar el disco duro nuevo, utilizaremos <code>fdisk</code>.</p>
-<div class="codehilite"><pre><span class="go">fisk /dev/sdb</span>
+<div class="highlight"><pre><span></span><span class="go">fisk /dev/sdb</span>
 </pre></div>
 
 
@@ -139,45 +170,69 @@
 <p>Recuerda cambiar el tipo de partición para idendificar esta partición como area de swap (utiliza el comando <code>t</code> de <code>fdisk</code> y el tipo 82 para&nbsp;ello).</p>
 <p>Abandona la consola de <code>fdisk</code> utilizando la opción <code>w</code> para que los cambios que has realizado tengan&nbsp;efecto.</p>
 <p>Ahora llega el momento de expander el filesystem de la partición raiz para que se ajueste al tamańo de la nueva&nbsp;partición.</p>
-<div class="codehilite"><pre><span class="go">resize2fs p /dev/sdb2</span>
+<div class="highlight"><pre><span></span><span class="go">resize2fs p /dev/sdb2</span>
 </pre></div>
 
 
 <p>Finalmente, creamos y activamos el nuevo area de&nbsp;swap</p>
-<div class="codehilite"><pre><span class="go">mkswap /dev/sdb3</span>
+<div class="highlight"><pre><span></span><span class="go">mkswap /dev/sdb3</span>
 <span class="go">swapon /dev/sdb3</span>
 </pre></div>
 
 
 <p>Esto es todo. Reinicia el sistema con el nuevo disco&nbsp;duro.</p>
 <p>Una vez arancado, puedes chequear el espacio disponible en la nueva partición raiz con el&nbsp;comando:</p>
-<div class="codehilite"><pre><span class="go">df -h</span>
+<div class="highlight"><pre><span></span><span class="go">df -h</span>
 </pre></div>
   </div>
 
     <h3>Related content</h3>
-    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
-        <li><a href="/modificar-ficheros-de-una-imagen-de-disco-particionada.html">Modificar ficheros de una imagen de disco&nbsp;particionada</a></li>
-        <li><a href="/crear-discos-virtuales-de-mas-de-256gb-en-vmware-esxi.html">Crear discos virtuales de más de <span class="caps">256GB</span> en VMware&nbsp;ESXi</a></li>
+        <li><a href="http://frommelmak.com/crear-discos-virtuales-de-mas-de-256gb-en-vmware-esxi.html">Crear discos virtuales de más de <span class="caps">256GB</span> en VMware&nbsp;ESXi</a></li>
+        <li><a href="http://frommelmak.com/modificar-ficheros-de-una-imagen-de-disco-particionada.html">Modificar ficheros de una imagen de disco&nbsp;particionada</a></li>
       </ul>
 
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html";
+        var disqus_title = "Como mover un sistema GNU/Linux ya instalado a un HDD mayor";
+        var disqus_url = "http://frommelmak.com/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
 
-          </div>
+        </div>
 
-            <div class="span3">
+          <div class="col-md-3">
   <div class="well">
 
-    <p><abbr class="fa fa-calendar" title="2006-02-21T17:09:57"> Tue 21 February 2006</abbr></p>
+    <p><abbr title="2006-02-21T17:09:57+01:00"><i class="fa fa-calendar"></i> Tue 21 February 2006</abbr></p>
 
-      <p><address class="fa fa-user"> By <a href="/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+      <p><address>
+        <i class="fa fa-user"></i> By
+          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+      </address></p>
 
     <hr/>
 
       <p>
-              <a href="/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
-            <a href="/tag/dd.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">dd</a>
-            <a href="/tag/hdd.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">hdd</a>
+              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+                  data-toggle="tooltip" class="label label-info"
+                  title="56 articles in this category">Spanish</a>
+            <a href="/tag/dd.html" data-toggle="tooltip"
+      class="label label-default"
+      title="2 articles with this tag">dd</a>
+            <a href="/tag/hdd.html" data-toggle="tooltip"
+      class="label label-default"
+      title="2 articles with this tag">hdd</a>
       </p>
       <hr/>
 
@@ -185,17 +240,26 @@
       <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/como-mover-un-sistema-gnulinux-ya-instalado-a-un-hdd-mayor.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
-      <ul class="pager">
-        <li class="previous "><a  href="/grabando-dvds-en-freebsd-53.html" title="Grabando DVDs en FreeBSD 5.3"  rel="prev">← Older</a></li>
-        <li class="next "><a  href="/apple-computers-cumple-30-anos.html" title="Apple Computers cumple 30 años"  rel="next">Newer →</a></li>
-      </ul>
+      <nav>
+        <ul class="pager">
+          <li class="previous ">
+            <a  href="http://frommelmak.com/grabando-dvds-en-freebsd-53.html" title="Grabando DVDs en FreeBSD 5.3"  rel="prev">
+              <span aria-hidden="true">←</span> Older
+            </a>
+          </li>
+          <li class="next ">
+            <a  href="http://frommelmak.com/apple-computers-cumple-30-anos.html" title="Apple Computers cumple 30 años"  rel="next">
+              Newer <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
   </div>
-              
-            </div>
+            
+          </div>
 
-        </div>
-      </section>
+      </div>
 
     </div>
 
@@ -204,18 +268,18 @@
       <div class="container">
         <div class="row">
 
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Social</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://twitter.com/frommelmak">
       <i class="fa fa-twitter"></i>
     @frommelmak
   </a></li>
                 </ul>
             </div>
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Links</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
       <i class="fa fa-linkedin-square"></i>
     LinkedIn
@@ -225,55 +289,55 @@
     GitHub
   </a></li>
                   <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
     Youtube
   </a></li>
                 </ul>
             </div>
 
-          <div class="span2">
+          <div class="col-md-2">
             <h5>Browse content by</h5>
-            <ul class="fa-ul">
-                <li><a href="/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
-                <li><a href="/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
-                <li><a href="/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
-
+            <ul class="list-unstyled">
+                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+            <p>© Copyright 2005-2019 Marcos Martinez.</p>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Disclaimer</h5>
               <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
           </div>
 
-          <div class="span2">
-            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          <div class="col-md-2">
           </div>
 
         </div>
       </div>
 
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+
       <div class="container">
-        <div class="row span12 muted text-center">
-          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        <div class="row col-md-12 text-muted text-center">
+          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
         </div>
       </div>
 
     </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="/theme/js/jquery.mglass.js"></script>
-    <script src="/theme/js/application.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="http://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

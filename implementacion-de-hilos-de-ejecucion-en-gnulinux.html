@@ -2,31 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>  Implementación de hilos de ejecución en GNU/Linux
+    <title>  Implementación de hilos de ejecución en GNU/Linux
  | frommelmak</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Marcos Martinez"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -34,52 +34,83 @@
   </head>
 
   <body>
+
     <div class="container">
 
-      <header>
-        <div class="page-header">
-            <a href="" class="avatar-container">
-              <div class="avatar  animate ">
-                <div class="side"><img src="images/avatar.png"/></div>
-                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
-              </div>
-            </a>
-          <h1><a href="">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      <div class="page-header">
+          <a href="http://frommelmak.com" class="avatar-container pull-left">
+            <div class="avatar  animate ">
+              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
+                <div class="side back"><p class="text-center">Alien Life Form</p></div>
+            </div>
+          </a>
+        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+
+        <!-- Hamburger menu for mobile -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="" title="Yet another Melmacian interested in technology...">frommelmak</a>
-            <ul class="nav">
-<li ><a href="/">Home</a></li>
-<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
-<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
-                  <li ><a href="/pages/about.html">About</a></li>
-            </ul>
-              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
-                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
-                <i class="fa fa-search fa-fw"></i>
+        <!-- Menus and search forms -->
+        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+          <ul class="nav navbar-nav">
+<li >
+                <a href="/">Home</a>
+              </li>
+<li >
+                <a href="http://wiki.frommelmak.com">Wiki</a>
+              </li>
+<li >
+                <a href="http://old.frommelmak.com">Old Blog</a>
+              </li>
+          </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
+                  </span>
+                </div>
                 <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
                 <input type="hidden" name="ie" value="UTF-8" />
-              </form>
-          </div>
+              </div>
+            </form>
+
+
         </div>
-      </header>
 
-      <section>
+      </nav>
 
-        <div class="row">
-          <div class=" span9  ">
+    </div>
+
+
+    <div class="container main">
+
+
+      <div class="row">
+        <div class=" col-md-9  ">
   <h1>
-    <a href="/implementacion-de-hilos-de-ejecucion-en-gnulinux.html" rel="bookmark" title="Permalink to Implementación de hilos de ejecución en GNU/Linux">Implementación de hilos de ejecución en&nbsp;<span class="caps">GNU</span>/Linux</a>
+    <a href="http://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html" rel="bookmark" title="Permalink to Implementación de hilos de ejecución en GNU/Linux">Implementación de hilos de ejecución en <span class="caps">GNU</span>/Linux</a>
   </h1>
-          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
 
-          <div class=" span9 " id="content" role="main">
+        <div class=" col-md-9 " id="content" role="main">
   
 
   <div>
@@ -88,8 +119,8 @@
 <p>Como no tenia ni idea de en que manera podía esto afectar al resultado de una <em>query</em> tan simple a la base de datos <span class="caps">RPM</span>, empecé a documentarme sobre qué demonios hacía esta variable. Tras un buen rato tirando del <strong><span class="caps">HILO</span></strong> di con la&nbsp;respuesta. </p>
 <p>El documento que viene a continuación intenta resumir todo lo que he aprendido a raíz de la dichosa&nbsp;variable.</p>
 <p>Si lo preferís, podéis descargarlo en <span class="caps">PDF</span> desde <a href="http://nomeriasdeti.no-ip.com/files/docs/IHEGL.pdf">aquí</a>.</p>
-<h1>Implementación de hilos de ejecución en sistemas&nbsp;<span class="caps">GNU</span>/Linux</h1>
-<h2>LinuxThreads vs Native <span class="caps">POSIX</span> Threads&nbsp;(<span class="caps">NPTL</span>)</h2>
+<h1>Implementación de hilos de ejecución en sistemas <span class="caps">GNU</span>/Linux</h1>
+<h2>LinuxThreads vs Native <span class="caps">POSIX</span> Threads (<span class="caps">NPTL</span>)</h2>
 <p>23-Jan-2007
 <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#111;&#109;&#109;&#101;&#108;&#109;&#97;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#102;&#114;&#111;&#109;&#109;&#101;&#108;&#109;&#97;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
 <h3>Diferencias entre hilos de ejecución (threads) y&nbsp;procesos</h3>
@@ -97,21 +128,21 @@
 <p>Por otro lado, un <em>thread</em> seria una entidad más reducida capaz de convivir junto a otros <em>threads</em> bajo el contexto de un único proceso, permitiendo compartir la información de estado, el área de memoria y/o los recursos asociados a ese&nbsp;proceso.</p>
 <p>Así, un <em>thread</em> no sería más que la habilidad de un proceso o programa para dividirse en varios hilos de ejecución simultáneos o aparentemente&nbsp;simultáneos.</p>
 <p>Desde el punto de vista del algoritmo de scheduling del kernel -que decide que proceso ha de pasar a la <span class="caps">CPU</span> en cada momento- el proceso seria la unidad más grande capaz de ser manejada por el scheduler, mientras que el hilo seria la unidad más pequea capaz de ser llevada a la <span class="caps">CPU</span> por el scheduler del&nbsp;kernel.</p>
-<h3>Hilos de ejecución en&nbsp;<span class="caps">GNU</span>/Linux</h3>
+<h3>Hilos de ejecución en <span class="caps">GNU</span>/Linux</h3>
 <p>Antes de la versión 2.6 del kernel Linux, no haba soporte real para manejar hilos a nivel de kernel. Las primeras versiones para el manejo de hilos en Linux (LinuxThreads) se implementaron en el área de usuario mediante llamadas a una función de sistema <code>clone()</code>, capaz de crear una copia de un proceso. Esta primera implementación además estaba muy lejos de ser compatible con los estándares <span class="caps">POSIX</span> de hilos de ejecución (<span class="caps">POSIX</span> threading&nbsp;standards).</p>
 <p>Para mejorar el soporte de hilos en Linux, fueron necesarios retoques tanto a nivel de kernel (y su <span class="caps">ABI</span>) como a nivel de las libreras <span class="caps">GNU</span> C Library (Glibc) que implementaban el concepto de&nbsp;hilo.</p>
 <p>Esto dio lugar a varios modelos/proyectos para la gestin de hilos, dependiendo de lo nuevo que fuera el&nbsp;sistema:</p>
 <ul>
 <li>LinuxThreads (with fixed stack&nbsp;size) </li>
 <li>LinuxThreads (with floating&nbsp;stacks) </li>
-<li><span class="caps">NGPT</span> (Next Generation <span class="caps">POSIX</span> Threads) liderado por <span class="caps">IBM</span> y abandonado  por&nbsp;<span class="caps">NPTL</span>.</li>
+<li><span class="caps">NGPT</span> (Next Generation <span class="caps">POSIX</span> Threads) liderado por <span class="caps">IBM</span> y abandonado  por <span class="caps">NPTL</span>.</li>
 <li><span class="caps">NPTL</span> (Native <span class="caps">POSIX</span> Thread) Proyecto liderado por Red Hat y liberado en&nbsp;2003.</li>
 </ul>
 <p>Al añadir nuevas posibilidades al trabajo con hilos en el kernel de linux, se inició una etapa de transición en la que algunas aplicaciones requerían un esquema de hilos moderno (<span class="caps">NPTL</span>), mientras que otras utilizaban otro más tradicional como LinuxThreads. Todo ello, teniendo el sistema que poder correr aplicaciones basadas en un modelo de hilos más o menos&nbsp;avanzado.</p>
-<p>Como se ha comentado al inicio, los nuevos modelos de soporte de hilos requerían cambios también a nivel de kernel. As, las diferentes libreras dinámicas (<span class="caps">DSO</span> Dinamic Shared Objects/Shared Libraries), además de una librera de hilos concreta, requerirán de una versión del kernel con una interfaz capaz de trabajar con dicha librera. A esta interfaz se la conoce con el nombre de Application Binary Interface&nbsp;(<span class="caps">ABI</span>).</p>
+<p>Como se ha comentado al inicio, los nuevos modelos de soporte de hilos requerían cambios también a nivel de kernel. As, las diferentes libreras dinámicas (<span class="caps">DSO</span> Dinamic Shared Objects/Shared Libraries), además de una librera de hilos concreta, requerirán de una versión del kernel con una interfaz capaz de trabajar con dicha librera. A esta interfaz se la conoce con el nombre de Application Binary Interface (<span class="caps">ABI</span>).</p>
 <p>Una <span class="caps">ABI</span> define la interfaz de bajo nivel entre la Aplicación y el sistema operativo o kernel , mientras que una <span class="caps">API</span> define el interfaz entre el código fuente y las&nbsp;libreras. </p>
 <p>De la misma forma que una <span class="caps">API</span> permite que un código fuente sea compilado en cualquier sistema que soporte para dicha <span class="caps">API</span>, la <span class="caps">ABI</span> permite que un objeto binario pueda funcionar en un sistema con una <span class="caps">ABI</span>&nbsp;compatible.</p>
-<p>Los <span class="caps">DSO</span> incluyen información relativa a la versión de <span class="caps">ABI</span> requerida, de manera que el enlazador o cargador dinámico (<span class="caps">LD</span>) de las Glibc (<code>ld.so/ld-linux.so</code>) sabe la versión <span class="caps">ABI</span> requerida por el&nbsp;<span class="caps">DSO</span>.</p>
+<p>Los <span class="caps">DSO</span> incluyen información relativa a la versión de <span class="caps">ABI</span> requerida, de manera que el enlazador o cargador dinámico (<span class="caps">LD</span>) de las Glibc (<code>ld.so/ld-linux.so</code>) sabe la versión <span class="caps">ABI</span> requerida por el <span class="caps">DSO</span>.</p>
 <p>Las ABIs disponibles dependen de la versión del kernel que utilice el sistema, mientras que el modelo de hilos utilizado depende de las libreras de hilos (<code>libpthread.so</code>) disponibles. La decisión de qué libreras utilizar la toma el enlazador&nbsp;dinámico.</p>
 <p>Así, la incursión de un nuevo modelo de hilos requería también de retoques en el enlazador dinámico de libreras, a fin de asegurar la compatibilidad total con las aplicaciones ya existentes, además de los ya mencionados cambios en el sistema (kernel y librera de implementación de&nbsp;hilos).</p>
 <p>El enlazador dinámico (<code>ld-linux.so</code>) de DSOs (Dynamic Share Object .so) forma parte de las Glibc, y es capaz de ver los requerimientos en cuanto a kernel/<span class="caps">ABI</span> de un <span class="caps">DSO</span> y llamar a las librerías necesarias/compatibles en cada caso. En Red Hat 9, Fedora Core 1 y 2, estas libreras están en <code>/lib</code>, <code>/lib/i686</code> y <code>/lib/tls</code> en función de si implementan un sistema de hilos LinuxTread (fixed stacks), LinuxTread (floating stacks) o <span class="caps">NPTL</span>&nbsp;respectivamente.</p>
@@ -124,105 +155,105 @@
 <li><code>/lib/tls/libpthread-0.34.so</code>   (<span class="caps">NPTL</span> disponible por primera vez en Red Hat&nbsp;9)</li>
 </ul>
 <p>Para saber el modelo de hilos utilizado podemos utilizar el comando&nbsp;getconf.</p>
-<div class="codehilite"><pre><span class="go">getconf GNU_LIBPTHREAD_VERSION</span>
-<span class="go"><span class="caps">NPTL</span> 0.34</span>
+<div class="highlight"><pre><span></span><span class="go">getconf GNU_LIBPTHREAD_VERSION</span>
+<span class="go">NPTL 0.34</span>
 </pre></div>
 
 
 <p>Como hemos dicho, si bien en Red Hat 9 <span class="caps">NPTL</span> es el modelo de hilos utilizado por defecto, utilizando la variable <code>LD_ASSUME_KERNEL</code>, es posible forzar al enlazador dinámico (Dynamic Linker <span class="caps">LD</span>) a la hora de cargar los DSOs requeridos por un programa, de manera que cargue los correspondientes a un modelo de threads u otro al <span class="caps">ASUMIR</span> que la <span class="caps">ABI</span> que le ofrecer el kernel es de una versión anterior a la del kernel actualmente en&nbsp;ejecución.</p>
-<div class="codehilite"><pre><span class="n">LD_ASSUME_KERNEL</span><span class="o">=</span><span class="mf">2.2.5</span>
-<span class="n">getconf</span> <span class="n">GNU_LIBPTHREAD_VERSION</span>
-<span class="n">linuxthreads</span><span class="o">-</span><span class="mf">0.10</span>
+<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.2.5
+getconf GNU_LIBPTHREAD_VERSION
+linuxthreads-0.10
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">LD_ASSUME_KERNEL</span><span class="o">=</span><span class="mf">2.4.1</span>
-<span class="n">getconf</span> <span class="n">GNU_LIBPTHREAD_VERSION</span>
-<span class="n">linuxthreads</span><span class="o">-</span><span class="mf">0.10</span>
+<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.4.1
+getconf GNU_LIBPTHREAD_VERSION
+linuxthreads-0.10
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">LD_ASSUME_KERNEL</span><span class="o">=</span><span class="mf">2.4.20</span>
-<span class="n">getconf</span> <span class="n">GNU_LIBPTHREAD_VERSION</span>
-<span class="n"><span class="caps">NPTL</span></span> <span class="mf">0.34</span> 
+<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.4.20
+getconf GNU_LIBPTHREAD_VERSION
+NPTL 0.34 
 </pre></div>
 
 
-<p>Mediante el comando <code>eu-readelf</code> presente en el paquete <code>elfutil</code>s, es posible saber el modelo de <span class="caps">ABI</span> requerido por un&nbsp;<span class="caps">DSO</span>.</p>
-<div class="codehilite"><pre><span class="go">eu-readelf -n /lib/libnss_nis.so.1</span>
+<p>Mediante el comando <code>eu-readelf</code> presente en el paquete <code>elfutil</code>s, es posible saber el modelo de <span class="caps">ABI</span> requerido por un <span class="caps">DSO</span>.</p>
+<div class="highlight"><pre><span></span><span class="go">eu-readelf -n /lib/libnss_nis.so.1</span>
 
 <span class="go">Note segment of 32 bytes at offset 0x000000f4:</span>
 <span class="go">Owner          Data size  Type</span>
-<span class="go"><span class="caps">GNU</span>                   16  <span class="caps">VERSION</span></span>
-<span class="go"><span class="caps">OS</span>: Linux, <span class="caps">ABI</span>: 2.2.5</span>
+<span class="go">GNU                   16  VERSION</span>
+<span class="go">OS: Linux, ABI: 2.2.5</span>
 </pre></div>
 
 
 <p>En el ejemplo anterior, la librera <code>libnss_nis.so.1</code> requiere de una <span class="caps">ABI</span>/Kernel superior o igual a la que ofrecía un kernel de la versión&nbsp;2.2.5.</p>
 <p>Otros&nbsp;ejemplos:</p>
-<div class="codehilite"><pre><span class="n">eu</span><span class="o">-</span><span class="n">readelf</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i686</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.3.2</span><span class="p">.</span><span class="n">so</span>
+<div class="highlight"><pre><span></span>eu-readelf -n /lib/i686/libc-2.3.2.so
 
-<span class="n">Note</span> <span class="n">segment</span> <span class="n">of</span> <span class="mi">32</span> <span class="n">bytes</span> <span class="n">at</span> <span class="n">offset</span> <span class="mh">0x00000114</span><span class="o">:</span>
-<span class="n">Owner</span>          <span class="n">Data</span> <span class="n">size</span>  <span class="n">Type</span>
-<span class="n"><span class="caps">GNU</span></span>                   <span class="mi">16</span>  <span class="n"><span class="caps">VERSIONOS</span></span><span class="o">:</span> <span class="n">Linux</span><span class="p">,</span> <span class="n"><span class="caps">ABI</span></span><span class="o">:</span> <span class="mf">2.4.1</span>
+Note segment of 32 bytes at offset 0x00000114:
+Owner          Data size  Type
+GNU                   16  VERSIONOS: Linux, ABI: 2.4.1
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">eu</span><span class="o">-</span><span class="n">readelf</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mf">2.3.2</span><span class="p">.</span><span class="n">so</span>
-<span class="n">Note</span> <span class="n">segment</span> <span class="n">of</span> <span class="mi">32</span> <span class="n">bytes</span> <span class="n">at</span> <span class="n">offset</span> <span class="mh">0x00000134</span><span class="o">:</span>
-<span class="n">Owner</span>          <span class="n">Data</span> <span class="n">size</span>  <span class="n">Type</span>
-<span class="n"><span class="caps">GNU</span></span>                   <span class="mi">16</span>  <span class="n"><span class="caps">VERSIONOS</span></span><span class="o">:</span> <span class="n">Linux</span><span class="p">,</span> <span class="n"><span class="caps">ABI</span></span><span class="o">:</span> <span class="mf">2.4.20</span>
+<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/libc-2.3.2.so
+Note segment of 32 bytes at offset 0x00000134:
+Owner          Data size  Type
+GNU                   16  VERSIONOS: Linux, ABI: 2.4.20
 </pre></div>
 
 
 <h3>Errores derivados de un mal uso de <code>LD_ASSUME_KERNEL</code></h3>
-<p>Las utilidades del sistema de paquetes <span class="caps">RPM</span> dependen de libreras que requieren una <span class="caps">ABI</span> y libreras con capacidades <span class="caps">NPTL</span>. Si utilizamos la variable <code>LD_ASSUME_KERNEL</code> para forzar al enlazador dinámico a utilizar las libreras de la implementación de hilos LinuxThreads, corremos el riesgo de obtener resultados inesperados o incluso de corromper la base de datos Berkley <span class="caps">DB</span> del sistema <span class="caps">RPM</span>, ya que esta base de datos está pensada y optimizada para su ejecución en un entorno de hilos&nbsp;<span class="caps">NPTL</span>.</p>
-<p>Es por este motivo que es recomendable estar seguros de que <span class="caps">NO</span> hemos modificado el valor de dicha variable de entorno antes de proceder a construir, o instalar un paquete mediante las herramientas del sistema de paquetes&nbsp;<span class="caps">RPM</span>.</p>
-<p>Las capturas siguientes muestran la estrecha relación que existe entre las herramientas <span class="caps">RPM</span> y el modelo de hilos&nbsp;<span class="caps">NPTL</span>.</p>
-<div class="codehilite"><pre><span class="n">ldd</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rpm</span>
-<span class="n">librpm</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpm</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x4002a000</span><span class="p">)</span>
-<span class="n">librpmdb</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpmdb</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x4007e000</span><span class="p">)</span>
-<span class="n">librpmio</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpmio</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x4015d000</span><span class="p">)</span>
-<span class="n">libpopt</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpopt</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="p">(</span><span class="mh">0x401bb000</span><span class="p">)</span>
-<span class="n">libelf</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libelf</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x401c3000</span><span class="p">)</span>
-<span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="o">=</span> <span class="n">tls</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="p">(</span><span class="mh">0x401d3000</span><span class="p">)</span>
-<span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="n">tls</span><span class="o">/</span><span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x401e2000</span><span class="p">)</span>
-<span class="n">libbz2</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libbz2</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x401f4000</span><span class="p">)</span>
-<span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="o">=</span> <span class="n">tls</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="p">(</span><span class="mh">0x42000000</span><span class="p">)</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span> <span class="o">=</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span> <span class="p">(</span><span class="mh">0x40000000</span><span class="p">)</span>
+<p>Las utilidades del sistema de paquetes <span class="caps">RPM</span> dependen de libreras que requieren una <span class="caps">ABI</span> y libreras con capacidades <span class="caps">NPTL</span>. Si utilizamos la variable <code>LD_ASSUME_KERNEL</code> para forzar al enlazador dinámico a utilizar las libreras de la implementación de hilos LinuxThreads, corremos el riesgo de obtener resultados inesperados o incluso de corromper la base de datos Berkley <span class="caps">DB</span> del sistema <span class="caps">RPM</span>, ya que esta base de datos está pensada y optimizada para su ejecución en un entorno de hilos <span class="caps">NPTL</span>.</p>
+<p>Es por este motivo que es recomendable estar seguros de que <span class="caps">NO</span> hemos modificado el valor de dicha variable de entorno antes de proceder a construir, o instalar un paquete mediante las herramientas del sistema de paquetes <span class="caps">RPM</span>.</p>
+<p>Las capturas siguientes muestran la estrecha relación que existe entre las herramientas <span class="caps">RPM</span> y el modelo de hilos <span class="caps">NPTL</span>.</p>
+<div class="highlight"><pre><span></span>ldd /bin/rpm
+librpm-4.2.so = /usr/lib/librpm-4.2.so (0x4002a000)
+librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x4007e000)
+librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x4015d000)
+libpopt.so.0 = /usr/lib/libpopt.so.0 (0x401bb000)
+libelf.so.1 = /usr/lib/libelf.so.1 (0x401c3000)
+libpthread.so.0 = tls/libpthread.so.0 (0x401d3000)
+librt.so.1 = tls/librt.so.1 (0x401e2000)
+libbz2.so.1 = /usr/lib/libbz2.so.1 (0x401f4000)
+libc.so.6 = tls/libc.so.6 (0x42000000)
+/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x40000000)
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">ldd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">rpmbuild</span>
-<span class="n">librpmbuild</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpmbuild</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x00bba000</span><span class="p">)</span>
-<span class="n">librpm</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpm</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x008a3000</span><span class="p">)</span>
-<span class="n">librpmdb</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpmdb</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x00252000</span><span class="p">)</span>
-<span class="n">librpmio</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">librpmio</span><span class="o">-</span><span class="mf">4.2</span><span class="p">.</span><span class="n">so</span> <span class="p">(</span><span class="mh">0x00380000</span><span class="p">)</span>
-<span class="n">libpopt</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libpopt</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="p">(</span><span class="mh">0x00d26000</span><span class="p">)</span>
-<span class="n">libelf</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libelf</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x00aef000</span><span class="p">)</span>
-<span class="n">libbeecrypt</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libbeecrypt</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="p">(</span><span class="mh">0x0061a000</span><span class="p">)</span>
-<span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x00d56000</span><span class="p">)</span>
-<span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="o">=</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span> <span class="p">(</span><span class="mh">0x005ac000</span><span class="p">)</span>
-<span class="n">libz</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libz</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x00c0e000</span><span class="p">)</span>
-<span class="n">libbz2</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libbz2</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span> <span class="p">(</span><span class="mh">0x00e55000</span><span class="p">)</span>
-<span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="o">=</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">libc</span><span class="p">.</span><span class="n">so</span><span class="mf">.6</span> <span class="p">(</span><span class="mh">0x00111000</span><span class="p">)</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span> <span class="o">=</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ld</span><span class="o">-</span><span class="n">linux</span><span class="p">.</span><span class="n">so</span><span class="mf">.2</span> <span class="p">(</span><span class="mh">0x00364000</span><span class="p">)</span>
+<div class="highlight"><pre><span></span>ldd /usr/bin/rpmbuild
+librpmbuild-4.2.so = /usr/lib/librpmbuild-4.2.so (0x00bba000)
+librpm-4.2.so = /usr/lib/librpm-4.2.so (0x008a3000)
+librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x00252000)
+librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x00380000)
+libpopt.so.0 = /usr/lib/libpopt.so.0 (0x00d26000)
+libelf.so.1 = /usr/lib/libelf.so.1 (0x00aef000)
+libbeecrypt.so.6 = /usr/lib/libbeecrypt.so.6 (0x0061a000)
+librt.so.1 = /lib/tls/librt.so.1 (0x00d56000)
+libpthread.so.0 = /lib/tls/libpthread.so.0 (0x005ac000)
+libz.so.1 = /usr/lib/libz.so.1 (0x00c0e000)
+libbz2.so.1 = /usr/lib/libbz2.so.1 (0x00e55000)
+libc.so.6 = /lib/tls/libc.so.6 (0x00111000)
+/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x00364000)
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">eu</span><span class="o">-</span><span class="n">readelf</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">librt</span><span class="p">.</span><span class="n">so</span><span class="mf">.1</span>
-<span class="n">Note</span> <span class="n">segment</span> <span class="n">of</span> <span class="mi">32</span> <span class="n">bytes</span> <span class="n">at</span> <span class="n">offset</span> <span class="mh">0x00000134</span><span class="o">:</span>
-<span class="n">Owner</span>          <span class="n">Data</span> <span class="n">size</span>  <span class="n">Type</span>
-<span class="n"><span class="caps">GNU</span></span>                   <span class="mi">16</span>  <span class="n"><span class="caps">VERSION</span></span>
-<span class="nl"><span class="caps">OS</span>:</span> <span class="n">Linux</span><span class="p">,</span> <span class="n"><span class="caps">ABI</span></span><span class="o">:</span> <span class="mf">2.4.20</span>
+<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/librt.so.1
+Note segment of 32 bytes at offset 0x00000134:
+Owner          Data size  Type
+GNU                   16  VERSION
+OS: Linux, ABI: 2.4.20
 </pre></div>
 
 
-<div class="codehilite"><pre><span class="n">eu</span><span class="o">-</span><span class="n">readelf</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">tls</span><span class="o">/</span><span class="n">libpthread</span><span class="p">.</span><span class="n">so</span><span class="mf">.0</span>
-<span class="n">Note</span> <span class="n">segment</span> <span class="n">of</span> <span class="mi">32</span> <span class="n">bytes</span> <span class="n">at</span> <span class="n">offset</span> <span class="mh">0x00000114</span><span class="o">:</span>
-<span class="n">Owner</span>          <span class="n">Data</span> <span class="n">size</span>  <span class="n">Type</span>
-<span class="n"><span class="caps">GNU</span></span>                   <span class="mi">16</span>  <span class="n"><span class="caps">VERSION</span></span>
-<span class="nl"><span class="caps">OS</span>:</span> <span class="n">Linux</span><span class="p">,</span> <span class="n"><span class="caps">ABI</span></span><span class="o">:</span> <span class="mf">2.4.20</span>
+<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/libpthread.so.0
+Note segment of 32 bytes at offset 0x00000114:
+Owner          Data size  Type
+GNU                   16  VERSION
+OS: Linux, ABI: 2.4.20
 </pre></div>
 
 
@@ -245,22 +276,46 @@
   </div>
 
 
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "implementacion-de-hilos-de-ejecucion-en-gnulinux.html";
+        var disqus_title = "Implementación de hilos de ejecución en GNU/Linux";
+        var disqus_url = "http://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
 
-          </div>
+        </div>
 
-            <div class="span3">
+          <div class="col-md-3">
   <div class="well">
 
-    <p><abbr class="fa fa-calendar" title="2007-01-25T19:01:52"> Thu 25 January 2007</abbr></p>
+    <p><abbr title="2007-01-25T19:01:52+01:00"><i class="fa fa-calendar"></i> Thu 25 January 2007</abbr></p>
 
-      <p><address class="fa fa-user"> By <a href="/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+      <p><address>
+        <i class="fa fa-user"></i> By
+          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+      </address></p>
 
     <hr/>
 
       <p>
-              <a href="/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
-            <a href="/tag/threads.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">threads</a>
-            <a href="/tag/hilos.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">hilos</a>
+              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+                  data-toggle="tooltip" class="label label-info"
+                  title="56 articles in this category">Spanish</a>
+            <a href="/tag/threads.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">threads</a>
+            <a href="/tag/hilos.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">hilos</a>
       </p>
       <hr/>
 
@@ -268,17 +323,26 @@
       <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/implementacion-de-hilos-de-ejecucion-en-gnulinux.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
-      <ul class="pager">
-        <li class="previous "><a  href="/asterisk-the-future-of-telephony.html" title="Asterisk: The Future of Telephony"  rel="prev">← Older</a></li>
-        <li class="next "><a  href="/tux-droid-tu-amigo-programable.html" title="Tux Droid, tu amigo programable"  rel="next">Newer →</a></li>
-      </ul>
+      <nav>
+        <ul class="pager">
+          <li class="previous ">
+            <a  href="http://frommelmak.com/asterisk-the-future-of-telephony.html" title="Asterisk: The Future of Telephony"  rel="prev">
+              <span aria-hidden="true">←</span> Older
+            </a>
+          </li>
+          <li class="next ">
+            <a  href="http://frommelmak.com/tux-droid-tu-amigo-programable.html" title="Tux Droid, tu amigo programable"  rel="next">
+              Newer <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
   </div>
-              
-            </div>
+            
+          </div>
 
-        </div>
-      </section>
+      </div>
 
     </div>
 
@@ -287,18 +351,18 @@
       <div class="container">
         <div class="row">
 
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Social</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://twitter.com/frommelmak">
       <i class="fa fa-twitter"></i>
     @frommelmak
   </a></li>
                 </ul>
             </div>
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Links</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
       <i class="fa fa-linkedin-square"></i>
     LinkedIn
@@ -308,55 +372,55 @@
     GitHub
   </a></li>
                   <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
     Youtube
   </a></li>
                 </ul>
             </div>
 
-          <div class="span2">
+          <div class="col-md-2">
             <h5>Browse content by</h5>
-            <ul class="fa-ul">
-                <li><a href="/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
-                <li><a href="/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
-                <li><a href="/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
-
+            <ul class="list-unstyled">
+                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+            <p>© Copyright 2005-2019 Marcos Martinez.</p>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Disclaimer</h5>
               <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
           </div>
 
-          <div class="span2">
-            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          <div class="col-md-2">
           </div>
 
         </div>
       </div>
 
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+
       <div class="container">
-        <div class="row span12 muted text-center">
-          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        <div class="row col-md-12 text-muted text-center">
+          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
         </div>
       </div>
 
     </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="/theme/js/jquery.mglass.js"></script>
-    <script src="/theme/js/application.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="http://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

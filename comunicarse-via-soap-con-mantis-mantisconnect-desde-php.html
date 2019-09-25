@@ -2,31 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>  Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP
+    <title>  Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP
  | frommelmak</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Marcos Martinez"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -34,97 +34,128 @@
   </head>
 
   <body>
+
     <div class="container">
 
-      <header>
-        <div class="page-header">
-            <a href="" class="avatar-container">
-              <div class="avatar  animate ">
-                <div class="side"><img src="images/avatar.png"/></div>
-                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
-              </div>
-            </a>
-          <h1><a href="">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      <div class="page-header">
+          <a href="http://frommelmak.com" class="avatar-container pull-left">
+            <div class="avatar  animate ">
+              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
+                <div class="side back"><p class="text-center">Alien Life Form</p></div>
+            </div>
+          </a>
+        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+
+        <!-- Hamburger menu for mobile -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="" title="Yet another Melmacian interested in technology...">frommelmak</a>
-            <ul class="nav">
-<li ><a href="/">Home</a></li>
-<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
-<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
-                  <li ><a href="/pages/about.html">About</a></li>
-            </ul>
-              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
-                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
-                <i class="fa fa-search fa-fw"></i>
+        <!-- Menus and search forms -->
+        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+          <ul class="nav navbar-nav">
+<li >
+                <a href="/">Home</a>
+              </li>
+<li >
+                <a href="http://wiki.frommelmak.com">Wiki</a>
+              </li>
+<li >
+                <a href="http://old.frommelmak.com">Old Blog</a>
+              </li>
+          </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
+                  </span>
+                </div>
                 <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
                 <input type="hidden" name="ie" value="UTF-8" />
-              </form>
-          </div>
+              </div>
+            </form>
+
+
         </div>
-      </header>
 
-      <section>
+      </nav>
 
-        <div class="row">
-          <div class=" span9  ">
+    </div>
+
+
+    <div class="container main">
+
+
+      <div class="row">
+        <div class=" col-md-9  ">
   <h1>
-    <a href="/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html" rel="bookmark" title="Permalink to Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP">Comunicarse via <span class="caps">SOAP</span> con Mantis (Mantisconnect) desde&nbsp;<span class="caps">PHP</span></a>
+    <a href="http://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html" rel="bookmark" title="Permalink to Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP">Comunicarse via <span class="caps">SOAP</span> con Mantis (Mantisconnect) desde <span class="caps">PHP</span></a>
   </h1>
-          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
 
-          <div class=" span9 " id="content" role="main">
+        <div class=" col-md-9 " id="content" role="main">
   
 
   <div>
     <p>No he encontrado muchos ejemplos (por no decir ninguno) de como llamar a los mtodos <span class="caps">SOAP</span> de Mantis desde <span class="caps">PHP</span>, así que aquí dejo unos&nbsp;ejemplitos.</p>
 <p>Lo primero de todo es saber que tras la instalación de Mantis, podemos obtener el <span class="caps">WSDL</span> bajo esta <span class="caps">URL</span>: <code>http://logquesea/api/soap/mantisconnect.php?wsdl</code></p>
 <p>Adems del <span class="caps">WSDL</span>, es interesante saber que hay una ayuda para humanos acerca de los métodos disponibles. Se puede obtener omitiendo <code>?wsdl</code> en la llamada&nbsp;anterior.</p>
-<p>A continuación os dejo los ejemplos sobre como llamar a algunos de estos métodos desde&nbsp;<span class="caps">PHP</span>.</p>
+<p>A continuación os dejo los ejemplos sobre como llamar a algunos de estos métodos desde <span class="caps">PHP</span>.</p>
 <p>Obtener la versin de&nbsp;Mantis:</p>
-<div class="codehilite"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span><span class="k">print</span><span class="p">(</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_version</span><span class="p">());</span>
-<span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);print($client-mc_version());</span>
+<span class="x">?&amp;gt;</span>
 </pre></div>
 
 
 <p>Obtener array con diferentes estadisticas de&nbsp;Mantis</p>
-<div class="codehilite"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span><span class="nv">$username</span><span class="o">=</span><span class="nx">usuario</span><span class="p">;</span><span class="nv">$password</span><span class="o">=</span><span class="nx">contrasea</span><span class="p">;</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_enum_status</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">));</span>
+<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);$username=usuario;$password=contrasea;print_r($client-mc_enum_status($username, $password));</span>
 
-<span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">?&amp;gt;</span>
 </pre></div>
 
 
 <p>Aadir una nueva issue a&nbsp;Mantis</p>
-<div class="codehilite"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
 
-<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span>
+<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);</span>
 
-<span class="nv">$username</span><span class="o">=</span><span class="nx">usuario</span><span class="p">;</span>
-<span class="nv">$password</span><span class="o">=</span><span class="nx">constrasea</span><span class="p">;</span>
+<span class="x">$username=usuario;</span>
+<span class="x">$password=constrasea;</span>
 
-<span class="nv">$issue</span><span class="o">=</span><span class="k">array</span> <span class="p">(</span><span class="nx">project</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx"><span class="caps">SOAP</span></span> <span class="nx">Test</span><span class="p">),</span>
-              <span class="nx">category</span> <span class="o">=</span> <span class="nx">General</span><span class="p">,</span>
-              <span class="nx">priority</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">severity</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">status</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">reproducibility</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">resolution</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">projection</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">eta</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">view_state</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
-              <span class="nx">summary</span>  <span class="o">=</span> <span class="nx">Test</span> <span class="nx"><span class="caps">SOAP</span></span><span class="p">,</span>
-              <span class="nx">description</span> <span class="o">=</span> <span class="k">This</span> <span class="nx">is</span> <span class="nx">just</span> <span class="nx">a</span> <span class="k">new</span> <span class="nx">issue</span> <span class="nx">added</span> <span class="nx">using</span> <span class="nx"><span class="caps">SOAP</span></span><span class="p">);</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_issue_add</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">,</span> <span class="nv">$issue</span><span class="p">);</span>
-<span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">$issue=array (project = array (id = , name = SOAP Test),</span>
+<span class="x">              category = General,</span>
+<span class="x">              priority = array (id = , name = ),</span>
+<span class="x">              severity = array (id = , name = ),</span>
+<span class="x">              status = array (id = , name = ),</span>
+<span class="x">              reproducibility = array (id = , name = ),</span>
+<span class="x">              resolution = array (id = , name = ),</span>
+<span class="x">              projection = array (id = , name = ),</span>
+<span class="x">              eta = array (id = , name = ),</span>
+<span class="x">              view_state = array (id = , name = ),</span>
+<span class="x">              summary  = Test SOAP,</span>
+<span class="x">              description = This is just a new issue added using SOAP);$client-mc_issue_add($username, $password, $issue);</span>
+<span class="x">?&amp;gt;</span>
 </pre></div>
 
 
@@ -132,28 +163,54 @@
   </div>
 
     <h3>Related content</h3>
-    <!-- TODO: Use fancier related layout, as in http://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
+    <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
-        <li><a href="/how-to-migrate-from-lamp-to-nginx-php-fpm.html">How to migrate from <span class="caps">LAMP</span> to Nginx +&nbsp;<span class="caps">PHP</span>-<span class="caps">FPM</span></a></li>
+        <li><a href="http://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></li>
       </ul>
 
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html";
+        var disqus_title = "Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP";
+        var disqus_url = "http://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
 
-          </div>
+        </div>
 
-            <div class="span3">
+          <div class="col-md-3">
   <div class="well">
 
-    <p><abbr class="fa fa-calendar" title="2008-11-26T22:15:54"> Wed 26 November 2008</abbr></p>
+    <p><abbr title="2008-11-26T22:15:54+01:00"><i class="fa fa-calendar"></i> Wed 26 November 2008</abbr></p>
 
-      <p><address class="fa fa-user"> By <a href="/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+      <p><address>
+        <i class="fa fa-user"></i> By
+          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+      </address></p>
 
     <hr/>
 
       <p>
-              <a href="/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
-            <a href="/tag/php.html" rel="tooltip" class="label" data-placement="right" data-original-title="2 articles with this tag">php</a>
-            <a href="/tag/mantis.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">mantis</a>
-            <a href="/tag/soap.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">soap</a>
+              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+                  data-toggle="tooltip" class="label label-info"
+                  title="56 articles in this category">Spanish</a>
+            <a href="/tag/php.html" data-toggle="tooltip"
+      class="label label-default"
+      title="2 articles with this tag">php</a>
+            <a href="/tag/soap.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">soap</a>
+            <a href="/tag/mantis.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">mantis</a>
       </p>
       <hr/>
 
@@ -161,17 +218,26 @@
       <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
-      <ul class="pager">
-        <li class="previous "><a  href="/de-vmware-server-a-esxi-con-vmware-converter.html" title="De VMware Server a ESXi con VMware Converter"  rel="prev">← Older</a></li>
-        <li class="next "><a  href="/crear-un-instalable-en-pocos-minutos-con-nsis.html" title="Crear un instalable en pocos minutos con NSIS"  rel="next">Newer →</a></li>
-      </ul>
+      <nav>
+        <ul class="pager">
+          <li class="previous ">
+            <a  href="http://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html" title="De VMware Server a ESXi con VMware Converter"  rel="prev">
+              <span aria-hidden="true">←</span> Older
+            </a>
+          </li>
+          <li class="next ">
+            <a  href="http://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html" title="Crear un instalable en pocos minutos con NSIS"  rel="next">
+              Newer <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
   </div>
-              
-            </div>
+            
+          </div>
 
-        </div>
-      </section>
+      </div>
 
     </div>
 
@@ -180,18 +246,18 @@
       <div class="container">
         <div class="row">
 
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Social</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://twitter.com/frommelmak">
       <i class="fa fa-twitter"></i>
     @frommelmak
   </a></li>
                 </ul>
             </div>
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Links</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
       <i class="fa fa-linkedin-square"></i>
     LinkedIn
@@ -201,55 +267,55 @@
     GitHub
   </a></li>
                   <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
     Youtube
   </a></li>
                 </ul>
             </div>
 
-          <div class="span2">
+          <div class="col-md-2">
             <h5>Browse content by</h5>
-            <ul class="fa-ul">
-                <li><a href="/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
-                <li><a href="/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
-                <li><a href="/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
-
+            <ul class="list-unstyled">
+                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+            <p>© Copyright 2005-2019 Marcos Martinez.</p>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Disclaimer</h5>
               <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
           </div>
 
-          <div class="span2">
-            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          <div class="col-md-2">
           </div>
 
         </div>
       </div>
 
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+
       <div class="container">
-        <div class="row span12 muted text-center">
-          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        <div class="row col-md-12 text-muted text-center">
+          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
         </div>
       </div>
 
     </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="/theme/js/jquery.mglass.js"></script>
-    <script src="/theme/js/application.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="http://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

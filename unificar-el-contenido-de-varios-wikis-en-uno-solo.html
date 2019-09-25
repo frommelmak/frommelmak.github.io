@@ -2,31 +2,31 @@
 <html lang="es">
   <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>  Unificar el contenido de varios wikis en uno solo
  | frommelmak</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Marcos Martinez"/>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='//fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='//fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
+      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -34,52 +34,83 @@
   </head>
 
   <body>
+
     <div class="container">
 
-      <header>
-        <div class="page-header">
-            <a href="" class="avatar-container">
-              <div class="avatar  animate ">
-                <div class="side"><img src="images/avatar.png"/></div>
-                  <div class="side back"><p class="text-center">Alien Life Form</p></div>
-              </div>
-            </a>
-          <h1><a href="">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      <div class="page-header">
+          <a href="http://frommelmak.com" class="avatar-container pull-left">
+            <div class="avatar  animate ">
+              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
+                <div class="side back"><p class="text-center">Alien Life Form</p></div>
+            </div>
+          </a>
+        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+      </div>
+
+      <nav class="navbar navbar-default">
+
+        <!-- Hamburger menu for mobile -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a class="brand" href="" title="Yet another Melmacian interested in technology...">frommelmak</a>
-            <ul class="nav">
-<li ><a href="/">Home</a></li>
-<li ><a href="http://wiki.frommelmak.com">Wiki</a></li>
-<li ><a href="http://old.frommelmak.com">Old Blog</a></li>
-                  <li ><a href="/pages/about.html">About</a></li>
-            </ul>
-              <form class="navbar-search pull-right" action="https://www.google.com" target="_blank">
-                <input type="text" name="q" class="search-query span2" placeholder="Search"/>
-                <i class="fa fa-search fa-fw"></i>
+        <!-- Menus and search forms -->
+        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+          <ul class="nav navbar-nav">
+<li >
+                <a href="/">Home</a>
+              </li>
+<li >
+                <a href="http://wiki.frommelmak.com">Wiki</a>
+              </li>
+<li >
+                <a href="http://old.frommelmak.com">Old Blog</a>
+              </li>
+          </ul>
+
+            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
+                  </span>
+                </div>
                 <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
                 <input type="hidden" name="ie" value="UTF-8" />
-              </form>
-          </div>
+              </div>
+            </form>
+
+
         </div>
-      </header>
 
-      <section>
+      </nav>
 
-        <div class="row">
-          <div class=" span9  ">
+    </div>
+
+
+    <div class="container main">
+
+
+      <div class="row">
+        <div class=" col-md-9  ">
   <h1>
-    <a href="/unificar-el-contenido-de-varios-wikis-en-uno-solo.html" rel="bookmark" title="Permalink to Unificar el contenido de varios wikis en uno solo">Unificar el contenido de varios wikis en uno&nbsp;solo</a>
+    <a href="http://frommelmak.com/unificar-el-contenido-de-varios-wikis-en-uno-solo.html" rel="bookmark" title="Permalink to Unificar el contenido de varios wikis en uno solo">Unificar el contenido de varios wikis en uno&nbsp;solo</a>
   </h1>
-          </div>
         </div>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
 
-          <div class=" span9 " id="content" role="main">
+        <div class=" col-md-9 " id="content" role="main">
   
 
   <div>
@@ -95,7 +126,7 @@
 <h3>En MediaWiki&nbsp;1.5.8</h3>
 <p>En esta versión no hay ningun secreto, tan sólo será necesario ejecutar el script <code>dumpBackup.php</code> que se encuentra en la carpeta&nbsp;maintenance.</p>
 <p>Antes de ejecutar los scripts de la carpeta maintenance deberemos editar el fichero <code>AdminSettings.php</code> con el un usuario y password con permisos sobre la base de datos MySQL del&nbsp;wiki.</p>
-<div class="codehilite"><pre><span class="go">cd /your_wiki_path/maintenance</span>
+<div class="highlight"><pre><span></span><span class="go">cd /your_wiki_path/maintenance</span>
 <span class="go">cp AdminSettings.sample AdminSettings.php</span>
 <span class="go">vi AdminSettings.php</span>
 <span class="go">php dumpBackup.php --full  wiki-backup.xml</span>
@@ -103,7 +134,7 @@
 
 
 <p>Para importar las imágenes, necesitaremos además extraer el contenido de las tablas: image, imagelinks y&nbsp;oldimage.</p>
-<div class="codehilite"><pre><span class="go">mysqldump -u root -p wikidatabase image  wiki1-image.sql</span>
+<div class="highlight"><pre><span></span><span class="go">mysqldump -u root -p wikidatabase image  wiki1-image.sql</span>
 <span class="go">mysqldump -u root -p wikidatabase imagelinks  wiki1-imagelinks.sql</span>
 <span class="go">mysqldump -u root -p wikidatabase oldimage  wiki1-oldimage.sql</span>
 </pre></div>
@@ -118,7 +149,7 @@
 <p>Vamos a:  <em>Special pages -&gt; All&nbsp;pages</em></p>
 <p>Utilizaremos entonces la opción <em>view-source</em> (de nuestro navegador), seleccionareos todo el código de la página y lo copiaremos a un fichero llamado <code>all_pages.txt</code>.</p>
 <p>Luego ejecutamos sobre ese fichero este comando y&nbsp;listos:</p>
-<div class="codehilite"><pre><span class="go">sed -n &#39;/-- start content --/,/-- end content --/p&#39; all_pages.txt |sed &#39;s/\/td/\n/g&#39;| sed -e &#39;s#[^]*##g&#39;| sed &#39;/^$/d&#39; |less</span>
+<div class="highlight"><pre><span></span><span class="go">sed -n &#39;/-- start content --/,/-- end content --/p&#39; all_pages.txt |sed &#39;s/\/td/\n/g&#39;| sed -e &#39;s#[^]*##g&#39;| sed &#39;/^$/d&#39; |less</span>
 </pre></div>
 
 
@@ -128,7 +159,7 @@
 <p>Finalmente le damos a: <em>Submit query</em>  y obtendreos en el browser el cdigo <span class="caps">XML</span> con todo el contenido de nuestro&nbsp;wiki.</p>
 <p>Ya sólo hemos de copiar el código y pegarlo en un fichero de texto: <code>wiki2-backup.xml</code>, por&nbsp;ejemplo.</p>
 <p>De igual modo que para la versión 1.5.8, de cara a exportar las imgenes necesitaremos también el contenido de las tabas: image, imagelinks y&nbsp;oldimage.</p>
-<div class="codehilite"><pre><span class="go">mysqldump -u root -p wikidatabase image  wiki2-image.sql</span>
+<div class="highlight"><pre><span></span><span class="go">mysqldump -u root -p wikidatabase image  wiki2-image.sql</span>
 <span class="go">mysqldump -u root -p wikidatabase imagelinks  wiki2-imagelinks.sql</span>
 <span class="go">mysqldump -u root -p wikidatabase oldimage  wiki2-oldimage.sql</span>
 </pre></div>
@@ -140,7 +171,7 @@
 <p>En primer lugar importaremos el contenido del wiki con la versin ms vieja (MediaWiki 1.3.9), más adelante veremos por&nbsp;qué.</p>
 <h3>Importar el <span class="caps">XML</span> generado por MediaWiki&nbsp;1.3.9</h3>
 <p>Dado que necesitaremos ejecutar varios de los scripts de la carpeta maintenance de nuestro wiki de destino, antes de nada, deberemos editar el <code>ficheroAdminSettings.php</code> para que estos scripts puedan acceder a la base de&nbsp;datos.</p>
-<div class="codehilite"><pre><span class="go">cp AdminSettings.sample AdminSettings.php</span>
+<div class="highlight"><pre><span></span><span class="go">cp AdminSettings.sample AdminSettings.php</span>
 <span class="go">vi AdminSettings.php</span>
 </pre></div>
 
@@ -148,33 +179,33 @@
 <p>Edit the file <code>AdminSettings.php</code> with the mysql&nbsp;user/password)</p>
 <p>Ahora ya podriamos importar el contenido del wiki con el script <code>importDump.php</code>, si bien antes de hacerlo podrá interesaros, como en mi caso, añadir una etiqueta de categoria a cada una de las páginas del wiki. Esto nos permitir poder separar la informacin de cada uno de los wikis en función de su procedencia. Así todas las páginas de la categoria wiki2 s que vienen del&nbsp;wiki2.</p>
 <p>Para hacer esto, podeis utilizar un script como el&nbsp;siguiente:</p>
-<div class="codehilite"><pre><span class="gp">#</span>!/bin/bash
+<div class="highlight"><pre><span></span><span class="gp">#</span>!/bin/bash
 
-<span class="go"><span class="caps">IFILE</span>=$1</span>
-<span class="go"><span class="caps">OFILE</span>=P_$1</span>
+<span class="go">IFILE=$1</span>
+<span class="go">OFILE=P_$1</span>
 <span class="go">CATEGORY_STRING=$2</span>
 
-<span class="go">echo Output file is: $<span class="caps">OFILE</span></span>
-<span class="gp">&gt;</span> <span class="nv">$<span class="caps">OFILE</span></span>
+<span class="go">echo Output file is: $OFILE</span>
+<span class="go">&amp;gt; $OFILE</span>
 
-<span class="go"><span class="caps">UPC</span>=<span class="caps">FALSE</span></span>
-<span class="go"><span class="caps">PAGES</span>=0</span>
+<span class="go">UPC=FALSE</span>
+<span class="go">PAGES=0</span>
 
-<span class="go">while read <span class="caps">LINE</span></span>
+<span class="go">while read LINE</span>
 <span class="go">do</span>
-<span class="go">echo $<span class="caps">LINE</span> | grep title.*/title | grep -qv -e MediaWiki:.* -e MediaWiki talk:.* -e Image:.* -e Image talk:.* -e Talk:.* -e User:.* -e User talk:.* -e Category:.* -e Category talk:.* -e Template:.* -e Template talk:.*  <span class="caps">UCP</span>=&#39;<span class="caps">TRUE</span>&#39;  let <span class="caps">PAGES</span>=$<span class="caps">PAGES</span>+1</span>
-<span class="go">echo $<span class="caps">LINE</span> | grep -q &#39;/text&#39;</span>
+<span class="go">echo $LINE | grep title.*/title | grep -qv -e MediaWiki:.* -e MediaWiki talk:.* -e Image:.* -e Image talk:.* -e Talk:.* -e User:.* -e User talk:.* -e Category:.* -e Category talk:.* -e Template:.* -e Template talk:.*  UCP=&#39;TRUE&#39;  let PAGES=$PAGES+1</span>
+<span class="go">echo $LINE | grep -q &#39;/text&#39;</span>
 <span class="go">TEXT_TAG=$?</span>
-<span class="go">if [[ $<span class="caps">UCP</span> = <span class="caps">TRUE</span>  $TEXT_TAG -eq 0 ]]</span>
+<span class="go">if [[ $UCP = TRUE  $TEXT_TAG -eq 0 ]]</span>
 <span class="go">then</span>
 <span class="go">echo -n .</span>
-<span class="go">echo $<span class="caps">LINE</span> | sed s/\/text/$CATEGORY_STRING\/text/g  $<span class="caps">OFILE</span></span>
-<span class="go">else echo $<span class="caps">LINE</span>  $<span class="caps">OFILE</span>  echo $<span class="caps">LINE</span> | grep -q &#39;/page&#39;  <span class="caps">UCP</span>=<span class="caps">FALSE</span></span>
+<span class="go">echo $LINE | sed s/\/text/$CATEGORY_STRING\/text/g  $OFILE</span>
+<span class="go">else echo $LINE  $OFILE  echo $LINE | grep -q &#39;/page&#39;  UCP=FALSE</span>
 <span class="go">fi</span>
-<span class="go">done  $<span class="caps">IFILE</span></span>
+<span class="go">done  $IFILE</span>
 <span class="go">echo</span>
 
-<span class="go">echo Processed pages: $<span class="caps">PAGES</span></span>
+<span class="go">echo Processed pages: $PAGES</span>
 
 
 <span class="go">echo Done!</span>
@@ -182,12 +213,12 @@
 
 
 <p>Para procesar el <span class="caps">XML</span>, llamaremos al script con algo parecido a&nbsp;esto:</p>
-<div class="codehilite"><pre><span class="go">./xwp.sh wiki2-backup.xml [[Category:wiki2]]</span>
+<div class="highlight"><pre><span></span><span class="go">./xwp.sh wiki2-backup.xml [[Category:wiki2]]</span>
 </pre></div>
 
 
 <p>Y finalmente importaremos el contenido del fichero resultante (P_wiki2-backup.xml) a nuestro nuevo&nbsp;wiki:</p>
-<div class="codehilite"><pre><span class="go">php maintenance/importDump.php P_wiki2-backup.xml</span>
+<div class="highlight"><pre><span></span><span class="go">php maintenance/importDump.php P_wiki2-backup.xml</span>
 </pre></div>
 
 
@@ -195,7 +226,7 @@
 <p>Podemos listarlas todas si vamos&nbsp;a:</p>
 <p><em>Special pages-&gt;All&nbsp;pages</em></p>
 <p>Del mismo modo, si nuestro viejo wiki disponía de categorias, estas aparecerán bajo: <em>Special pages-&gt;Categories</em>, después de ejecutar este&nbsp;script.</p>
-<div class="codehilite"><pre><span class="go">php maintenance/refreshLinks.php</span>
+<div class="highlight"><pre><span></span><span class="go">php maintenance/refreshLinks.php</span>
 </pre></div>
 
 
@@ -208,7 +239,7 @@
 <li>Actualizar las tablas de imagenes a las de la version&nbsp;1.6.10</li>
 </ul>
 <p>Llevamos a la consola, quedaría&nbsp;asi:</p>
-<div class="codehilite"><pre><span class="go">cd /your_wiki_path/images</span>
+<div class="highlight"><pre><span></span><span class="go">cd /your_wiki_path/images</span>
 <span class="go">rsync -avz wiki2host:/path/to/old/wiki2/images/ .</span>
 <span class="go">chown -R apache:apache *</span>
 <span class="go">cd /path/to/your/database_files</span>
@@ -220,7 +251,7 @@
 
 <p>Dado que no hemos modificado los ficheros <span class="caps">SQL</span> obtenidos mediante el volcado con <code>mysqldump</code>, las tablas actuales han sido substituidas por las viejas. Estas tablas no son exactamente igual en la version 1.3.9 y la 1.6.10 por lo que deberemos añadir los nuevos campos que se introducen a partir de la versin&nbsp;1.5.8.</p>
 <p>Afortunadamente, disponemos de un script que actualiza esta tabla sin eliminar su&nbsp;contenido.</p>
-<div class="codehilite"><pre><span class="go">php maintenance/update.php</span>
+<div class="highlight"><pre><span></span><span class="go">php maintenance/update.php</span>
 <span class="go">php rebuildImages.php</span>
 </pre></div>
 
@@ -229,7 +260,7 @@
 <h2>Importar el <span class="caps">XML</span> generado por MediaWiki&nbsp;1.5.8</h2>
 <p>En este punto, apenas hay diferencias con la versin 1.3.9 y el proceso es prácticamente idéntico. Es decir: procesamos el <span class="caps">XML</span> antes de importarlo y luego importamos las imágenes y documentos&nbsp;adjuntos.</p>
 <p>La única diferencia en este punto es que si importamos el contenido de un <span class="caps">XML</span> generado con la versin 1.5.8 de MediaWiki, es que las pginas de descripción de las categorias y los templates en esta ocasión, se crean&nbsp;correctamente.</p>
-<div class="codehilite"><pre><span class="go">cd /your_wiki_path</span>
+<div class="highlight"><pre><span></span><span class="go">cd /your_wiki_path</span>
 <span class="go">./xwp.sh wiki1-backup.xml [[Category:wiki1]]</span>
 <span class="go">cd /your_wiki_path/maintenance </span>
 <span class="go">php importDump.php P_wiki1-backup.xml</span>
@@ -239,21 +270,21 @@
 <h2>Importar las imagenes y documentos adjuntos desde MediaWiki&nbsp;1.5.8</h2>
 <p>De nuevo en esencia la idea es la misma, por un lado copiaremos los ficheros de imagenes y documentos adjuntos para posteriormente reflejar estos en la base de datos. Si bien en esta ocasión, los campos de las tablas son idénticos para ambas versiones de MediaWiki, deberemos editar los ficheros <span class="caps">SQL</span> antes de&nbsp;importarlos.</p>
 <p>Lo que haremos es borrar la sentencias <code>CREATE TABLE</code> que crean las tablas image, imagelinks y oldimage. Si no lo hacemos, perderemos que habiamos importado del anterior&nbsp;wiki.</p>
-<div class="codehilite"><pre><span class="go">cd /your_wiki_path/images</span>
+<div class="highlight"><pre><span></span><span class="go">cd /your_wiki_path/images</span>
 <span class="go">rsync -avz wiki1host:/path/to/old/wiki1/images/ .</span>
 <span class="go">chown -R apache:apache *</span>
 </pre></div>
 
 
 <p>Ahora, deberemos editar los ficheros <span class="caps">SQL</span> borrando las sentencias <code>CREATE TABLE</code> que preceden a los <code>INSERT</code> de cada tabla. En otras palabras, borraremos las lineas que preceden a&nbsp;cada:</p>
-<div class="codehilite"><pre><span class="go">--</span>
+<div class="highlight"><pre><span></span><span class="go">--</span>
 <span class="go">-- Dumping data for table</span>
 <span class="go">--</span>
 </pre></div>
 
 
 <p><strong>Nota</strong>: En mi caso también he tenido que eliminar la siguiente línea de cada archivo. Sino, el <code>import</code> me daba un&nbsp;warning.</p>
-<div class="codehilite"><pre><span class="go">/*!40101 <span class="caps">SET</span> SQL_MODE=@OLD_SQL_MODE */;</span>
+<div class="highlight"><pre><span></span><span class="go">/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;</span>
 
 <span class="go">:::console</span>
 <span class="go">vi wiki1-image.sql</span>
@@ -269,7 +300,7 @@
 
 <h3>Retoques&nbsp;finales:</h3>
 <p>Una vez hayamos repetido esto para cada uno de los wikis a fusionar, nos queda ejecutar estos&nbsp;scritps:</p>
-<div class="codehilite"><pre><span class="go">php maintenance/initStats.php</span>
+<div class="highlight"><pre><span></span><span class="go">php maintenance/initStats.php</span>
 <span class="go">php maintenance/updateSearchIndex.php</span>
 <span class="go">php maintenance/rebuildtextindex.php</span>
 </pre></div>
@@ -279,21 +310,43 @@
   </div>
 
 
+    <div class="comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        var disqus_shortname = 'frommelmak';
+        var disqus_identifier = "unificar-el-contenido-de-varios-wikis-en-uno-solo.html";
+        var disqus_title = "Unificar el contenido de varios wikis en uno solo";
+        var disqus_url = "http://frommelmak.com/unificar-el-contenido-de-varios-wikis-en-uno-solo.html";
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+    </div>
 
-          </div>
+        </div>
 
-            <div class="span3">
+          <div class="col-md-3">
   <div class="well">
 
-    <p><abbr class="fa fa-calendar" title="2007-07-12T22:34:00"> Thu 12 July 2007</abbr></p>
+    <p><abbr title="2007-07-12T22:34:00+02:00"><i class="fa fa-calendar"></i> Thu 12 July 2007</abbr></p>
 
-      <p><address class="fa fa-user"> By <a href="/author/frommelmak.html" rel="author">frommelmak</a></address></p>
+      <p><address>
+        <i class="fa fa-user"></i> By
+          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+      </address></p>
 
     <hr/>
 
       <p>
-              <a href="/category/spanish.html" rel="tag tooltip" class="label label-info" data-placement="right" data-original-title="56 articles in this category">Spanish</a>
-            <a href="/tag/mediawiki.html" rel="tooltip" class="label" data-placement="right" data-original-title="1 article with this tag">mediawiki</a>
+              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+                  data-toggle="tooltip" class="label label-info"
+                  title="56 articles in this category">Spanish</a>
+            <a href="/tag/mediawiki.html" data-toggle="tooltip"
+      class="label label-default"
+      title="1 article with this tag">mediawiki</a>
       </p>
       <hr/>
 
@@ -301,17 +354,26 @@
       <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/unificar-el-contenido-de-varios-wikis-en-uno-solo.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
-      <ul class="pager">
-        <li class="previous "><a  href="/incoherencias-entre-los-comandos-df-y-du.html" title="Incoherencias entre los comandos df y du"  rel="prev">← Older</a></li>
-        <li class="next "><a  href="/xqde-screenshot.html" title="XQDE screenshot"  rel="next">Newer →</a></li>
-      </ul>
+      <nav>
+        <ul class="pager">
+          <li class="previous ">
+            <a  href="http://frommelmak.com/incoherencias-entre-los-comandos-df-y-du.html" title="Incoherencias entre los comandos df y du"  rel="prev">
+              <span aria-hidden="true">←</span> Older
+            </a>
+          </li>
+          <li class="next ">
+            <a  href="http://frommelmak.com/xqde-screenshot.html" title="XQDE screenshot"  rel="next">
+              Newer <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
   </div>
-              
-            </div>
+            
+          </div>
 
-        </div>
-      </section>
+      </div>
 
     </div>
 
@@ -320,18 +382,18 @@
       <div class="container">
         <div class="row">
 
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Social</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://twitter.com/frommelmak">
       <i class="fa fa-twitter"></i>
     @frommelmak
   </a></li>
                 </ul>
             </div>
-            <div class="span2">
+            <div class="col-md-2">
                 <h5>Links</h5>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                   <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
       <i class="fa fa-linkedin-square"></i>
     LinkedIn
@@ -341,55 +403,55 @@
     GitHub
   </a></li>
                   <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://icons.better-idea.org/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
+      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
     Youtube
   </a></li>
                 </ul>
             </div>
 
-          <div class="span2">
+          <div class="col-md-2">
             <h5>Browse content by</h5>
-            <ul class="fa-ul">
-                <li><a href="/categories/index.html"><i class="fa-li fa fa-tags"></i> Categories</a></li>
-                <li><a href="/archives/index.html"><i class="fa-li fa fa-calendar"></i> Dates</a></li>
-                <li><a href="/tags/index.html"><i class="fa-li fa fa-tag"></i> Tags</a></li>
-
+            <ul class="list-unstyled">
+                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2015 Marcos Martínez.</p>
+            <p>© Copyright 2005-2019 Marcos Martinez.</p>
           </div>
 
-          <div class="span2 muted">
+          <div class="col-md-2 text-muted">
             <h5>Disclaimer</h5>
               <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
           </div>
 
-          <div class="span2">
-            <h5 class="pull-right"><a href="#" class="fa fa-arrow-up"> Back to top</a></h5>
+          <div class="col-md-2">
           </div>
 
         </div>
       </div>
 
+      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
+
       <div class="container">
-        <div class="row span12 muted text-center">
-          Site generated by <a href="http://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="http://kevin.deldycke.com">Kevin Deldycke</a>.
+        <div class="row col-md-12 text-muted text-center">
+          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
+          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
         </div>
       </div>
 
     </footer>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="/theme/js/jquery.mglass.js"></script>
-    <script src="/theme/js/application.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="http://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

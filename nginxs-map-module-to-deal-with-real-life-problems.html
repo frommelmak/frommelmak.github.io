@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>  How to mount a ZFS drive in Linux
+    <title>  Nginx’s map module to deal with real life problems
  | frommelmak</title>
 
     <meta name="author" content="Marcos Martinez"/>
@@ -102,7 +102,7 @@
       <div class="row">
         <div class=" col-md-9  ">
   <h1>
-    <a href="http://frommelmak.com/how-to-mount-a-zfs-drive-in-linux.html" rel="bookmark" title="Permalink to How to mount a ZFS drive in Linux">How to mount a <span class="caps">ZFS</span> drive in&nbsp;Linux</a>
+    <a href="http://frommelmak.com/nginxs-map-module-to-deal-with-real-life-problems.html" rel="bookmark" title="Permalink to Nginx’s map module to deal with real life problems">Nginx&#8217;s map module to deal with real life&nbsp;problems</a>
   </h1>
         </div>
       </div>
@@ -114,76 +114,61 @@
   
 
   <div>
-    <p>First: Plug the <span class="caps">HDD</span> into a <span class="caps">SATA</span> to <span class="caps">USB</span> adapter (obvious).
-Then find the&nbsp;device:</p>
-<div class="highlight"><pre><span></span><span class="go">sfdisk -l</span>
+    <p>I&#8217;ll try to show you how to use nginx&#8217;s log and map modules to put different header values from the http requests into the same place in the log&nbsp;files.</p>
+<p>Imagine you have two kind of http request. One provides some info in an optional http header (like referer), since the other put the same info in a custom header (like&nbsp;client).</p>
+<p>curl &#8212;referer client-xxx http://someserver/some_resource
+curl &#8212;header &#8220;client: client-xxx&#8221;&nbsp;http://someserver/someresource</p>
+<p>Nginx sets incoming headers to variables so you can use $http_referer and $http_client in the log_format&nbsp;definition</p>
+<div class="highlight"><pre><span></span>log_format my_format &#39;$msec|$bytes_sent|$http_referer|$remote_addr|$uri&#39;;
 </pre></div>
 
 
-<p>In my case the device was <code>/dev/sdb1</code></p>
-<p>Install zfs-fuse for your&nbsp;distro:</p>
-<p><strong>Debian</strong>:</p>
-<div class="highlight"><pre><span></span><span class="go">apt-get install zfs-fuse</span>
+<p>or</p>
+<div class="highlight"><pre><span></span>log_format my_format &#39;$msec|$bytes_sent|$http_client|$remote_addr|$uri&#39;;
 </pre></div>
 
 
-<p><strong>OpenSUSE</strong>:</p>
-<div class="highlight"><pre><span></span><span class="go">zypper install zfs-fuse</span>
+<p>But, what if you want to use the referer header for requests whose include it and client one for the rest&nbsp;?</p>
+<p>I mean: What if If you want to put the &#8220;client&#8221; value in the logs always in the same position regardless where the request came from&nbsp;? </p>
+<p>Since the info comes from different varialbes: $http_referer and $http_client, you can&#8217;t use it in the same position in the log_format definition. But no worries, this is where the Nginx&#8217;s &#8220;map&#8221; module comes to the&nbsp;rescue.</p>
+<p>The map module allows you to asign conditional values to a new custom variable. Something like&nbsp;this:</p>
+<div class="highlight"><pre><span></span>map $http_referer $new_var {
+  string_pattern1 value1;
+  string_pattern2 value2;
+  regexp1 value3;
+  regexp2 value4;
+  default value5;
+}
 </pre></div>
 
 
-<p>Start the zfs fuse&nbsp;daemon:</p>
-<div class="highlight"><pre><span></span>/etc/init.d/zfs-fuse start
-super8:~ <span class="c1"># zpool import</span>
- pool: mypool
- id: <span class="m">16911161038176216381</span>
-state: ONLINE
-status: The pool was last accessed by another system.
-action: The pool can be imported using its name or numeric identifier and
-    the <span class="s1">&#39;-f&#39;</span> flag.
-   see: http://www.sun.com/msg/ZFS-8000-EY
-config:
-    mypool  ONLINE
-      disk/by-id/ata-ST3500418AS_5VM4KPXB-part2 ONLINE
+<p>Values can be setted using an existing var, so you can do something like&nbsp;this:</p>
+<div class="highlight"><pre><span></span>  map $http_referer $client {
+    ~^client-* $http_referer;
+    default $http_client;
+  }
 </pre></div>
 
 
-<p>Force the command using the -f flag and the pool&nbsp;identifier</p>
-<div class="highlight"><pre><span></span>super8:~ <span class="c1"># zpool -f import 16911161038176216381</span>
-</pre></div>
-
-
-<p>Verify that everithing look&nbsp;normal:</p>
-<div class="highlight"><pre><span></span>super8:~ <span class="c1"># zpool list</span>
-NAME SIZE ALLOC FREE CAP DEDUP HEALTH ALTROOT
-mypool  460G <span class="m">2</span>.97G 457G <span class="m">0</span>% <span class="m">1</span>.00x ONLINE -
-</pre></div>
-
-
-<p>And mount the filesystem in your desired&nbsp;mountpoint.</p>
-<div class="highlight"><pre><span></span>zfs <span class="nb">set</span> <span class="nv">mountpoint</span><span class="o">=</span>/mnt/zfs mypool
-</pre></div>
-
-
-<p>Thats all, you are done! Your disk is available at <code>/mnt/zfs</code> mountpoint
-Do whatever you need to do and finaly umount the device with this&nbsp;command:</p>
-<div class="highlight"><pre><span></span>zfs umount mypool
-</pre></div>
+<p>log_format my_format&nbsp;&#8216;$msec|$bytes_sent|$client|$remote_addr|$uri&#8217;;</p>
+<p>If the referer exists and starts with the pattern &#8220;client-&#8220;, then the value is assigned to a new var called $client if not, the client header will be used as the value of the new $client&nbsp;var.</p>
+<p>The new $client var will be used in our log_format&nbsp;definition.</p>
+<p>Beatifull and powerfull right&nbsp;?</p>
   </div>
 
     <h3>Related content</h3>
     <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
-        <li><a href="http://frommelmak.com/modificar-ficheros-de-una-imagen-de-disco-particionada.html">Modificar ficheros de una imagen de disco&nbsp;particionada</a></li>
+        <li><a href="http://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></li>
       </ul>
 
     <div class="comments">
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_shortname = 'frommelmak';
-        var disqus_identifier = "how-to-mount-a-zfs-drive-in-linux.html";
-        var disqus_title = "How to mount a ZFS drive in Linux";
-        var disqus_url = "http://frommelmak.com/how-to-mount-a-zfs-drive-in-linux.html";
+        var disqus_identifier = "nginxs-map-module-to-deal-with-real-life-problems.html";
+        var disqus_title = "Nginx’s map module to deal with real life problems";
+        var disqus_url = "http://frommelmak.com/nginxs-map-module-to-deal-with-real-life-problems.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
@@ -198,7 +183,7 @@ Do whatever you need to do and finaly umount the device with this&nbsp;command:<
           <div class="col-md-3">
   <div class="well">
 
-    <p><abbr title="2012-02-08T14:39:12+01:00"><i class="fa fa-calendar"></i> Wed 08 February 2012</abbr></p>
+    <p><abbr title="2019-09-25T19:38:00+02:00"><i class="fa fa-calendar"></i> Wed 25 September 2019</abbr></p>
 
       <p><address>
         <i class="fa fa-user"></i> By
@@ -211,28 +196,28 @@ Do whatever you need to do and finaly umount the device with this&nbsp;command:<
               <a href="http://frommelmak.com/category/english.html" rel="tag"
                   data-toggle="tooltip" class="label label-info"
                   title="14 articles in this category">English</a>
-            <a href="/tag/mount.html" data-toggle="tooltip"
+            <a href="/tag/nginx.html" data-toggle="tooltip"
       class="label label-default"
-      title="2 articles with this tag">mount</a>
-            <a href="/tag/zfs.html" data-toggle="tooltip"
+      title="2 articles with this tag">nginx</a>
+            <a href="/tag/logs.html" data-toggle="tooltip"
       class="label label-default"
-      title="1 article with this tag">zfs</a>
+      title="1 article with this tag">logs</a>
       </p>
       <hr/>
 
       <p>Found a typo ? Want to fix it ?</p>
-      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/how-to-mount-a-zfs-drive-in-linux.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
+      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/nginxs-map-module-to-deal-with-real-life-problems.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
       <hr/>
 
       <nav>
         <ul class="pager">
           <li class="previous ">
-            <a  href="http://frommelmak.com/how-to-convert-your-server-into-a-video-streaming-server.html" title="How to convert your server into a video streaming server"  rel="prev">
+            <a  href="http://frommelmak.com/increase-volume-size-using-elastic-volumes.html" title="Increase volume size using Elastic Volumes"  rel="prev">
               <span aria-hidden="true">←</span> Older
             </a>
           </li>
-          <li class="next ">
-            <a  href="http://frommelmak.com/couchdb-how-to-continue-the-replication-processes-after-restart.html" title="Couchdb: How to continue the replication processes after restart"  rel="next">
+          <li class="next  disabled ">
+            <a  rel="next">
               Newer <span aria-hidden="true">→</span>
             </a>
           </li>
