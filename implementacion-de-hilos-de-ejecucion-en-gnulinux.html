@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
@@ -25,8 +25,8 @@
       <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -38,13 +38,13 @@
     <div class="container">
 
       <div class="page-header">
-          <a href="http://frommelmak.com" class="avatar-container pull-left">
+          <a href="https://frommelmak.com" class="avatar-container pull-left">
             <div class="avatar  animate ">
               <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
                 <div class="side back"><p class="text-center">Alien Life Form</p></div>
             </div>
           </a>
-        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
       </div>
 
       <nav class="navbar navbar-default">
@@ -57,7 +57,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+          <a class="navbar-brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
         <!-- Menus and search forms -->
@@ -102,7 +102,7 @@
       <div class="row">
         <div class=" col-md-9  ">
   <h1>
-    <a href="http://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html" rel="bookmark" title="Permalink to Implementación de hilos de ejecución en GNU/Linux">Implementación de hilos de ejecución en <span class="caps">GNU</span>/Linux</a>
+    <a href="https://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html" rel="bookmark" title="Permalink to Implementación de hilos de ejecución en GNU/Linux">Implementación de hilos de ejecución en <span class="caps">GNU</span>/Linux</a>
   </h1>
         </div>
       </div>
@@ -161,21 +161,21 @@
 
 
 <p>Como hemos dicho, si bien en Red Hat 9 <span class="caps">NPTL</span> es el modelo de hilos utilizado por defecto, utilizando la variable <code>LD_ASSUME_KERNEL</code>, es posible forzar al enlazador dinámico (Dynamic Linker <span class="caps">LD</span>) a la hora de cargar los DSOs requeridos por un programa, de manera que cargue los correspondientes a un modelo de threads u otro al <span class="caps">ASUMIR</span> que la <span class="caps">ABI</span> que le ofrecer el kernel es de una versión anterior a la del kernel actualmente en&nbsp;ejecución.</p>
-<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.2.5
-getconf GNU_LIBPTHREAD_VERSION
-linuxthreads-0.10
+<div class="highlight"><pre><span></span><span class="err">LD_ASSUME_KERNEL=2.2.5</span>
+<span class="err">getconf GNU_LIBPTHREAD_VERSION</span>
+<span class="err">linuxthreads-0.10</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.4.1
-getconf GNU_LIBPTHREAD_VERSION
-linuxthreads-0.10
+<div class="highlight"><pre><span></span><span class="err">LD_ASSUME_KERNEL=2.4.1</span>
+<span class="err">getconf GNU_LIBPTHREAD_VERSION</span>
+<span class="err">linuxthreads-0.10</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>LD_ASSUME_KERNEL=2.4.20
-getconf GNU_LIBPTHREAD_VERSION
-NPTL 0.34 
+<div class="highlight"><pre><span></span><span class="err">LD_ASSUME_KERNEL=2.4.20</span>
+<span class="err">getconf GNU_LIBPTHREAD_VERSION</span>
+<span class="err">NPTL 0.34 </span>
 </pre></div>
 
 
@@ -191,18 +191,18 @@ NPTL 0.34
 
 <p>En el ejemplo anterior, la librera <code>libnss_nis.so.1</code> requiere de una <span class="caps">ABI</span>/Kernel superior o igual a la que ofrecía un kernel de la versión&nbsp;2.2.5.</p>
 <p>Otros&nbsp;ejemplos:</p>
-<div class="highlight"><pre><span></span>eu-readelf -n /lib/i686/libc-2.3.2.so
+<div class="highlight"><pre><span></span><span class="n">eu</span><span class="o">-</span><span class="n">readelf</span> <span class="o">-</span><span class="n">n</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">i686</span><span class="o">/</span><span class="n">libc</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">2</span><span class="p">.</span><span class="n">so</span>
 
-Note segment of 32 bytes at offset 0x00000114:
-Owner          Data size  Type
-GNU                   16  VERSIONOS: Linux, ABI: 2.4.1
+<span class="n">Note</span> <span class="n">segment</span> <span class="k">of</span> <span class="mi">32</span> <span class="n">bytes</span> <span class="k">at</span> <span class="k">offset</span> <span class="mi">0</span><span class="n">x00000114</span><span class="p">:</span>
+<span class="k">Owner</span>          <span class="k">Data</span> <span class="k">size</span>  <span class="k">Type</span>
+<span class="n">GNU</span>                   <span class="mi">16</span>  <span class="n">VERSIONOS</span><span class="p">:</span> <span class="n">Linux</span><span class="p">,</span> <span class="n">ABI</span><span class="p">:</span> <span class="mi">2</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="mi">1</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/libc-2.3.2.so
-Note segment of 32 bytes at offset 0x00000134:
-Owner          Data size  Type
-GNU                   16  VERSIONOS: Linux, ABI: 2.4.20
+<div class="highlight"><pre><span></span><span class="err">eu-readelf -n /lib/tls/libc-2.3.2.so</span>
+<span class="err">Note segment of 32 bytes at offset 0x00000134:</span>
+<span class="err">Owner          Data size  Type</span>
+<span class="err">GNU                   16  VERSIONOS: Linux, ABI: 2.4.20</span>
 </pre></div>
 
 
@@ -210,50 +210,50 @@ GNU                   16  VERSIONOS: Linux, ABI: 2.4.20
 <p>Las utilidades del sistema de paquetes <span class="caps">RPM</span> dependen de libreras que requieren una <span class="caps">ABI</span> y libreras con capacidades <span class="caps">NPTL</span>. Si utilizamos la variable <code>LD_ASSUME_KERNEL</code> para forzar al enlazador dinámico a utilizar las libreras de la implementación de hilos LinuxThreads, corremos el riesgo de obtener resultados inesperados o incluso de corromper la base de datos Berkley <span class="caps">DB</span> del sistema <span class="caps">RPM</span>, ya que esta base de datos está pensada y optimizada para su ejecución en un entorno de hilos <span class="caps">NPTL</span>.</p>
 <p>Es por este motivo que es recomendable estar seguros de que <span class="caps">NO</span> hemos modificado el valor de dicha variable de entorno antes de proceder a construir, o instalar un paquete mediante las herramientas del sistema de paquetes <span class="caps">RPM</span>.</p>
 <p>Las capturas siguientes muestran la estrecha relación que existe entre las herramientas <span class="caps">RPM</span> y el modelo de hilos <span class="caps">NPTL</span>.</p>
-<div class="highlight"><pre><span></span>ldd /bin/rpm
-librpm-4.2.so = /usr/lib/librpm-4.2.so (0x4002a000)
-librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x4007e000)
-librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x4015d000)
-libpopt.so.0 = /usr/lib/libpopt.so.0 (0x401bb000)
-libelf.so.1 = /usr/lib/libelf.so.1 (0x401c3000)
-libpthread.so.0 = tls/libpthread.so.0 (0x401d3000)
-librt.so.1 = tls/librt.so.1 (0x401e2000)
-libbz2.so.1 = /usr/lib/libbz2.so.1 (0x401f4000)
-libc.so.6 = tls/libc.so.6 (0x42000000)
-/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x40000000)
+<div class="highlight"><pre><span></span><span class="err">ldd /bin/rpm</span>
+<span class="err">librpm-4.2.so = /usr/lib/librpm-4.2.so (0x4002a000)</span>
+<span class="err">librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x4007e000)</span>
+<span class="err">librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x4015d000)</span>
+<span class="err">libpopt.so.0 = /usr/lib/libpopt.so.0 (0x401bb000)</span>
+<span class="err">libelf.so.1 = /usr/lib/libelf.so.1 (0x401c3000)</span>
+<span class="err">libpthread.so.0 = tls/libpthread.so.0 (0x401d3000)</span>
+<span class="err">librt.so.1 = tls/librt.so.1 (0x401e2000)</span>
+<span class="err">libbz2.so.1 = /usr/lib/libbz2.so.1 (0x401f4000)</span>
+<span class="err">libc.so.6 = tls/libc.so.6 (0x42000000)</span>
+<span class="err">/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x40000000)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>ldd /usr/bin/rpmbuild
-librpmbuild-4.2.so = /usr/lib/librpmbuild-4.2.so (0x00bba000)
-librpm-4.2.so = /usr/lib/librpm-4.2.so (0x008a3000)
-librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x00252000)
-librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x00380000)
-libpopt.so.0 = /usr/lib/libpopt.so.0 (0x00d26000)
-libelf.so.1 = /usr/lib/libelf.so.1 (0x00aef000)
-libbeecrypt.so.6 = /usr/lib/libbeecrypt.so.6 (0x0061a000)
-librt.so.1 = /lib/tls/librt.so.1 (0x00d56000)
-libpthread.so.0 = /lib/tls/libpthread.so.0 (0x005ac000)
-libz.so.1 = /usr/lib/libz.so.1 (0x00c0e000)
-libbz2.so.1 = /usr/lib/libbz2.so.1 (0x00e55000)
-libc.so.6 = /lib/tls/libc.so.6 (0x00111000)
-/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x00364000)
+<div class="highlight"><pre><span></span><span class="err">ldd /usr/bin/rpmbuild</span>
+<span class="err">librpmbuild-4.2.so = /usr/lib/librpmbuild-4.2.so (0x00bba000)</span>
+<span class="err">librpm-4.2.so = /usr/lib/librpm-4.2.so (0x008a3000)</span>
+<span class="err">librpmdb-4.2.so = /usr/lib/librpmdb-4.2.so (0x00252000)</span>
+<span class="err">librpmio-4.2.so = /usr/lib/librpmio-4.2.so (0x00380000)</span>
+<span class="err">libpopt.so.0 = /usr/lib/libpopt.so.0 (0x00d26000)</span>
+<span class="err">libelf.so.1 = /usr/lib/libelf.so.1 (0x00aef000)</span>
+<span class="err">libbeecrypt.so.6 = /usr/lib/libbeecrypt.so.6 (0x0061a000)</span>
+<span class="err">librt.so.1 = /lib/tls/librt.so.1 (0x00d56000)</span>
+<span class="err">libpthread.so.0 = /lib/tls/libpthread.so.0 (0x005ac000)</span>
+<span class="err">libz.so.1 = /usr/lib/libz.so.1 (0x00c0e000)</span>
+<span class="err">libbz2.so.1 = /usr/lib/libbz2.so.1 (0x00e55000)</span>
+<span class="err">libc.so.6 = /lib/tls/libc.so.6 (0x00111000)</span>
+<span class="err">/lib/ld-linux.so.2 = /lib/ld-linux.so.2 (0x00364000)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/librt.so.1
-Note segment of 32 bytes at offset 0x00000134:
-Owner          Data size  Type
-GNU                   16  VERSION
-OS: Linux, ABI: 2.4.20
+<div class="highlight"><pre><span></span><span class="err">eu-readelf -n /lib/tls/librt.so.1</span>
+<span class="err">Note segment of 32 bytes at offset 0x00000134:</span>
+<span class="err">Owner          Data size  Type</span>
+<span class="err">GNU                   16  VERSION</span>
+<span class="c">OS: Linux, ABI: 2.4.20</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>eu-readelf -n /lib/tls/libpthread.so.0
-Note segment of 32 bytes at offset 0x00000114:
-Owner          Data size  Type
-GNU                   16  VERSION
-OS: Linux, ABI: 2.4.20
+<div class="highlight"><pre><span></span><span class="err">eu-readelf -n /lib/tls/libpthread.so.0</span>
+<span class="err">Note segment of 32 bytes at offset 0x00000114:</span>
+<span class="err">Owner          Data size  Type</span>
+<span class="err">GNU                   16  VERSION</span>
+<span class="c">OS: Linux, ABI: 2.4.20</span>
 </pre></div>
 
 
@@ -282,7 +282,7 @@ OS: Linux, ABI: 2.4.20
         var disqus_shortname = 'frommelmak';
         var disqus_identifier = "implementacion-de-hilos-de-ejecucion-en-gnulinux.html";
         var disqus_title = "Implementación de hilos de ejecución en GNU/Linux";
-        var disqus_url = "http://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html";
+        var disqus_url = "https://frommelmak.com/implementacion-de-hilos-de-ejecucion-en-gnulinux.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
@@ -301,13 +301,13 @@ OS: Linux, ABI: 2.4.20
 
       <p><address>
         <i class="fa fa-user"></i> By
-          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+          <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
       </address></p>
 
     <hr/>
 
       <p>
-              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag"
                   data-toggle="tooltip" class="label label-info"
                   title="56 articles in this category">Spanish</a>
             <a href="/tag/threads.html" data-toggle="tooltip"
@@ -326,12 +326,12 @@ OS: Linux, ABI: 2.4.20
       <nav>
         <ul class="pager">
           <li class="previous ">
-            <a  href="http://frommelmak.com/asterisk-the-future-of-telephony.html" title="Asterisk: The Future of Telephony"  rel="prev">
+            <a  href="https://frommelmak.com/asterisk-the-future-of-telephony.html" title="Asterisk: The Future of Telephony"  rel="prev">
               <span aria-hidden="true">←</span> Older
             </a>
           </li>
           <li class="next ">
-            <a  href="http://frommelmak.com/tux-droid-tu-amigo-programable.html" title="Tux Droid, tu amigo programable"  rel="next">
+            <a  href="https://frommelmak.com/tux-droid-tu-amigo-programable.html" title="Tux Droid, tu amigo programable"  rel="next">
               Newer <span aria-hidden="true">→</span>
             </a>
           </li>
@@ -381,15 +381,15 @@ OS: Linux, ABI: 2.4.20
           <div class="col-md-2">
             <h5>Browse content by</h5>
             <ul class="list-unstyled">
-                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
-                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
-                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
           <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2019 Marcos Martinez.</p>
+            <p>© Copyright 2005-2020 Marcos Martinez.</p>
           </div>
 
           <div class="col-md-2 text-muted">
@@ -419,8 +419,8 @@ OS: Linux, ABI: 2.4.20
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
-    <script src="http://frommelmak.com/theme/js/application.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>

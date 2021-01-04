@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="http://frommelmak.com/theme/css/style.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
+    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
 
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
@@ -25,8 +25,8 @@
       <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
 
 
-    <link rel="icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="http://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
 
     <!-- Feeds -->
 
@@ -38,13 +38,13 @@
     <div class="container">
 
       <div class="page-header">
-          <a href="http://frommelmak.com" class="avatar-container pull-left">
+          <a href="https://frommelmak.com" class="avatar-container pull-left">
             <div class="avatar  animate ">
               <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
                 <div class="side back"><p class="text-center">Alien Life Form</p></div>
             </div>
           </a>
-        <h1><a href="http://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
+        <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
       </div>
 
       <nav class="navbar navbar-default">
@@ -57,7 +57,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+          <a class="navbar-brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
         </div>
 
         <!-- Menus and search forms -->
@@ -102,7 +102,7 @@
       <div class="row">
         <div class=" col-md-9  ">
   <h1>
-    <a href="http://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html" rel="bookmark" title="Permalink to Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP">Comunicarse via <span class="caps">SOAP</span> con Mantis (Mantisconnect) desde <span class="caps">PHP</span></a>
+    <a href="https://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html" rel="bookmark" title="Permalink to Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP">Comunicarse via <span class="caps">SOAP</span> con Mantis (Mantisconnect) desde <span class="caps">PHP</span></a>
   </h1>
         </div>
       </div>
@@ -119,43 +119,43 @@
 <p>Adems del <span class="caps">WSDL</span>, es interesante saber que hay una ayuda para humanos acerca de los métodos disponibles. Se puede obtener omitiendo <code>?wsdl</code> en la llamada&nbsp;anterior.</p>
 <p>A continuación os dejo los ejemplos sobre como llamar a algunos de estos métodos desde <span class="caps">PHP</span>.</p>
 <p>Obtener la versin de&nbsp;Mantis:</p>
-<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
-<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);print($client-mc_version());</span>
-<span class="x">?&amp;gt;</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span><span class="k">print</span><span class="p">(</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_version</span><span class="p">());</span>
+<span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 
 
 <p>Obtener array con diferentes estadisticas de&nbsp;Mantis</p>
-<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
-<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);$username=usuario;$password=contrasea;print_r($client-mc_enum_status($username, $password));</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span><span class="nv">$username</span><span class="o">=</span><span class="nx">usuario</span><span class="p">;</span><span class="nv">$password</span><span class="o">=</span><span class="nx">contrasea</span><span class="p">;</span><span class="nb">print_r</span><span class="p">(</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_enum_status</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">));</span>
 
-<span class="x">?&amp;gt;</span>
+<span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 
 
 <p>Aadir una nueva issue a&nbsp;Mantis</p>
-<div class="highlight"><pre><span></span><span class="x">&amp;lt;?php</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
 
-<span class="x">$client = new SoapClient(http://mantis/api/soap/mantisconnect.php?wsdl);</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SoapClient</span><span class="p">(</span><span class="nx">http</span><span class="o">://</span><span class="nx">mantis</span><span class="o">/</span><span class="nx">api</span><span class="o">/</span><span class="nx">soap</span><span class="o">/</span><span class="nx">mantisconnect</span><span class="o">.</span><span class="nx">php</span><span class="o">?</span><span class="nx">wsdl</span><span class="p">);</span>
 
-<span class="x">$username=usuario;</span>
-<span class="x">$password=constrasea;</span>
+<span class="nv">$username</span><span class="o">=</span><span class="nx">usuario</span><span class="p">;</span>
+<span class="nv">$password</span><span class="o">=</span><span class="nx">constrasea</span><span class="p">;</span>
 
-<span class="x">$issue=array (project = array (id = , name = SOAP Test),</span>
-<span class="x">              category = General,</span>
-<span class="x">              priority = array (id = , name = ),</span>
-<span class="x">              severity = array (id = , name = ),</span>
-<span class="x">              status = array (id = , name = ),</span>
-<span class="x">              reproducibility = array (id = , name = ),</span>
-<span class="x">              resolution = array (id = , name = ),</span>
-<span class="x">              projection = array (id = , name = ),</span>
-<span class="x">              eta = array (id = , name = ),</span>
-<span class="x">              view_state = array (id = , name = ),</span>
-<span class="x">              summary  = Test SOAP,</span>
-<span class="x">              description = This is just a new issue added using SOAP);$client-mc_issue_add($username, $password, $issue);</span>
-<span class="x">?&amp;gt;</span>
+<span class="nv">$issue</span><span class="o">=</span><span class="k">array</span> <span class="p">(</span><span class="nx">project</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">SOAP</span> <span class="nx">Test</span><span class="p">),</span>
+              <span class="nx">category</span> <span class="o">=</span> <span class="nx">General</span><span class="p">,</span>
+              <span class="nx">priority</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">severity</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">status</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">reproducibility</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">resolution</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">projection</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">eta</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">view_state</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="nx">id</span> <span class="o">=</span> <span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="p">),</span>
+              <span class="nx">summary</span>  <span class="o">=</span> <span class="nx">Test</span> <span class="nx">SOAP</span><span class="p">,</span>
+              <span class="nx">description</span> <span class="o">=</span> <span class="k">This</span> <span class="nx">is</span> <span class="nx">just</span> <span class="nx">a</span> <span class="k">new</span> <span class="nx">issue</span> <span class="nx">added</span> <span class="nx">using</span> <span class="nx">SOAP</span><span class="p">);</span><span class="nv">$client</span><span class="o">-</span><span class="nx">mc_issue_add</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">,</span> <span class="nv">$issue</span><span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 
 
@@ -165,7 +165,7 @@
     <h3>Related content</h3>
     <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
     <ul>
-        <li><a href="http://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></li>
+        <li><a href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></li>
       </ul>
 
     <div class="comments">
@@ -174,7 +174,7 @@
         var disqus_shortname = 'frommelmak';
         var disqus_identifier = "comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html";
         var disqus_title = "Comunicarse via SOAP con Mantis (Mantisconnect) desde PHP";
-        var disqus_url = "http://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html";
+        var disqus_url = "https://frommelmak.com/comunicarse-via-soap-con-mantis-mantisconnect-desde-php.html";
         (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
@@ -193,13 +193,13 @@
 
       <p><address>
         <i class="fa fa-user"></i> By
-          <a href="http://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+          <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
       </address></p>
 
     <hr/>
 
       <p>
-              <a href="http://frommelmak.com/category/spanish.html" rel="tag"
+              <a href="https://frommelmak.com/category/spanish.html" rel="tag"
                   data-toggle="tooltip" class="label label-info"
                   title="56 articles in this category">Spanish</a>
             <a href="/tag/php.html" data-toggle="tooltip"
@@ -221,12 +221,12 @@
       <nav>
         <ul class="pager">
           <li class="previous ">
-            <a  href="http://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html" title="De VMware Server a ESXi con VMware Converter"  rel="prev">
+            <a  href="https://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html" title="De VMware Server a ESXi con VMware Converter"  rel="prev">
               <span aria-hidden="true">←</span> Older
             </a>
           </li>
           <li class="next ">
-            <a  href="http://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html" title="Crear un instalable en pocos minutos con NSIS"  rel="next">
+            <a  href="https://frommelmak.com/crear-un-instalable-en-pocos-minutos-con-nsis.html" title="Crear un instalable en pocos minutos con NSIS"  rel="next">
               Newer <span aria-hidden="true">→</span>
             </a>
           </li>
@@ -276,15 +276,15 @@
           <div class="col-md-2">
             <h5>Browse content by</h5>
             <ul class="list-unstyled">
-                <li><a href="http://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
-                <li><a href="http://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
-                <li><a href="http://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
+                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
+                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
+                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
             </ul>
           </div>
 
           <div class="col-md-2 text-muted">
             <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2019 Marcos Martinez.</p>
+            <p>© Copyright 2005-2020 Marcos Martinez.</p>
           </div>
 
           <div class="col-md-2 text-muted">
@@ -314,8 +314,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="http://frommelmak.com/theme/js/jquery.mglass.js"></script>
-    <script src="http://frommelmak.com/theme/js/application.js"></script>
+    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
+    <script src="https://frommelmak.com/theme/js/application.js"></script>
 
   </body>
 </html>
