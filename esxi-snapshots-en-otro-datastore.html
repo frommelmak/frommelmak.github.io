@@ -1,116 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>  ESXi: Snapshots en otro datastore
- | frommelmak</title>
-
-    <meta name="author" content="Marcos Martinez"/>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
-    <link rel="stylesheet" href="https://frommelmak.com/theme/css/jquery.mglass.css"/>
-    <link rel="stylesheet" href="https://frommelmak.com/theme/css/pygment-solarized-dark.css"/>
-    <link rel="stylesheet" href="https://frommelmak.com/theme/css/style.css"/>
-
-    <!-- Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
-    <link href='https://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'/>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'/>
-      <link href='https://fonts.googleapis.com/css?family=Expletus+Sans' rel='stylesheet' type='text/css'>
+<head>
+          <title>frommelmak - ESXi: Snapshots en otro&nbsp;datastore</title>
+        <meta charset="utf-8" />
 
 
-    <link rel="icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="https://frommelmak.com/favicon.ico" type="image/x-icon">
-
-    <!-- Feeds -->
 
 
-  </head>
+    <meta name="tags" content="vmware" />
+    <meta name="tags" content="esxi" />
+    <meta name="tags" content="virtualization" />
 
-  <body>
+</head>
 
-    <div class="container">
-
-      <div class="page-header">
-          <a href="https://frommelmak.com" class="avatar-container pull-left">
-            <div class="avatar  animate ">
-              <div class="side"><img src="images/avatar.png" class="img-responsive"/></div>
-                <div class="side back"><p class="text-center">Alien Life Form</p></div>
-            </div>
-          </a>
-        <h1><a href="https://frommelmak.com">frommelmak</a> <small>Yet another Melmacian interested in technology...</small></h1>
-      </div>
-
-      <nav class="navbar navbar-default">
-
-        <!-- Hamburger menu for mobile -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
-        </div>
-
-        <!-- Menus and search forms -->
-        <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
-
-          <ul class="nav navbar-nav">
-<li >
-                <a href="/">Home</a>
-              </li>
-<li >
-                  <a href="https://frommelmak.com/pages/about.html">About</a>
-                </li>
-          </ul>
-
-            <form class="navbar-form navbar-right" role="search" action="https://www.google.com" target="_blank">
-              <div class="form-group">
-                <div class="input-group">
-                  <input type="text" name="q" class="form-control search-query" placeholder="Search" required />
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="fa fa-search fa-fw"></i></button>
-                  </span>
-                </div>
-                <input type="hidden" name="cx" value="partner-pub-2082790787711438:7148578903" />
-                <input type="hidden" name="ie" value="UTF-8" />
-              </div>
-            </form>
-
-
-        </div>
-
-      </nav>
-
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark"
+         title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro&nbsp;datastore</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2010-11-04T00:22:40+01:00">
+      Thu 04 November 2010
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
+    </address>
+    <div class="category">
+        Category: <a href="https://frommelmak.com/category/spanish.html">Spanish</a>
     </div>
-
-
-    <div class="container main">
-
-
-      <div class="row">
-        <div class=" col-md-9  ">
-  <h1>
-    <a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark" title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro&nbsp;datastore</a>
-  </h1>
-        </div>
-      </div>
-
-      <div class="row">
-
-
-        <div class=" col-md-9 " id="content" role="main">
-  
-
-  <div>
+    <div class="tags">
+        Tags:
+            <a href="https://frommelmak.com/tag/vmware.html">vmware</a>
+            <a href="https://frommelmak.com/tag/esxi.html">esxi</a>
+            <a href="https://frommelmak.com/tag/virtualization.html">virtualization</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
     <p>Si al intentar hacer un snapshot de un guest nos dice que no tenemos espacio, tenemos dos opciones: La primera es añadir otro disco duro y añadirlo al datastore en el que reside la máquina, la segunda es hacer el snapshot en otro&nbsp;datastore.</p>
 <p>No obstante, hay escenarios en los que la primera opción puede no ser una solución. Por ejemplo: Si el guest dispone de dos discos duros virtuales, cada uno en un datastore con tamano de bloque diferente, podría ser que pese a tener espacio, el tamaño máximo del fichero permitido en el datastore en el que reside el disco principal no permita realizar el snapshot. En este y otros casos, la solución pasa por forzar el snapshot en otro&nbsp;datastore.</p>
 <p>Para ello, existe una variable que controla dónde se hacen los snapshots. Si esta variable no existe, se realizarán el el mismo folder dónde se encuentre el fichero <code>.vmx</code> que define la&nbsp;máquina.</p>
@@ -125,164 +60,13 @@
 </ul>
 <p><img alt="vmx register" src="|filename|/images/old_blog/register_vmachine.png"></p>
 <p>Tras esto, veremos que el working dir es ahora otro el folder <code>vm-snapshots</code>. Este cambio afecta también al área de <em>swap</em> de esta máquina que pasa a estar en el nuevo&nbsp;datastore.</p>
-  </div>
-
-    <h3>Related content</h3>
-    <!-- TODO: Use fancier related layout, as in https://kevin.deldycke.com/2012/04/beautify-contextual-related-posts-wordpress-plugin/ -->
-    <ul>
-        <li><a href="https://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html">De VMware Server a ESXi con VMware&nbsp;Converter</a></li>
-        <li><a href="https://frommelmak.com/anadir-discos-en-caliente-a-guest-debian-50-sobre-esxi-host.html">Añadir discos en caliente a guest Debian 5.0 sobre ESXi&nbsp;host</a></li>
-        <li><a href="https://frommelmak.com/udev-network-device-en-ubuntu-hardy-sobre-vmware.html">udev network device en Ubuntu Hardy sobre&nbsp;VMWare</a></li>
-      </ul>
-
-    <div class="comments">
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-        var disqus_shortname = 'frommelmak';
-        var disqus_identifier = "esxi-snapshots-en-otro-datastore.html";
-        var disqus_title = "ESXi: Snapshots en otro datastore";
-        var disqus_url = "https://frommelmak.com/esxi-snapshots-en-otro-datastore.html";
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
-    </div>
-
-        </div>
-
-          <div class="col-md-3">
-  <div class="well">
-
-    <p><abbr title="2010-11-04T00:22:40+01:00"><i class="fa fa-calendar"></i> Thu 04 November 2010</abbr></p>
-
-      <p><address>
-        <i class="fa fa-user"></i> By
-          <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
-      </address></p>
-
-    <hr/>
-
-      <p>
-              <a href="https://frommelmak.com/category/spanish.html" rel="tag"
-                  data-toggle="tooltip" class="label label-info"
-                  title="56 articles in this category">Spanish</a>
-            <a href="/tag/vmware.html" data-toggle="tooltip"
-      class="label label-default"
-      title="5 articles with this tag">vmware</a>
-            <a href="/tag/esxi.html" data-toggle="tooltip"
-      class="label label-default"
-      title="2 articles with this tag">esxi</a>
-            <a href="/tag/virtualization.html" data-toggle="tooltip"
-      class="label label-default"
-      title="2 articles with this tag">virtualization</a>
-      </p>
-      <hr/>
-
-      <p>Found a typo ? Want to fix it ?</p>
-      <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/esxi-snapshots-en-otro-datastore.md"><i class="fa fa-random fa-white fa-fw"></i> Edit article on GitHub</a>
-      <hr/>
-
-      <nav>
-        <ul class="pager">
-          <li class="previous ">
-            <a  href="https://frommelmak.com/backup-completo-de-un-guest-linux-mediante-tar.html" title="Backup completo de un guest Linux mediante tar"  rel="prev">
-              <span aria-hidden="true">←</span> Older
-            </a>
-          </li>
-          <li class="next ">
-            <a  href="https://frommelmak.com/couchdb-auth.html" title="Couchdb auth"  rel="next">
-              Newer <span aria-hidden="true">→</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-  </div>
-            
-          </div>
-
-      </div>
-
-    </div>
-
-    <!-- TODO: make footer sticky -->
-    <footer class="container-fluid">
-      <div class="container">
-        <div class="row">
-
-            <div class="col-md-2">
-                <h5>Social</h5>
-                <ul class="list-unstyled">
-                  <li>  <a href="http://twitter.com/frommelmak">
-      <i class="fa fa-twitter"></i>
-    @frommelmak
-  </a></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <h5>Links</h5>
-                <ul class="list-unstyled">
-                  <li>  <a href="http://linkedin.com/in/marcosmartinezjimenez">
-      <i class="fa fa-linkedin-square"></i>
-    LinkedIn
-  </a></li>
-                  <li>  <a href="http://github.com/frommelmak">
-      <i class="fa fa-github"></i>
-    GitHub
-  </a></li>
-                  <li>  <a href="http://www.youtube.com/user/melmak">
-      <img src="https://besticon-demo.herokuapp.com/icon?url=www.youtube.com&size=16" width="16" height="16" class="icon" alt="www.youtube.com icon"/>
-    Youtube
-  </a></li>
-                </ul>
-            </div>
-
-          <div class="col-md-2">
-            <h5>Browse content by</h5>
-            <ul class="list-unstyled">
-                <li><a href="https://frommelmak.com/categories/index.html"><i class="fa fa-tags"></i> Categories</a></li>
-                <li><a href="https://frommelmak.com/archives/index.html"><i class="fa fa-calendar"></i> Dates</a></li>
-                <li><a href="https://frommelmak.com/tags/index.html"><i class="fa fa-tag"></i> Tags</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-2 text-muted">
-            <h5>Copyright notice</h5>
-            <p>© Copyright 2005-2020 Marcos Martinez.</p>
-          </div>
-
-          <div class="col-md-2 text-muted">
-            <h5>Disclaimer</h5>
-              <p>All opinions expressed in this site are my own personal opinions and are not endorsed by, nor do they represent the opinions of my previous, current and future employers or any of its affiliates, partners or customers.</p>
-          </div>
-
-          <div class="col-md-2">
-          </div>
-
-        </div>
-      </div>
-
-      <h5 class="text-right"><a href="#"><i class="fa fa-arrow-up"></i> Back to top</a></h5>
-
-      <div class="container">
-        <div class="row col-md-12 text-muted text-center">
-          Site generated by <a href="https://getpelican.com"> Pelican</a>.<br/>
-          <a href="https://github.com/kdeldycke/plumage"> Plumage</a> theme by <a href="https://kevin.deldycke.com">Kevin Deldycke</a>.
-        </div>
-      </div>
-
-    </footer>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.1.0/jquery.fitvids.min.js"></script>
-    <script src="https://frommelmak.com/theme/js/jquery.mglass.js"></script>
-    <script src="https://frommelmak.com/theme/js/application.js"></script>
-
-  </body>
+  </div><!-- /.entry-content -->
+</section>
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+</body>
 </html>
