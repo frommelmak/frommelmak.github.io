@@ -1,106 +1,164 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-          <title>frommelmak - Instalar Xgl + Compiz en SuSE 10.x con <span class="caps">KDE</span></title>
-        <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>    Instalar Xgl + Compiz en SuSE 10.x con KDE
+ | frommelmak</title>
+
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+        <meta name="keywords" content="xgl, compiz">
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
 
 
-    <meta name="tags" content="xgl" />
-    <meta name="tags" content="compiz" />
+                </div>
 
-</head>
+            </nav>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="https://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html" rel="bookmark"
-         title="Permalink to Instalar Xgl + Compiz en SuSE 10.x con KDE">Instalar Xgl + Compiz en SuSE 10.x con <span class="caps">KDE</span></a></h2>
- 
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="2006-04-10T20:54:30+02:00">
-      Mon 10 April 2006
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-    </address>
-    <div class="category">
-        Category: <a href="https://frommelmak.com/category/spanish.html">Spanish</a>
-    </div>
-    <div class="tags">
-        Tags:
-            <a href="https://frommelmak.com/tag/xgl.html">xgl</a>
-            <a href="https://frommelmak.com/tag/compiz.html">compiz</a>
-    </div>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
-    <p>Hoy, tras mucho tiempo con ganas de probarlo me he decidido a instalar Xgl + Compiz en SuSE&nbsp;10.x.</p>
-<p>Primero lo he instalado en una SuSE 10.1 Beta 9 sobre un hardware sobrado de potencia (Intel Xeon 2.8GHz <span class="caps">2GB</span> <span class="caps">RAM</span> + NVidia Quadro <span class="caps">FX</span> 1300) y en vista del éxito, me he decidido a probarlo también en mi portatil SuSE 10.0 (Centrino a 1.73GHz <span class="caps">1GB</span> <span class="caps">RAM</span> + Intel <span class="caps">GMA</span>&nbsp;900).</p>
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-9
+">
+    <h1>
+        <a href="https://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html" rel="bookmark" title="Permalink to Instalar Xgl + Compiz en SuSE 10.x con KDE">Instalar Xgl + Compiz en SuSE 10.x con <span class="caps">KDE</span></a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-9
+">
+    
+
+    <p>Hoy, tras mucho tiempo con ganas de probarlo me he decidido a instalar Xgl + Compiz en SuSE 10.x.</p>
+<p>Primero lo he instalado en una SuSE 10.1 Beta 9 sobre un hardware sobrado de potencia (Intel Xeon 2.8GHz <span class="caps">2GB</span> <span class="caps">RAM</span> + NVidia Quadro <span class="caps">FX</span> 1300) y en vista del éxito, me he decidido a probarlo también en mi portatil SuSE 10.0 (Centrino a 1.73GHz <span class="caps">1GB</span> <span class="caps">RAM</span> + Intel <span class="caps">GMA</span> 900).</p>
 <p>La última información referente a Xgl en SuSE la encontrareis siempre aquí: <a href="http://en.opensuse.org/Xgl">http://en.opensuse.org/Xgl</a></p>
-<p>Desde allí, llegareis a esta otra pagina en la que explican cómo instalar y utilizar Xgl en SuSE. Tanto si utilizas <span class="caps">KDE</span> o Gnome: <a href="http://en.opensuse.org/Using_Xgl_on_SUSE_Linux">http://en.opensuse.org/Using_Xgl_on_SUSE_Linux</a> A continuación os detallo el procedimiento que he seguido en ambos casos, y los resultados obtenidos. De esta manera podreis haceros una idea de lo que podeis esperar de vuestros sistemas. Os dejo también <a href="http://nomeriasdeti.no-ip.com/index.php?top_tab=2&amp;section_type=3&amp;num=&amp;task=view&amp;id_album=26">esta</a> galería de imagenes con algunas&nbsp;capturas.</p>
-<p><strong>Actualización</strong>: He actualizado Xgl, Compiz y algunas librerias a la versión de la Release Candidate 1 de SuSE 10.1. No he encontrado mejoras radicales, slo alguna mejora con las knotes asi que habrá que esperar a la version 10.1 y ver si el kernel y los nuevos drivers solventan los problemas con&nbsp;Intel.</p>
+<p>Desde allí, llegareis a esta otra pagina en la que explican cómo instalar y utilizar Xgl en SuSE. Tanto si utilizas <span class="caps">KDE</span> o Gnome: <a href="http://en.opensuse.org/Using_Xgl_on_SUSE_Linux">http://en.opensuse.org/Using_Xgl_on_SUSE_Linux</a> A continuación os detallo el procedimiento que he seguido en ambos casos, y los resultados obtenidos. De esta manera podreis haceros una idea de lo que podeis esperar de vuestros sistemas. Os dejo también <a href="http://nomeriasdeti.no-ip.com/index.php?top_tab=2&amp;section_type=3&amp;num=&amp;task=view&amp;id_album=26">esta</a> galería de imagenes con algunas capturas.</p>
+<p><strong>Actualización</strong>: He actualizado Xgl, Compiz y algunas librerias a la versión de la Release Candidate 1 de SuSE 10.1. No he encontrado mejoras radicales, slo alguna mejora con las knotes asi que habrá que esperar a la version 10.1 y ver si el kernel y los nuevos drivers solventan los problemas con Intel.</p>
 <p>Por otro lado, he encontrado <a href="http://www.tuxpan.com/fcatrin/es/comments.php?guid=20060311">este</a> interesantisimo articulo que aclara conceptos a veces confusos sobre los nuevos composite manager versus los windown-managers tradicionales. <span class="caps">MUY</span> <span class="caps">RECOMENDABLE</span>!</p>
 <p><strong>Actualización 2</strong>: Me comentan desde Mexico que algunos de los <span class="caps">RPM</span> referenciados en este articulo ya no se encuentran disponibles. Si es tu caso mira a ver si es uno de los que he podido rescatar de mi portatil y poner en este tarball <a href="http://nomeriasdeti.no-ip.com/files/Xgl-SuSE-10.x-RPMS.tar.gz">Xgl-SuSE-10.x-<span class="caps">RPMS</span>.tar.gz</a></p>
-<h1>Instalación en SuSE 10.1 (Beta&nbsp;9)</h1>
-<p>La instalación sobre una SuSE 10.1 no tiene ningun misterio. Los Pasos a seguir serian&nbsp;estos:</p>
-<h2>Instalar el driver de NVidia&nbsp;oficial</h2>
-<p>Si dispones de una tarjeta de video NVidia, SuSE 10.1 cargar por defecto el módulo de NVidia que viene con el kernel (<code>nv</code>). Sin embargo para hacer funcionar Xgl es necesario instalar los drivers oficiales de NVidia. Por otro lado, es importante hacer esto antes de instalar el paquete&nbsp;Xgl.</p>
-<p>Antes de bajarte e instalar el driver oficial de NVidia, asegurate que has instalado las fuentes del kernel y el compilador gcc, ya que son necesarias para compilar el modulo nvidia, pues no viene uno precompilado en el paquete oficial y ser necesario compilar uno especifico para nuestro&nbsp;kernel.</p>
-<p>La forma más sencialla de instalar las fuentes es via YaST. Para instalar el driver oficial de Nvidia haz&nbsp;esto:</p>
-<div class="highlight"><pre><span></span><span class="go">init 3</span>
+<h1>Instalación en SuSE 10.1 (Beta 9)</h1>
+<p>La instalación sobre una SuSE 10.1 no tiene ningun misterio. Los Pasos a seguir serian estos:</p>
+<h2>Instalar el driver de NVidia oficial</h2>
+<p>Si dispones de una tarjeta de video NVidia, SuSE 10.1 cargar por defecto el módulo de NVidia que viene con el kernel (<code>nv</code>). Sin embargo para hacer funcionar Xgl es necesario instalar los drivers oficiales de NVidia. Por otro lado, es importante hacer esto antes de instalar el paquete Xgl.</p>
+<p>Antes de bajarte e instalar el driver oficial de NVidia, asegurate que has instalado las fuentes del kernel y el compilador gcc, ya que son necesarias para compilar el modulo nvidia, pues no viene uno precompilado en el paquete oficial y ser necesario compilar uno especifico para nuestro kernel.</p>
+<p>La forma más sencialla de instalar las fuentes es via YaST. Para instalar el driver oficial de Nvidia haz esto:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">init 3</span>
 <span class="go">wget http://download.nvidia.com/XFree86/Linux-x86/ 1.0-8756/NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
 <span class="go">chmod u+x NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
 <span class="go">./NVIDIA-Linux-x86-1.0-8756-pkg1.run</span>
-</pre></div>
+</code></pre></div>
 
+<p>El proceso de instalación de NVidia nos informar de que no existe un módulo precompilado para nuestra distribución y nos preguntará si queremos compilar uno. Le decimos que sí.</p>
+<p>Finalmente nos pregunta si queremos modificar el fichero <code>xorg.conf</code> para que cargue el nuevo módulo. Le diremos tambin que sí.</p>
+<p>Ahora volvemos a lanzar el entorno gráfico, tras lo cual podremos seguir con la instalación del server gráfico OpenGL Xgl.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">init 5</span>
+</code></pre></div>
 
-<p>El proceso de instalación de NVidia nos informar de que no existe un módulo precompilado para nuestra distribución y nos preguntará si queremos compilar uno. Le decimos que&nbsp;sí.</p>
-<p>Finalmente nos pregunta si queremos modificar el fichero <code>xorg.conf</code> para que cargue el nuevo módulo. Le diremos tambin que&nbsp;sí.</p>
-<p>Ahora volvemos a lanzar el entorno gráfico, tras lo cual podremos seguir con la instalación del server gráfico OpenGL&nbsp;Xgl.</p>
-<div class="highlight"><pre><span></span><span class="go">init 5</span>
-</pre></div>
+<h2>Instalar Xgl + Compiz (via Yast)</h2>
+<p>Si queremos evitar problemas de dependencias, lo más sencillo es instalar Xgl y Compiz via YaST. Haciendolo de esta manera, no tendremos ningún problema.</p>
+<p>Hay que tener en cuenta que si no tenemos instalado Gnome en nuestro sistema, se instalarán varios componentes de Gnome (<code>control-center2</code>, <code>gnome-window-decorator</code>…) así como algunas librerias (<code>libsvg</code>, <code>libsvg-cairo</code>…). En cualquier caso, sera YaST el encargado de resolver dichas dependencias.</p>
+<h2>Configurar Xgl como servidor de X principal</h2>
+<p>Ahora ya sólo queda configurar el sistema para ejecutar Xgl y cargar los plugins de Compiz con los efectos que queramos.</p>
+<p>Para ejecutar Xgl deberemos decirle a kdm que ejecute Xgl en lugar del servidor de X. En SuSE 10.1 esto es muy fácil, ya que disponemos de una variable en <code>/etc/sysconfig/displaymanager</code> que nos permite hacerlo. Así, pondremos el valor de la variable <code>DISPLAYMANAGER_XSERVER</code> a <code>Xgl</code>. Hecho esto, ejecutaremos:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">SuSEconfig --module xdm</span>
+</code></pre></div>
 
-
-<h2>Instalar Xgl + Compiz (via&nbsp;Yast)</h2>
-<p>Si queremos evitar problemas de dependencias, lo más sencillo es instalar Xgl y Compiz via YaST. Haciendolo de esta manera, no tendremos ningún&nbsp;problema.</p>
-<p>Hay que tener en cuenta que si no tenemos instalado Gnome en nuestro sistema, se instalarán varios componentes de Gnome (<code>control-center2</code>, <code>gnome-window-decorator</code>&#8230;) así como algunas librerias (<code>libsvg</code>, <code>libsvg-cairo</code>&#8230;). En cualquier caso, sera YaST el encargado de resolver dichas&nbsp;dependencias.</p>
-<h2>Configurar Xgl como servidor de X&nbsp;principal</h2>
-<p>Ahora ya sólo queda configurar el sistema para ejecutar Xgl y cargar los plugins de Compiz con los efectos que&nbsp;queramos.</p>
-<p>Para ejecutar Xgl deberemos decirle a kdm que ejecute Xgl en lugar del servidor de X. En SuSE 10.1 esto es muy fácil, ya que disponemos de una variable en <code>/etc/sysconfig/displaymanager</code> que nos permite hacerlo. Así, pondremos el valor de la variable <code>DISPLAYMANAGER_XSERVER</code> a <code>Xgl</code>. Hecho esto,&nbsp;ejecutaremos:</p>
-<div class="highlight"><pre><span></span><span class="go">SuSEconfig --module xdm</span>
-</pre></div>
-
-
-<p>Y reiniciaremos las X. Lo sé, tras reiniciar has movido una de las ventanas y te has llevado una desilusión al ver que no ha pasado nada. No se ha deformado ni nada expectacular. No te preocupes, es normal porque no hemos cargado ningun plugin de&nbsp;Compiz.</p>
+<p>Y reiniciaremos las X. Lo sé, tras reiniciar has movido una de las ventanas y te has llevado una desilusión al ver que no ha pasado nada. No se ha deformado ni nada expectacular. No te preocupes, es normal porque no hemos cargado ningun plugin de Compiz.</p>
 <p>Hay multitud de opciones que pueden modificar muy mucho el funcionamiento del servidor Xgl. Muchas de ellas dependen del hardware utilizado. Para ver la lista de opciones, puedes consultar este Documento <code>/usr/share/doc/packages/xgl/README.SUSE</code></p>
-<h2>Configurar Compiz como gestor de&nbsp;ventanas</h2>
+<h2>Configurar Compiz como gestor de ventanas</h2>
 <p>Todas las funcionalizades de Xgl, se explotan via plugins del composite manager Compiz. Tan slo has de cargar los que quieras para porder utilizarlos.
 Por ejemplo, para conseguir el efecto de elasticidad en las ventanas cargariamos los plugins bsicos (decoration move resize place minimize) y además el wobbly.
-Para cargar todas las opciones utilizariamos un comando como&nbsp;este:</p>
-<div class="highlight"><pre><span></span><span class="go">compiz --replace gconf decoration wobbly fade minimize cube rotate zoom scale move resize</span>
+Para cargar todas las opciones utilizariamos un comando como este:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">compiz --replace gconf decoration wobbly fade minimize cube rotate zoom scale move resize</span>
 <span class="go">place switcher  &amp;</span>
 <span class="go">gnome-window-decorator &amp;</span>
-</pre></div>
+</code></pre></div>
 
-
-<p><strong><span class="caps">NOTA</span></strong>:Cuando cargamos el plugin gconf por primera vez, Gconf guarda un registro con los plugins cargados. De esta manera, en posteriores llamadas a&nbsp;Compiz</p>
-<div class="highlight"><pre><span></span><span class="go">compiz --replace gconf decoration wobbly...</span>
-</pre></div>
-
+<p><strong><span class="caps">NOTA</span></strong>:Cuando cargamos el plugin gconf por primera vez, Gconf guarda un registro con los plugins cargados. De esta manera, en posteriores llamadas a Compiz</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">compiz --replace gconf decoration wobbly...</span>
+</code></pre></div>
 
 <p>Los módulos que aparecen tras <code>gconf</code> son ignorados, ya que la configuracin de los modulos a cargar se lee de un registro que guarda <code>gconf</code>.</p>
 <p>Posteriormente los cambios deberiamos realizarlos mediante el editor gconf-editor. Lamentablemente, este <strong><span class="caps">NO</span></strong> esta disponible para <span class="caps">KDE</span>, por lo que para arrancar Compiz al arranque editaremos el archivo <code>~/.kde/Autostart/compiz.desktop</code>:</p>
-<div class="highlight"><pre><span></span><span class="go">[Desktop Entry]</span>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">[Desktop Entry]</span>
 <span class="go">Encoding=UTF-8</span>
 <span class="go">Exec=compiz --replace decoration wobbly fade minimize cube rotate zoom scale move resize place switcher &amp;  gnome-window-decorator &amp;</span>
 <span class="go">GenericName[en_US]=</span>
@@ -109,94 +167,239 @@ Para cargar todas las opciones utilizariamos un comando como&nbsp;este:</p>
 <span class="go">TerminalOptions=</span>
 <span class="go">Type=Application</span>
 <span class="go">X-KDE-autostart-after=kdesktop</span>
-</pre></div>
+</code></pre></div>
 
-
-<h1>Instalación en SuSE&nbsp;10.0</h1>
+<h1>Instalación en SuSE 10.0</h1>
 <p>Como ya he comentado al principio de este articulo, la instalacin sobre SuSE 10.0 la he llevado a cabo sobre mi portatil, un <strong>Compaq Presario V4000</strong>.
-Dado que la targeta gráfica del Compaq es una Intel <span class="caps">GMA900</span> (driver i915). Nos podemos saltar el paso de la instalacin de los drivers oficiales de&nbsp;NVidia.</p>
-<h2>Instalar Xgl +&nbsp;Compiz</h2>
-<p>Tal y como aparece en la web de <a href="http://www.opensuse.org/">OpenSuSE</a>, la manera ms rpida de instalar el software en SuSE 10.0 es esta: Actualizacin:Antes de nada, debes instalar estos paquetes de compatibilidad(gracias a Jose Alberto por sufrir la primera version de este manual ;o)&nbsp;) </p>
+Dado que la targeta gráfica del Compaq es una Intel <span class="caps">GMA900</span> (driver i915). Nos podemos saltar el paso de la instalacin de los drivers oficiales de NVidia.</p>
+<h2>Instalar Xgl + Compiz</h2>
+<p>Tal y como aparece en la web de <a href="http://www.opensuse.org/">OpenSuSE</a>, la manera ms rpida de instalar el software en SuSE 10.0 es esta: Actualizacin:Antes de nada, debes instalar estos paquetes de compatibilidad(gracias a Jose Alberto por sufrir la primera version de este manual ;o) ) </p>
 <ul>
 <li>xgl_compat100</li>
 <li>libdrm</li>
 </ul>
-<p>Instalamos via YaST el <code>control-center2</code> y luego descargamos e instalamos los siguientes&nbsp;paquetes:</p>
-<div class="highlight"><pre><span></span><span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/xgl-cvs_060405-4.i586.rpm</span>
+<p>Instalamos via YaST el <code>control-center2</code> y luego descargamos e instalamos los siguientes paquetes:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/xgl-cvs_060405-4.i586.rpm</span>
 <span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/compiz-cvs_060407-3.i586.rpm</span>
 <span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libsvg-0.1.4-11.i586.rpm</span>
 <span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libsvg-cairo-0.1.6-11.i586.rpm</span>
 <span class="go">wget http://ftp.gwdg.de/pub/opensuse/distribution/SL-OSS-factory/ inst-source/suse/i586/libwnck-2.12.2-19.i586.rpm</span>
 <span class="go">rpm -ivh xgl-cvs_060405-4.i586.rpm compiz-cvs_060407-3.i586.rpm libsvg-0.1.4-11.i586.rpm libsvg-cairo-0.1.6-11.i586.rpm libwnck-2.12.2-19.i586.rpm</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Vamos ahora con la&nbsp;configuración.</p>
-<h2>Configurar Xgl como servidor de X&nbsp;principal</h2>
+<p>Vamos ahora con la configuración.</p>
+<h2>Configurar Xgl como servidor de X principal</h2>
 <p>En SuSE 10.0 no existe la variable <code>DISPLAYMANAGER_XSERVER</code> en el fichero <code>/etc/sysconfig/displaymanager</code>. En su lugar editaremos el fichero <code>/etc/opt/kde3/share/config/kdm/kdmrc</code> modificando el valor de la variable <code>ServerCmd</code>.</p>
-<div class="highlight"><pre><span></span><span class="go">ServerCmd=/usr/X11R6/bin/Xgl -br</span>
-</pre></div>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">ServerCmd=/usr/X11R6/bin/Xgl -br</span>
+</code></pre></div>
 
+<p>Tras esto ejecutamos:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">SuSEconfig --module xdm</span>
+</code></pre></div>
 
-<p>Tras esto&nbsp;ejecutamos:</p>
-<div class="highlight"><pre><span></span><span class="go">SuSEconfig --module xdm</span>
-</pre></div>
-
-
-<p>Ahora ya esta todo listo para que tras reiniciar las X (int 3; init 5) podamos cargar los plugins de&nbsp;Compiz.</p>
-<h2>Configurar Compiz como gestor de&nbsp;ventanas</h2>
-<p>Para cargar los plugins de Compiz al arrancar <span class="caps">KDE</span>, podemos seguir un proceso anlogo al descrito para&nbsp;10.1.</p>
-<h1>Jugando con&nbsp;Compiz</h1>
-<p>Muchos de los plugins de Compiz se activan intrinsecamente con tan solo cargarlos. Por ejemplo, el efecto <strong>Wobbly</strong> deformar sin ms nuestras ventanas cada vez que movamos una de ellas. Por el contrario, hay una serie de funcionalidades ocultas que se activan mediante la combinacin de teclas y/o la accin del mouse. A continuacin os muestro las que me han parecido ms&nbsp;interesantes:</p>
-<p><img alt="Cube" src="/images/old_blog/hsm54_botton.png"></p>
-<p><img alt="Cube" src="/images/old_blog/hsm52_botton.png"></p>
-<p><img alt="Cube" src="/images/old_blog/compiz_water02.png"></p>
-<h2>Scale (el Expose de&nbsp;MacOSX)</h2>
-<p>Esta función redimensiona todas las ventanas que tengamos en pantalla de manera que quepan todas en pantalla. Esta funcion es extremadamente útil, sobretodo en portatiles con poca área de visualización, ya que nos permite ver de una vez el contenido de todas las ventanas que tengamos abierta. Luego al hacer click sobre una de las ventanas, esta pasa a primer plano. <span class="caps">IMHO</span>, el efecto mejora bastante el de&nbsp;MacOSX.</p>
-<p>Activación: F11 Combinable con el Switcher una vez escladas las&nbsp;ventanas.</p>
+<p>Ahora ya esta todo listo para que tras reiniciar las X (int 3; init 5) podamos cargar los plugins de Compiz.</p>
+<h2>Configurar Compiz como gestor de ventanas</h2>
+<p>Para cargar los plugins de Compiz al arrancar <span class="caps">KDE</span>, podemos seguir un proceso anlogo al descrito para 10.1.</p>
+<h1>Jugando con Compiz</h1>
+<p>Muchos de los plugins de Compiz se activan intrinsecamente con tan solo cargarlos. Por ejemplo, el efecto <strong>Wobbly</strong> deformar sin ms nuestras ventanas cada vez que movamos una de ellas. Por el contrario, hay una serie de funcionalidades ocultas que se activan mediante la combinacin de teclas y/o la accin del mouse. A continuacin os muestro las que me han parecido ms interesantes:</p>
+<p><img alt="Cube" src="/images/old_blog/hsm54_botton.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
+<p><img alt="Cube" src="/images/old_blog/hsm52_botton.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
+<p><img alt="Cube" src="/images/old_blog/compiz_water02.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
+<h2>Scale (el Expose de MacOSX)</h2>
+<p>Esta función redimensiona todas las ventanas que tengamos en pantalla de manera que quepan todas en pantalla. Esta funcion es extremadamente útil, sobretodo en portatiles con poca área de visualización, ya que nos permite ver de una vez el contenido de todas las ventanas que tengamos abierta. Luego al hacer click sobre una de las ventanas, esta pasa a primer plano. <span class="caps">IMHO</span>, el efecto mejora bastante el de MacOSX.</p>
+<p>Activación: F11 Combinable con el Switcher una vez escladas las ventanas.</p>
 <h2>Switcher</h2>
-<p>Es la legendaria opción de cambio de tarea <code>Alt+Tab</code> per mejorada muy mucho. La principal novedad es que no vemos un carrusel de iconos, sino que veremos una previsualización de las aplicaciones!. En el caso de un reproductor de video, veremos el video ejecutandose, en el caso de Amarok o <span class="caps">XMMS</span>, veremos incluso las visualizaciones tipo espectro y el display de segmentos mostrando la canción que suena sin más!!! Sin duda muy útil y espectacular.&nbsp;Activación:</p>
+<p>Es la legendaria opción de cambio de tarea <code>Alt+Tab</code> per mejorada muy mucho. La principal novedad es que no vemos un carrusel de iconos, sino que veremos una previsualización de las aplicaciones!. En el caso de un reproductor de video, veremos el video ejecutandose, en el caso de Amarok o <span class="caps">XMMS</span>, veremos incluso las visualizaciones tipo espectro y el display de segmentos mostrando la canción que suena sin más!!! Sin duda muy útil y espectacular. Activación:</p>
 <p>Alt+Tab</p>
 <h2>Rotate</h2>
-<p>Esta es sin duda una de las opciones ms espectaculare y que ms ha dado que hablar, si bien no creo que sea de las ms tiles. Consiste en la posibilidad de cambiar de desktop haciendo girar toda la pantalla como si de un cubo se tratara. Es posible incluso poner una aplicacin en una de las esquinas del cubo y hacerlo rotar!. La informacin que muestran las ventanas es completamente en tiempo real. Veamos como&nbsp;utilizarlo</p>
+<p>Esta es sin duda una de las opciones ms espectaculare y que ms ha dado que hablar, si bien no creo que sea de las ms tiles. Consiste en la posibilidad de cambiar de desktop haciendo girar toda la pantalla como si de un cubo se tratara. Es posible incluso poner una aplicacin en una de las esquinas del cubo y hacerlo rotar!. La informacin que muestran las ventanas es completamente en tiempo real. Veamos como utilizarlo</p>
 <p>Activación: </p>
 <ul>
-<li>Ctrl + Alt + Teclas Iqz/Derecha  (Rotamos el desktop utilizando el&nbsp;teclado)</li>
-<li>Ctrl + Shift + Alt + Teclas Izq/Dercha (Rotamos el desktop utilizando el teclado. La ventana activa se queda fuera del cubo llendo a parar al nuevo&nbsp;desktop)</li>
-<li>Ctrl + Alt + boton mouse izq (rota el desktop manualmente. Hemos de tener el fondo de pantalla en el foco del&nbsp;mouse)</li>
+<li>Ctrl + Alt + Teclas Iqz/Derecha  (Rotamos el desktop utilizando el teclado)</li>
+<li>Ctrl + Shift + Alt + Teclas Izq/Dercha (Rotamos el desktop utilizando el teclado. La ventana activa se queda fuera del cubo llendo a parar al nuevo desktop)</li>
+<li>Ctrl + Alt + boton mouse izq (rota el desktop manualmente. Hemos de tener el fondo de pantalla en el foco del mouse)</li>
 </ul>
-<h2>Otras combinaciones de teclas para activar modulos de&nbsp;Compiz</h2>
+<h2>Otras combinaciones de teclas para activar modulos de Compiz</h2>
 <ul>
-<li>Slow-motion = Shift + F10 (Activa y descativo todos los movimientos a velocidad super lenta o&nbsp;normal)</li>
-<li>Transparencias = Ctrl + Alt + ruedecita del mouse. (varia el grado de transparencia de la ventana que esta en primer&nbsp;plano)</li>
-<li>Zoom = Windows Key + wheel mouse (Solo me ha funcionado en&nbsp;NVidia)</li>
-<li>Water = Crtl + WinKey Es necesario cargar el plugin water. En su modalidad Rain (shift + F9) simula el efecto de las gotas de lluvia al caer sobre el desktop, como si de un lago se&nbsp;tratara.</li>
+<li>Slow-motion = Shift + F10 (Activa y descativo todos los movimientos a velocidad super lenta o normal)</li>
+<li>Transparencias = Ctrl + Alt + ruedecita del mouse. (varia el grado de transparencia de la ventana que esta en primer plano)</li>
+<li>Zoom = Windows Key + wheel mouse (Solo me ha funcionado en NVidia)</li>
+<li>Water = Crtl + WinKey Es necesario cargar el plugin water. En su modalidad Rain (shift + F9) simula el efecto de las gotas de lluvia al caer sobre el desktop, como si de un lago se tratara.</li>
 </ul>
 <h1>Rendimiento</h1>
 <p>Ni que decir tiene que el rendimiento en un Xeon con 2GBytes de <span class="caps">RAM</span> y una NVidia Quadro <span class="caps">FX</span> es realmente expectacular y que la carga del sistema apenas se ve afectada. Por contra, en mi modesto portatil la cosa cambia bastante. Sobretodo si lo intento utilizar junto a kxdocker (barra de herramientas tipo MacOS X. Pese a que en el portatil no se ve tan suelto como en la workstation, la principal limitacin es que que la aceleracin XVideo no funciona para las tarjetas i915 y i945. El scroll de una web larga en el navegador se vuelve desesperante.
-Por todo esto, se recomienda esperar a las versiones Xgl y Compiz de la Release Candidate 1 de SuSE 10.1 si utilizas el driver i914  i945 de&nbsp;Intel.</p>
-<h1>Bugs y&nbsp;limitaciones</h1>
-<p>Tanto utilizando el driver de NVidia como el Intel, hay situaciones que Xgl no maneja bien o directamente se cuelga. Por&nbsp;ejemplo: </p>
+Por todo esto, se recomienda esperar a las versiones Xgl y Compiz de la Release Candidate 1 de SuSE 10.1 si utilizas el driver i914  i945 de Intel.</p>
+<h1>Bugs y limitaciones</h1>
+<p>Tanto utilizando el driver de NVidia como el Intel, hay situaciones que Xgl no maneja bien o directamente se cuelga. Por ejemplo: </p>
 <ul>
-<li>En ambos casos, juegos como Frozen Bubble no se muestran&nbsp;correctamente.</li>
-<li>Las notas de Knotes (No se visualizan correctamente con el driver de intel). Actualización: Tras actualizar xgl, compiz y algunas librerias a 10.1 <span class="caps">RC1</span>, se han solventado los&nbsp;problemas.</li>
-<li>No es posible ver videos <span class="caps">AVI</span> (mplayer + drivers xv o xdivx) con el modulo de&nbsp;Intel.</li>
+<li>En ambos casos, juegos como Frozen Bubble no se muestran correctamente.</li>
+<li>Las notas de Knotes (No se visualizan correctamente con el driver de intel). Actualización: Tras actualizar xgl, compiz y algunas librerias a 10.1 <span class="caps">RC1</span>, se han solventado los problemas.</li>
+<li>No es posible ver videos <span class="caps">AVI</span> (mplayer + drivers xv o xdivx) con el modulo de Intel.</li>
 </ul>
-<p><strong>Nota</strong>: Poco a poco ir añadiendo aquí los fallos que me vaya&nbsp;encontrando.</p>
+<p><strong>Nota</strong>: Poco a poco ir añadiendo aquí los fallos que me vaya encontrando.</p>
 <h1>Conclusión</h1>
-<p>De todas todas, si lo que quieres es utilizar xgl y compiz en un entrono de trabajo <span class="caps">REAL</span> lo deseable seria esperar a que se libere 10.1 y disponer de una tarjeta grafica completamente soportada. No obstante, si no deseas ejecutar todos los plugins disponibles, quizas puedas ir utilizando aquellos modulos que no te den&nbsp;problemas.</p>
-<p>En el portatil, muchas aplicaciones que hacian uso de aceleraion XVideo producian un cuelgue total del&nbsp;sistema.</p>
-<p>Así, no he conseguido reproducir  video con mplayer ni ejecutar muchos&nbsp;juegos.</p>
+<p>De todas todas, si lo que quieres es utilizar xgl y compiz en un entrono de trabajo <span class="caps">REAL</span> lo deseable seria esperar a que se libere 10.1 y disponer de una tarjeta grafica completamente soportada. No obstante, si no deseas ejecutar todos los plugins disponibles, quizas puedas ir utilizando aquellos modulos que no te den problemas.</p>
+<p>En el portatil, muchas aplicaciones que hacian uso de aceleraion XVideo producian un cuelgue total del sistema.</p>
+<p>Así, no he conseguido reproducir  video con mplayer ni ejecutar muchos juegos.</p>
 <p>Por el contrario, el trabajo con la workstation y el driver NVidia ha sido realmente increible. Sólo he medio-colgado una vez el sistema al ejecutar un juego.
 El resto de funciones se han comportado muy bien (increiblemente rpido y movimientos suaves y sin saltos).
-La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy recomendable si dispones de un equipo potente y&nbsp;soportado.</p>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+La carga de la máquina era siempre la misma hiciera lo que hiciera. Muy, muy recomendable si dispones de un equipo potente y soportado.</p>
+
+        <h3 class="mt-3">Related content</h3>
+        <div class="list-group bg-light text-dark">
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/compiz-fusion-sobre-aiglx-en-intel-gma900.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>Compiz Fusion sobre <span class="caps">AIGLX</span> en Intel <span class="caps">GMA900</span></h5>
+                        <abbr class="small published" title="2008-04-28T21:03:31+02:00">
+                            2008
+                        </abbr>
+                    </div>
+                    <small>Mucho ha llovido desde que en 2006 empezara a jugar con Compiz y XGL. Pese ha todo, no ha sido hasta hace unos dias que me he decidido a utilizar Compiz Fusion + AIGLX como configuración por defecto. Los motivos que me retenian en un modelo sin composite manager eran básicamente …</small>
+                </a>
+        </div>
+
+        <div class="comments mt-5">
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://frommelmak.com/instalar-xgl-compiz-en-suse-10x-con-kde.html";
+                    this.page.identifier = "instalar-xgl-compiz-en-suse-10x-con-kde.html";
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://frommelmak.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+        </div>
+
+                </div>
+
+                    <div class="col-md-3">
+    <div class="card bg-light text-dark">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <abbr title="2006-04-10T20:54:30+02:00"><i class="fas fa-calendar"></i> Mon 10 April 2006</abbr>
+            </li>
+
+                <li class="list-group-item">
+                    <address>
+                        <i class="fas fa-user"></i> By
+                            <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+                    </address>
+                </li>
+
+                <li class="list-group-item">
+                                <a href="https://frommelmak.com/category/spanish.html" rel="tag" data-toggle="tooltip" class="badge badge-info" title="56 articles in this category">Spanish</a>
+                            <a href="/tag/compiz.html" data-toggle="tooltip" class="badge badge-secondary" title="2 articles with this tag">compiz</a>
+                            <a href="/tag/xgl.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">xgl</a>
+                </li>
+
+                <li class="list-group-item">
+                    <p>Found a typo? Fix it now:</p>
+                    <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/instalar-xgl-compiz-en-suse-10x-con-kde.md"><i class="fas fa-edit fa-fw"></i> Edit article on GitHub</a>
+                </li>
+
+                <li class="list-group-item">
+                    <nav class="nav nav-pills nav-fill">
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/apple-computers-cumple-30-anos.html" title="Apple Computers cumple 30 años" rel="prev">
+                            <span aria-hidden="true">←</span> Older
+                        </a>
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/instalar-gnulinux-en-el-ipod-con-el-ipodlinux-installer.html" title="Instalar GNU/Linux en el iPod con el iPodLinux Installer" rel="next">
+                            Newer <span aria-hidden="true">→</span>
+                        </a>
+                    </nav>
+                </li>
+
+        </ul>
+    </div>
+                        
+                    </div>
+
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

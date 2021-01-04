@@ -1,71 +1,132 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-          <title>frommelmak - TestDisk: Recuperar datos de una partición <span class="caps">NTFS</span></title>
-        <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>    TestDisk: Recuperar datos de una partición NTFS
+ | frommelmak</title>
+
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+        <meta name="keywords" content="ntfs, testdisk, filesystems">
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
 
 
-    <meta name="tags" content="ntfs" />
-    <meta name="tags" content="testdisk" />
-    <meta name="tags" content="filesystems" />
+                </div>
 
-</head>
+            </nav>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="https://frommelmak.com/testdisk-recuperar-datos-de-una-particion-ntfs.html" rel="bookmark"
-         title="Permalink to TestDisk: Recuperar datos de una partición NTFS">TestDisk: Recuperar datos de una partición <span class="caps">NTFS</span></a></h2>
- 
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="2008-01-03T11:40:01+01:00">
-      Thu 03 January 2008
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-    </address>
-    <div class="category">
-        Category: <a href="https://frommelmak.com/category/spanish.html">Spanish</a>
-    </div>
-    <div class="tags">
-        Tags:
-            <a href="https://frommelmak.com/tag/ntfs.html">ntfs</a>
-            <a href="https://frommelmak.com/tag/testdisk.html">testdisk</a>
-            <a href="https://frommelmak.com/tag/filesystems.html">filesystems</a>
-    </div>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
-    <p>Imagina que tu <span class="caps">PC</span> se muere, imagina que te compras uno nuevo, llegas a casa lo conectas todo y lo enciendes. Imagina ahora que por alguna extraña razón decides instalar Windows en tu nuevo ordenador y en el momento de reparticionar el disco vas a saco. Pese a que te extraña ver dos discos piensas que los de la tienda han hecho algo raro y no le das más importancia. Te cargas <strong><span class="caps">TODAS</span></strong> las particiones que ves para empezar de cero y dejarlo todo como a ti te&nbsp;gusta. </p>
-<p>Justo en ese fatídico momento te das cuenta de que la <span class="caps">BIOS</span> de tu flamante nuevo equipo es capaz de arrancar desde dispositivos <span class="caps">USB</span> por lo que windows ha sido capaz de detectar el disco duro externo en el momento del particionado. Así que te lo has cargado todo todo y&nbsp;todo!!!</p>
-<p>Antes de pensar en el suicidio como una posible solución al problema, quizás te interese seguir leyendo. Bueno, que no cunda el pánico!!! La teoría dice que sólo te has cargado la partición, por lo que el filesystem debería seguir ahí, intacto. Mas chulo que un ocho arrancas de nuevo el ordenador con un sistema operativo de verdad. Metes tu <span class="caps">CD</span> de Knoppix y tiras de <code>fdisk</code> para volver a crear la partición. Pero horror!!! Tras rehacerla, sigues sin poder montar el disco duro externo! Esto quiere decir que no sólo has eliminado la partición, sino que ademas dañado el filesystem que&nbsp;contiene.</p>
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-9
+">
+    <h1>
+        <a href="https://frommelmak.com/testdisk-recuperar-datos-de-una-particion-ntfs.html" rel="bookmark" title="Permalink to TestDisk: Recuperar datos de una partición NTFS">TestDisk: Recuperar datos de una partición <span class="caps">NTFS</span></a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-9
+">
+    
+
+    <p>Imagina que tu <span class="caps">PC</span> se muere, imagina que te compras uno nuevo, llegas a casa lo conectas todo y lo enciendes. Imagina ahora que por alguna extraña razón decides instalar Windows en tu nuevo ordenador y en el momento de reparticionar el disco vas a saco. Pese a que te extraña ver dos discos piensas que los de la tienda han hecho algo raro y no le das más importancia. Te cargas <strong><span class="caps">TODAS</span></strong> las particiones que ves para empezar de cero y dejarlo todo como a ti te gusta. </p>
+<p>Justo en ese fatídico momento te das cuenta de que la <span class="caps">BIOS</span> de tu flamante nuevo equipo es capaz de arrancar desde dispositivos <span class="caps">USB</span> por lo que windows ha sido capaz de detectar el disco duro externo en el momento del particionado. Así que te lo has cargado todo todo y todo!!!</p>
+<p>Antes de pensar en el suicidio como una posible solución al problema, quizás te interese seguir leyendo. Bueno, que no cunda el pánico!!! La teoría dice que sólo te has cargado la partición, por lo que el filesystem debería seguir ahí, intacto. Mas chulo que un ocho arrancas de nuevo el ordenador con un sistema operativo de verdad. Metes tu <span class="caps">CD</span> de Knoppix y tiras de <code>fdisk</code> para volver a crear la partición. Pero horror!!! Tras rehacerla, sigues sin poder montar el disco duro externo! Esto quiere decir que no sólo has eliminado la partición, sino que ademas dañado el filesystem que contiene.</p>
 <p>Bien, es hora de asumir que quizás no sabes tanto como creías sobre particiones y filesystems y dejar paso a un experto en la materia: <a href="http://www.cgsecurity.org/wiki/TestDisk">TestDisk</a>.</p>
-<p>Esta tool a la que debiste haber recurrido desde un buen principio es 100% <span class="caps">GPL</span> y te permite ,entre otras cosas, escanear el disco duro y detectar problemas con las particiones y/o los filesystem. Dado que existen versiones para Windows, Linux (el propio Knoppix la trae en sus últimas versiones) y Mac podrás utilizar la tool desde cualquier&nbsp;ordenador.</p>
-<p>Pese a que la tool está ampliamente documentada en el wiki del proyecto, voy a tratar de explicar paso a paso como utilizarla para este caso en concreto, ya que en el momento de la recuperación, quizás estemos algo alterados como para tener que leer la&nbsp;documentación.</p>
-<p>Lo primero de todo es instalar la aplicación en nuestro sistema. Si estamos utilizando un sistema <span class="caps">GNU</span>/Linux probablemente la tool ya este instalada. En caso contrario, la <a href="http://www.cgsecurity.org/wiki/TestDisk_Download">descargaremos desde la web</a> y la instalaremos (descomprimir el fichero en el caso de windows) en el&nbsp;sistema.</p>
-<p>Para ejecutarla en Linux basta con ejecutar testdisk como root. En windows en cambio, deberemos ejecutar el siguiente binario una vez descomprimido el&nbsp;software:</p>
+<p>Esta tool a la que debiste haber recurrido desde un buen principio es 100% <span class="caps">GPL</span> y te permite ,entre otras cosas, escanear el disco duro y detectar problemas con las particiones y/o los filesystem. Dado que existen versiones para Windows, Linux (el propio Knoppix la trae en sus últimas versiones) y Mac podrás utilizar la tool desde cualquier ordenador.</p>
+<p>Pese a que la tool está ampliamente documentada en el wiki del proyecto, voy a tratar de explicar paso a paso como utilizarla para este caso en concreto, ya que en el momento de la recuperación, quizás estemos algo alterados como para tener que leer la documentación.</p>
+<p>Lo primero de todo es instalar la aplicación en nuestro sistema. Si estamos utilizando un sistema <span class="caps">GNU</span>/Linux probablemente la tool ya este instalada. En caso contrario, la <a href="http://www.cgsecurity.org/wiki/TestDisk_Download">descargaremos desde la web</a> y la instalaremos (descomprimir el fichero en el caso de windows) en el sistema.</p>
+<p>Para ejecutarla en Linux basta con ejecutar testdisk como root. En windows en cambio, deberemos ejecutar el siguiente binario una vez descomprimido el software:</p>
 <p><code>testdisk\win\testdisk_win.exe</code></p>
-<h2>Guia&nbsp;Rápida.</h2>
-<p>Para recuperar una partición borrada, la secuencia de opciones a seleccionar sera&nbsp;esta:</p>
-<p>No Log -&gt; Seleccionamos partición a restaurar + Proceed -&gt; Intel -&gt; Analyse -&gt; Proceed -&gt; Buscar Vista ? N Seleccionamos la Partición a Restaurar + Enter -&gt; Write ? Y -&gt; Ok -&gt; Quit  -&gt;Quit&nbsp;&#8230;</p>
-<p>Si sólo hemos borrado la partición, ya deberíamos haber solucionado el&nbsp;problema.</p>
-<p>Para comprobarlo salimos de la aplicación, (desmontamos: quitar hardware con seguridad) y desconectamos el disco <span class="caps">USB</span>. Volvemos a conectar y si el filesystem no tiene daños, deberá montarse sin&nbsp;más.</p>
-<p>Si no es así, es porque probablemente hemos dañado el sector de arranque. Los pasos para intentar restaurar el sistema de ficheros serán&nbsp;estos:</p>
-<p>No Log -&gt; Seleccionamos partición a restaurar + Proceed -&gt; Intel -&gt; Advance -&gt; Boot -&gt; Rebuild <span class="caps">BS</span> (esperamos cruzando los dedos) -&gt; Quit -&gt; Quit&nbsp;&#8230;</p>
-<p>Al igual que antes, quitamos el hardware y lo volvemos a conectar para ver si ya es&nbsp;accesible.</p>
-<p>Bueno, hasta aquí la guia rápida. Dejo unas capturas a continuación para ilustrar con más detalle los dos procesos descritos&nbsp;anteriormente.</p>
-<h2>Recuperación de una partición con Test Disk paso a paso (con&nbsp;capturas):</h2>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
+<h2>Guia Rápida.</h2>
+<p>Para recuperar una partición borrada, la secuencia de opciones a seleccionar sera esta:</p>
+<p>No Log -&gt; Seleccionamos partición a restaurar + Proceed -&gt; Intel -&gt; Analyse -&gt; Proceed -&gt; Buscar Vista ? N Seleccionamos la Partición a Restaurar + Enter -&gt; Write ? Y -&gt; Ok -&gt; Quit  -&gt;Quit …</p>
+<p>Si sólo hemos borrado la partición, ya deberíamos haber solucionado el problema.</p>
+<p>Para comprobarlo salimos de la aplicación, (desmontamos: quitar hardware con seguridad) y desconectamos el disco <span class="caps">USB</span>. Volvemos a conectar y si el filesystem no tiene daños, deberá montarse sin más.</p>
+<p>Si no es así, es porque probablemente hemos dañado el sector de arranque. Los pasos para intentar restaurar el sistema de ficheros serán estos:</p>
+<p>No Log -&gt; Seleccionamos partición a restaurar + Proceed -&gt; Intel -&gt; Advance -&gt; Boot -&gt; Rebuild <span class="caps">BS</span> (esperamos cruzando los dedos) -&gt; Quit -&gt; Quit …</p>
+<p>Al igual que antes, quitamos el hardware y lo volvemos a conectar para ver si ya es accesible.</p>
+<p>Bueno, hasta aquí la guia rápida. Dejo unas capturas a continuación para ilustrar con más detalle los dos procesos descritos anteriormente.</p>
+<h2>Recuperación de una partición con Test Disk paso a paso (con capturas):</h2>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -84,13 +145,12 @@
 <span class="go">Use arrow keys to select, then press Enter key:</span>
 <span class="go">[ Create ] Create a new log file</span>
 <span class="go">[ Append ] Append information to log file</span>
-<span class="go">[ No Log ] Don&#39;t record anything</span>
-</pre></div>
+<span class="go">[ No Log ] Don't record anything</span>
+</code></pre></div>
 
-
-<p>Donde seleccionaremos <strong><code>[ No Log ]</code></strong> si no deseamos guardar lo que vamos haciendo. Guardar un log podría ser útil en caso de problemas para por ejemplo poder enviar el log al creador de la tool o a algún foro especializado en busca de&nbsp;ayuda.</p>
-<p>La siguiente pantalla que veríamos sería&nbsp;esta:</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
+<p>Donde seleccionaremos <strong><code>[ No Log ]</code></strong> si no deseamos guardar lo que vamos haciendo. Guardar un log podría ser útil en caso de problemas para por ejemplo poder enviar el log al creador de la tool o a algún foro especializado en busca de ayuda.</p>
+<p>La siguiente pantalla que veríamos sería esta:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -113,11 +173,10 @@
 <span class="go">Note: Disk capacity must be correctly detected for a successful recovery.</span>
 <span class="go">If a disk listed above has incorrect size, check HD jumper settings, BIOS</span>
 <span class="go">detection, and install the latest OS patches and disk drivers.</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Seleccionamos el dispositivo danado -<code>/dev/sdb</code> en este caso- y le damos a&nbsp;[Proceed].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
+<p>Seleccionamos el dispositivo danado -<code>/dev/sdb</code> en este caso- y le damos a [Proceed].</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -137,13 +196,12 @@
 
 
 
-<span class="go">Note: Do NOT select &#39;None&#39; for media with only a single partition. It&#39;s very</span>
-<span class="go">rare for a drive to be &#39;Non-partitioned&#39;.</span>
-</pre></div>
-
+<span class="go">Note: Do NOT select 'None' for media with only a single partition. It's very</span>
+<span class="go">rare for a drive to be 'Non-partitioned'.</span>
+</code></pre></div>
 
 <p>Aquí seleccionamos Intel ya que la partición del ejemplo es <span class="caps">NTFS</span> (<span class="caps">PC</span>).</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -163,13 +221,12 @@
 
 
 
-<span class="go">Note: Correct disk geometry is required for a successful recovery. &#39;Analyse&#39;</span>
+<span class="go">Note: Correct disk geometry is required for a successful recovery. 'Analyse'</span>
 <span class="go">process may give some warnings if it thinks the logical geometry is mismatched.</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>En primer lugar recuperaremos la tabla de particiones que hemos perdido utilizando la opción [ Analyse&nbsp;].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
+<p>En primer lugar recuperaremos la tabla de particiones que hemos perdido utilizando la opción [ Analyse ].</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.7, Data Recovery Utility, June 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -194,20 +251,18 @@
 <span class="go">*=Primary bootable P=Primary L=Logical E=Extended D=Deleted</span>
 <span class="go">[Proceed ]</span>
 <span class="go"> Try to locate partition</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Seleccionamos&nbsp;[Proceed].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Seleccionamos [Proceed].</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
 <span class="go">Should TestDisk search for partition created under Vista ? [Y/N] (answer Yes if unsure)</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Si el disco no fue formateado bajo Vista responderemos Y, en caso contrario&nbsp;N.</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Si el disco no fue formateado bajo Vista responderemos Y, en caso contrario N.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -232,11 +287,10 @@
 <span class="go">Keys A: add partition, L: load backup, T: change type, P: list files,</span>
 <span class="go">Enter: to continue</span>
 <span class="go">NTFS, 2015 MB / 1921 MiB</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Le damos a&nbsp;Enter.</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Le damos a Enter.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -254,22 +308,20 @@
 
 <span class="go">[  Quit  ]  [Search! ]  [ Write  ]</span>
 <span class="go">Search deeper, try to find more partitions</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Guardamos la propuesta&nbsp;[Write].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Guardamos la propuesta [Write].</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
 <span class="go">Write partition table, confirm ? (Y/N)</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Si sólo has dañado la partición, ya hemos terminado. Desconecta el disco y vuelve a conectarlo. Si sigues sin poder acceder a la unidad, es probable que también este dañado el sistema de ficheros, pero no te preocupes. Con un poco de suerte aun podrás reconstruirlo si no has perdido el backup del que dispone es propio sistema de ficheros <span class="caps">NTFS</span>. El procedimiento paso a paso seria&nbsp;este:</p>
-<h2>Recuperación de un filesystem <span class="caps">NTFS</span> con Test Disk paso a paso (con&nbsp;capturas):</h2>
-<p>Las primeras cinco capturas serían análogas al procedimiento descrito para recuperar la información, sólo que en esta ocasión, en lugar de la opción [Analyse], seleccionaremos la opción&nbsp;[Advance].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Si sólo has dañado la partición, ya hemos terminado. Desconecta el disco y vuelve a conectarlo. Si sigues sin poder acceder a la unidad, es probable que también este dañado el sistema de ficheros, pero no te preocupes. Con un poco de suerte aun podrás reconstruirlo si no has perdido el backup del que dispone es propio sistema de ficheros <span class="caps">NTFS</span>. El procedimiento paso a paso seria este:</p>
+<h2>Recuperación de un filesystem <span class="caps">NTFS</span> con Test Disk paso a paso (con capturas):</h2>
+<p>Las primeras cinco capturas serían análogas al procedimiento descrito para recuperar la información, sólo que en esta ocasión, en lugar de la opción [Analyse], seleccionaremos la opción [Advance].</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -292,20 +344,18 @@
 
 <span class="go">[  Quit  ]  [  List  ]  [Backup BS] [Rebuild BS][  Dump  ]</span>
 <span class="go">Return to Advanced menu</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Vemos que el sector de arranque parece estar dañado, no obstante y dado que el sector de boot de backup es correcto, podemos restaurar utilizando dicho backup. Para ello seleccionamos la opción [Backup <span class="caps">BS</span>].</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
 <span class="go">Copy backup NTFS boot sector over boot sector, confirm ? (Y/N)</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Confirmamos con Y y hemos&nbsp;terminado.</p>
-<div class="highlight"><pre><span></span><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
+<p>Confirmamos con Y y hemos terminado.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">TestDisk 6.8, Data Recovery Utility, August 2007</span>
 <span class="go">Christophe GRENIER grenier@cgsecurity.org</span>
 <span class="go">http://www.cgsecurity.org</span>
 
@@ -328,18 +378,155 @@
 
 <span class="go">[  Quit  ]  [  List  ]  [Rebuild BS][Repair MFT][  Dump  ]</span>
 <span class="go">Return to Advanced menu</span>
-</pre></div>
+</code></pre></div>
+
+<p>Salimos…quit, quit, quit…etc. Y volvemos a conectar el disco. Si todo ha ido bien y con un poco de suerte, deberías ver todos tus datos intactos.</p>
+<p><strong>Nota</strong>: El ejemplo descrito aquí es para el caso concreto descrito al inicio. Quizás tengas que jugar un poquito más con la tool para recuperar tus datos, o puede que el daño sea tan serio que esta tool no te pueda ayudar. Si es as, las opciones pasan por tools propietarias o servicios de pago o empezar a asumir que lo has perdido todo.</p>
 
 
-<p>Salimos&#8230;quit, quit, quit&#8230;etc. Y volvemos a conectar el disco. Si todo ha ido bien y con un poco de suerte, deberías ver todos tus datos&nbsp;intactos.</p>
-<p><strong>Nota</strong>: El ejemplo descrito aquí es para el caso concreto descrito al inicio. Quizás tengas que jugar un poquito más con la tool para recuperar tus datos, o puede que el daño sea tan serio que esta tool no te pueda ayudar. Si es as, las opciones pasan por tools propietarias o servicios de pago o empezar a asumir que lo has perdido&nbsp;todo.</p>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+        <div class="comments mt-5">
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://frommelmak.com/testdisk-recuperar-datos-de-una-particion-ntfs.html";
+                    this.page.identifier = "testdisk-recuperar-datos-de-una-particion-ntfs.html";
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://frommelmak.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+        </div>
+
+                </div>
+
+                    <div class="col-md-3">
+    <div class="card bg-light text-dark">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <abbr title="2008-01-03T11:40:01+01:00"><i class="fas fa-calendar"></i> Thu 03 January 2008</abbr>
+            </li>
+
+                <li class="list-group-item">
+                    <address>
+                        <i class="fas fa-user"></i> By
+                            <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+                    </address>
+                </li>
+
+                <li class="list-group-item">
+                                <a href="https://frommelmak.com/category/spanish.html" rel="tag" data-toggle="tooltip" class="badge badge-info" title="56 articles in this category">Spanish</a>
+                            <a href="/tag/filesystems.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">filesystems</a>
+                            <a href="/tag/ntfs.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">ntfs</a>
+                            <a href="/tag/testdisk.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">testdisk</a>
+                </li>
+
+                <li class="list-group-item">
+                    <p>Found a typo? Fix it now:</p>
+                    <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/testdisk-recuperar-datos-de-una-particion-ntfs.md"><i class="fas fa-edit fa-fw"></i> Edit article on GitHub</a>
+                </li>
+
+                <li class="list-group-item">
+                    <nav class="nav nav-pills nav-fill">
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/nagios-checker-para-firefox.html" title="Nagios Checker para Firefox" rel="prev">
+                            <span aria-hidden="true">←</span> Older
+                        </a>
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/humor-como-medir-la-calidad-de-un-cdigo-fuente.html" title="Humor: Cómo medir la calidad de un cdigo fuente." rel="next">
+                            Newer <span aria-hidden="true">→</span>
+                        </a>
+                    </nav>
+                </li>
+
+        </ul>
+    </div>
+                        
+                    </div>
+
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

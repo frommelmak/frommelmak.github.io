@@ -1,162 +1,358 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-        <title>frommelmak - Articles by frommelmak</title>
-        <meta charset="utf-8" />
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content">
-<h2>Articles by frommelmak</h2>
+        <title>    Articles by frommelmak
+ | frommelmak</title>
 
-<ol id="post-list">
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark" title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro&nbsp;datastore</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2010-11-04T00:22:40+01:00"> Thu 04 November 2010 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Si al intentar hacer un snapshot de un guest nos dice que no tenemos espacio, tenemos dos opciones: La primera es añadir otro disco duro y añadirlo al datastore en el que reside la máquina, la segunda es hacer el snapshot en otro&nbsp;datastore.</p>
-<p>No obstante, hay escenarios en los …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/backup-completo-de-un-guest-linux-mediante-tar.html" rel="bookmark" title="Permalink to Backup completo de un guest Linux mediante tar">Backup completo de un guest Linux mediante&nbsp;tar</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2010-05-03T17:25:39+02:00"> Mon 03 May 2010 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Clonar una mquina virtual mediante <em>VMWare Converter</em> suele ser un proceso lento, especialmente si la máquina tiene un disco grande, este el espacio ocupado o no. En ocasiones, ya no es que sea lento, sino que directamente el <em>VMWare Converter</em> falla inexplicablemente. En estos caso tenemos dos opciones. O bien …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/anadir-discos-en-caliente-a-guest-debian-50-sobre-esxi-host.html" rel="bookmark" title="Permalink to Añadir discos en caliente a guest Debian 5.0 sobre ESXi host">Añadir discos en caliente a guest Debian 5.0 sobre ESXi&nbsp;host</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2010-04-21T13:36:51+02:00"> Wed 21 April 2010 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>En primer lugar añadimos un nuevo disco al guest desde el host mediante&nbsp;vSphere.</p>
-<p>El disco aun no se ve en el&nbsp;guest:</p>
-<div class="highlight"><pre><span></span><span class="gp">guest666@root:#</span> cat /proc/scsi/scsi 
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
+
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
+
+
+                </div>
+
+            </nav>
+
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-12
+">
+    <h1>
+        <a href="https://frommelmak.com/author/frommelmak.html" rel="bookmark" title="Permalink to frommelmak's articles">Articles by frommelmak</a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-12
+">
+
+        <h2>Articles</h2>
+
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark" title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro datastore</a></h2>
+            </header>
+            <div><p>Si al intentar hacer un snapshot de un guest nos dice que no tenemos espacio, tenemos dos opciones: La primera es añadir otro disco duro y añadirlo al datastore en el que reside la máquina, la segunda es hacer el snapshot en otro datastore.</p>
+<p>No obstante, hay escenarios en los …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/backup-completo-de-un-guest-linux-mediante-tar.html" rel="bookmark" title="Permalink to Backup completo de un guest Linux mediante tar">Backup completo de un guest Linux mediante tar</a></h2>
+            </header>
+            <div><p>Clonar una mquina virtual mediante <em>VMWare Converter</em> suele ser un proceso lento, especialmente si la máquina tiene un disco grande, este el espacio ocupado o no. En ocasiones, ya no es que sea lento, sino que directamente el <em>VMWare Converter</em> falla inexplicablemente. En estos caso tenemos dos opciones. O bien …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/backup-completo-de-un-guest-linux-mediante-tar.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/anadir-discos-en-caliente-a-guest-debian-50-sobre-esxi-host.html" rel="bookmark" title="Permalink to Añadir discos en caliente a guest Debian 5.0 sobre ESXi host">Añadir discos en caliente a guest Debian 5.0 sobre ESXi host</a></h2>
+            </header>
+            <div><p>En primer lugar añadimos un nuevo disco al guest desde el host mediante vSphere.</p>
+<p>El disco aun no se ve en el guest:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="gp">guest666@root:#</span> cat /proc/scsi/scsi 
 <span class="go">Attached devices: </span>
 <span class="go">Host: scsi0 Channel: 00 Id: 01 Lun: 00 </span>
 <span class="go"> Vendor: VMware Model: Virtual disk Rev: 1.0 </span>
-<span class="go"> Type: Direct-Access ANSI …</span></pre></div> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/udev-network-device-en-ubuntu-hardy-sobre-vmware.html" rel="bookmark" title="Permalink to udev network device en Ubuntu Hardy sobre VMWare">udev network device en Ubuntu Hardy sobre&nbsp;VMWare</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2010-03-22T15:47:00+01:00"> Mon 22 March 2010 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Cuando clonamos una máquina <em>Ubuntu Hardy</em> para correr otra instancia en VMWare, <code>udev</code> detecta una nueva <span class="caps">MAC</span> y crea otra interfaz de&nbsp;red.</p>
-<p>Esto provoca que cada vez que restauramos una máquina basada en <em>Ubuntu Hardy</em>, el interfaz de red se incremente: eth0, eth1,&#8230;&nbsp;etc.</p>
-<p><em>Debian 5.0</em> (<em>lenny</em>) soluciona …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/freecom-dvb-t-usb-stick-en-opensuse-112.html" rel="bookmark" title="Permalink to Freecom DVB-T USB Stick en Opensuse 11.2">Freecom <span class="caps">DVB</span>-T <span class="caps">USB</span> Stick en Opensuse&nbsp;11.2</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-12-29T16:00:10+01:00"> Tue 29 December 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Olvida Yast2. Lo más rápido&nbsp;es:</p>
+<span class="go"> Type: Direct-Access ANSI …</span></code></pre></div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/anadir-discos-en-caliente-a-guest-debian-50-sobre-esxi-host.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/udev-network-device-en-ubuntu-hardy-sobre-vmware.html" rel="bookmark" title="Permalink to udev network device en Ubuntu Hardy sobre VMWare">udev network device en Ubuntu Hardy sobre VMWare</a></h2>
+            </header>
+            <div><p>Cuando clonamos una máquina <em>Ubuntu Hardy</em> para correr otra instancia en VMWare, <code>udev</code> detecta una nueva <span class="caps">MAC</span> y crea otra interfaz de red.</p>
+<p>Esto provoca que cada vez que restauramos una máquina basada en <em>Ubuntu Hardy</em>, el interfaz de red se incremente: eth0, eth1,… etc.</p>
+<p><em>Debian 5.0</em> (<em>lenny</em>) soluciona …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/udev-network-device-en-ubuntu-hardy-sobre-vmware.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/freecom-dvb-t-usb-stick-en-opensuse-112.html" rel="bookmark" title="Permalink to Freecom DVB-T USB Stick en Opensuse 11.2">Freecom <span class="caps">DVB</span>-T <span class="caps">USB</span> Stick en Opensuse 11.2</a></h2>
+            </header>
+            <div><p>Olvida Yast2. Lo más rápido es:</p>
 <ul>
 <li>Descargar <a href="http://www.linuxtv.org/downloads/firmware/dvb-usb-wt220u-02.fw">dvb-usb-wt220u-02.fw</a></li>
 <li>Copiarlo a <code>/lib/firmware</code></li>
 <li>Pinchar Stick y mirar si aparece en <code>/var/log/messages</code></li>
 </ul>
-<p>Arrancamos <a href="http://kaffeine.kde.org/"><span class="caps">KDE</span> Media Player</a>, configuramos el dispositivo y&nbsp;listos.</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/la-grafica-de-mi-dell-xps-m1330-ha-muerto.html" rel="bookmark" title="Permalink to La gráfica de mi Dell XPS m1330 ha muerto">La gráfica de mi Dell <span class="caps">XPS</span> m1330 ha&nbsp;muerto</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-12-03T15:00:55+01:00"> Thu 03 December 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content">  </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/sftp-jail-en-openssh.html" rel="bookmark" title="Permalink to SFTP jail en OpenSSH"><span class="caps">SFTP</span> jail en&nbsp;OpenSSH</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-12-02T10:33:48+01:00"> Wed 02 December 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Las versiones recientes de OpenSSH facilitan la tarea de enjaular a los usuarios dentro de su home al acceder por <span class="caps">SFTP</span>. Para ello podemos utilizar la directivas <code>Match</code> y <code>ChrootDirectory</code> que permiten sobreescribir las opciones globales de configuración para un grupo, usuario, host o <span class="caps">IP</span>&nbsp;determinados.</p>
+<p>Arrancamos <a href="http://kaffeine.kde.org/"><span class="caps">KDE</span> Media Player</a>, configuramos el dispositivo y listos.</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/freecom-dvb-t-usb-stick-en-opensuse-112.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/la-grafica-de-mi-dell-xps-m1330-ha-muerto.html" rel="bookmark" title="Permalink to La gráfica de mi Dell XPS m1330 ha muerto">La gráfica de mi Dell <span class="caps">XPS</span> m1330 ha muerto</a></h2>
+            </header>
+            <div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/la-grafica-de-mi-dell-xps-m1330-ha-muerto.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/sftp-jail-en-openssh.html" rel="bookmark" title="Permalink to SFTP jail en OpenSSH"><span class="caps">SFTP</span> jail en OpenSSH</a></h2>
+            </header>
+            <div><p>Las versiones recientes de OpenSSH facilitan la tarea de enjaular a los usuarios dentro de su home al acceder por <span class="caps">SFTP</span>. Para ello podemos utilizar la directivas <code>Match</code> y <code>ChrootDirectory</code> que permiten sobreescribir las opciones globales de configuración para un grupo, usuario, host o <span class="caps">IP</span> determinados.</p>
 <p>Ejemplo <code>sshd_config</code>:</p>
-<div class="highlight"><pre><span></span><span class="go">Subsystem sftp …</span></pre></div> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/utilidad-para-modificar-ficheros-swf-en-linuxwindows.html" rel="bookmark" title="Permalink to Utilidad para modificar ficheros SWF en Linux/Windows">Utilidad para modificar ficheros <span class="caps">SWF</span> en&nbsp;Linux/Windows</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-12-01T00:11:32+01:00"> Tue 01 December 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Para poder modificar un fichero <span class="caps">SWF</span> es necesario desensamblar el binario <span class="caps">SWF</span>, editar el fichero de texto resultante y volver a ensamblar. Mediante la utilidad <a href="http://www.nowrap.de/flasm.html">Flasm</a> es posible realizar esto de forma sencilla.&nbsp;Ejemplo:</p>
-<div class="highlight"><pre><span></span><span class="go">./flame -d fichero.swf  fichero.flm</span>
-</pre></div>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">Subsystem sftp …</span></code></pre></div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/sftp-jail-en-openssh.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/utilidad-para-modificar-ficheros-swf-en-linuxwindows.html" rel="bookmark" title="Permalink to Utilidad para modificar ficheros SWF en Linux/Windows">Utilidad para modificar ficheros <span class="caps">SWF</span> en Linux/Windows</a></h2>
+            </header>
+            <div><p>Para poder modificar un fichero <span class="caps">SWF</span> es necesario desensamblar el binario <span class="caps">SWF</span>, editar el fichero de texto resultante y volver a ensamblar. Mediante la utilidad <a href="http://www.nowrap.de/flasm.html">Flasm</a> es posible realizar esto de forma sencilla. Ejemplo:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">./flame -d fichero.swf  fichero.flm</span>
+</code></pre></div>
+
+<p>Editamos el fichero <code>.flm</code> mediante un editor de textos y …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/utilidad-para-modificar-ficheros-swf-en-linuxwindows.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/convertir-book-drupal-utf-8-a-pdf-mediante-htmldoc.html" rel="bookmark" title="Permalink to Convertir book drupal (UTF-8) a PDF mediante htmldoc">Convertir book drupal (<span class="caps">UTF</span>-8) a <span class="caps">PDF</span> mediante htmldoc</a></h2>
+            </header>
+            <div><p>Descargamos la versión <em>printer friendly version</em> del book</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">wget http://www.youdomain.com/book/export/html/xxx -O web.html</span>
+</code></pre></div>
+
+<p>Dado que <code>htmldoc</code> no soporta <code>--charset utf-8</code> (en las versiones estables  1.9.x), deberemos convertir el <code>html</code> a <code>iso-8859-1</code> o de lo contrario no veremos bien algunos caracteres.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">iconv …</span></code></pre></div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/convertir-book-drupal-utf-8-a-pdf-mediante-htmldoc.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/svn-relocate.html" rel="bookmark" title="Permalink to SVN relocate"><span class="caps">SVN</span> relocate</a></h2>
+            </header>
+            <div><p><strong>Nota rápida</strong>: Si el host o la <span class="caps">IP</span> del servidor de svn cambia, un upgrade de tu copia local fallará. Esto es porque tu copia local hace referencia a la <span class="caps">IP</span> o nombre viejo. Para que no tengas que hacer un chekcout entero del repositorio, es posible cambiar la copia …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/svn-relocate.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="https://frommelmak.com/author/frommelmak2.html" aria-label="Previous" rel="prev">
+                        <span aria-hidden="true">←</span>
+                    </a>
+                </li>
+
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak.html" rel="
+ first ">
+                            1
+                        </a>
+                    </li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak2.html" rel="
+ prev ">
+                            2
+                        </a>
+                    </li>
+<li class="page-item active" aria-current="page">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak3.html" rel="
+">
+                            3
+                                <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak4.html" rel="
+ next ">
+                            4
+                        </a>
+                    </li>
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak7.html" rel="
+">
+                            7
+                        </a>
+                    </li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak8.html" rel="
+ last ">
+                            8
+                        </a>
+                    </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="https://frommelmak.com/author/frommelmak4.html" aria-label="Next" rel="next">
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+
+                </div>
 
 
-<p>Editamos el fichero <code>.flm</code> mediante un editor de textos y …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/convertir-book-drupal-utf-8-a-pdf-mediante-htmldoc.html" rel="bookmark" title="Permalink to Convertir book drupal (UTF-8) a PDF mediante htmldoc">Convertir book drupal (<span class="caps">UTF</span>-8) a <span class="caps">PDF</span> mediante&nbsp;htmldoc</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-11-26T09:40:04+01:00"> Thu 26 November 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Descargamos la versión <em>printer friendly version</em> del&nbsp;book</p>
-<div class="highlight"><pre><span></span><span class="go">wget http://www.youdomain.com/book/export/html/xxx -O web.html</span>
-</pre></div>
+            </div>
 
+        </div>
 
-<p>Dado que <code>htmldoc</code> no soporta <code>--charset utf-8</code> (en las versiones estables  1.9.x), deberemos convertir el <code>html</code> a <code>iso-8859-1</code> o de lo contrario no veremos bien algunos&nbsp;caracteres.</p>
-<div class="highlight"><pre><span></span><span class="go">iconv …</span></pre></div> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/svn-relocate.html" rel="bookmark" title="Permalink to SVN relocate"><span class="caps">SVN</span>&nbsp;relocate</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2009-11-16T11:22:17+01:00"> Mon 16 November 2009 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p><strong>Nota rápida</strong>: Si el host o la <span class="caps">IP</span> del servidor de svn cambia, un upgrade de tu copia local fallará. Esto es porque tu copia local hace referencia a la <span class="caps">IP</span> o nombre viejo. Para que no tengas que hacer un chekcout entero del repositorio, es posible cambiar la copia …</p> </div><!-- /.entry-content -->
-        </article></li>
-</ol><!-- /#posts-list -->
-<p class="paginator">
-        <a href="https://frommelmak.com/author/frommelmak2.html">&laquo;</a>
-    Page 3 / 8
-        <a href="https://frommelmak.com/author/frommelmak4.html">&raquo;</a>
-</p>
-</section><!-- /#content -->
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

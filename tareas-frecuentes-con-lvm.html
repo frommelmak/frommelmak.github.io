@@ -1,71 +1,283 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-          <title>frommelmak - Tareas frecuentes con <span class="caps">LVM</span></title>
-        <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>    Tareas frecuentes con LVM
+ | frommelmak</title>
+
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+        <meta name="keywords" content="lvm">
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
 
 
-    <meta name="tags" content="lvm" />
+                </div>
 
-</head>
+            </nav>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="https://frommelmak.com/tareas-frecuentes-con-lvm.html" rel="bookmark"
-         title="Permalink to Tareas frecuentes con LVM">Tareas frecuentes con <span class="caps">LVM</span></a></h2>
- 
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="2011-02-15T17:25:01+01:00">
-      Tue 15 February 2011
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-    </address>
-    <div class="category">
-        Category: <a href="https://frommelmak.com/category/spanish.html">Spanish</a>
-    </div>
-    <div class="tags">
-        Tags:
-            <a href="https://frommelmak.com/tag/lvm.html">lvm</a>
-    </div>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-9
+">
+    <h1>
+        <a href="https://frommelmak.com/tareas-frecuentes-con-lvm.html" rel="bookmark" title="Permalink to Tareas frecuentes con LVM">Tareas frecuentes con <span class="caps">LVM</span></a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-9
+">
+    
+
     <p>Un par de apuntes rápidos sobre <span class="caps">LVM</span>:</p>
-<p>Juntar varios discos o particiones en un único volumen&nbsp;lógico:</p>
-<div class="highlight"><pre><span></span><span class="go">pvcreate /dev/sdb /dev/sdc</span>
+<p>Juntar varios discos o particiones en un único volumen lógico:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">pvcreate /dev/sdb /dev/sdc</span>
 <span class="go">vgcreate -s 16M data /dev/sdb /dev/sdc</span>
 <span class="go">vgdisplay</span>
 <span class="go">lvcreate -l 25600 -n storage data</span>
 <span class="go">mkfs.ext3 /dev/data/storage</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Expandir en <span class="caps">100GB</span> un <span class="caps">LV</span> y el filesystem que&nbsp;contiene.</p>
-<div class="highlight"><pre><span></span><span class="go">lvextend -L+100G /dev/mapper/loquesea</span>
+<p>Expandir en <span class="caps">100GB</span> un <span class="caps">LV</span> y el filesystem que contiene.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">lvextend -L+100G /dev/mapper/loquesea</span>
 <span class="go"> umount /del/putno/de/montaje</span>
 <span class="go"> e2fsck -f /dev/mapper/loquesea</span>
 <span class="go"> resize2fs /dev/mapper/loquesea</span>
 <span class="go"> mount -a</span>
-</pre></div>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+</code></pre></div>
+
+        <h3 class="mt-3">Related content</h3>
+        <div class="list-group bg-light text-dark">
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/increase-volume-size-using-elastic-volumes.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>Increase volume size using Elastic Volumes</h5>
+                        <abbr class="small published" title="2018-12-31T06:15:00+01:00">
+                            2018
+                        </abbr>
+                    </div>
+                    <small>On February 2017, AWS announced the availability of a new EBS feature called Elastic Volumes. The new feature allows you to increase the size, performance and type and of your EBS volumes while in use. In order to take adantage of this great feature some requisites needs to be done …</small>
+                </a>
+        </div>
+
+        <div class="comments mt-5">
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://frommelmak.com/tareas-frecuentes-con-lvm.html";
+                    this.page.identifier = "tareas-frecuentes-con-lvm.html";
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://frommelmak.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+        </div>
+
+                </div>
+
+                    <div class="col-md-3">
+    <div class="card bg-light text-dark">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <abbr title="2011-02-15T17:25:01+01:00"><i class="fas fa-calendar"></i> Tue 15 February 2011</abbr>
+            </li>
+
+                <li class="list-group-item">
+                    <address>
+                        <i class="fas fa-user"></i> By
+                            <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+                    </address>
+                </li>
+
+                <li class="list-group-item">
+                                <a href="https://frommelmak.com/category/spanish.html" rel="tag" data-toggle="tooltip" class="badge badge-info" title="56 articles in this category">Spanish</a>
+                            <a href="/tag/lvm.html" data-toggle="tooltip" class="badge badge-secondary" title="2 articles with this tag">lvm</a>
+                </li>
+
+                <li class="list-group-item">
+                    <p>Found a typo? Fix it now:</p>
+                    <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/tareas-frecuentes-con-lvm.md"><i class="fas fa-edit fa-fw"></i> Edit article on GitHub</a>
+                </li>
+
+                <li class="list-group-item">
+                    <nav class="nav nav-pills nav-fill">
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/configurar-fail2ban-para-notificaciones-por-email.html" title="Configurar fail2ban para notificaciones por email" rel="prev">
+                            <span aria-hidden="true">←</span> Older
+                        </a>
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html" title="Building CouchDB from sources in RHEL6" rel="next">
+                            Newer <span aria-hidden="true">→</span>
+                        </a>
+                    </nav>
+                </li>
+
+        </ul>
+    </div>
+                        
+                    </div>
+
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

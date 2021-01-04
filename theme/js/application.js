@@ -4,10 +4,10 @@
     // Activate Bootstrap's tooltips
     $('[data-toggle="tooltip"]').tooltip()
 
-    // Subnav fixing code from
-    // https://github.com/thomaspark/bootswatch/blob/gh-pages/2/js/bootswatch.js
+    // Fix navigation to the top on scroll.
     var $win = $(window)
       , $nav = $('.navbar')
+      , $brand = $('.navbar-brand')
       , navTop = $('.navbar').length && $('.navbar').offset().top
       , isFixed = 0
     processScroll()
@@ -16,39 +16,27 @@
       var i, scrollTop = $win.scrollTop()
       if (scrollTop >= navTop && !isFixed) {
         isFixed = 1
-        $nav.addClass('navbar-fixed-top')
+        $nav.addClass('fixed-top').removeClass('rounded-lg d-block')
+        $brand.removeClass('d-none')
       } else if (scrollTop <= navTop && isFixed) {
         isFixed = 0
-        $nav.removeClass('navbar-fixed-top')
+        $nav.removeClass('fixed-top').addClass('rounded-lg d-block')
+        $brand.addClass('d-none')
       }
     };
 
-    // TODO: this should be done server side with a Jinja or Markdown
-    // extension.
-    // Add bootstrap table style to table elements.
-    $("#content table").addClass('table').addClass('table-hover');
-    // Make images responsive in article content, which was the default in
-    // Bootstrap 2.x. See: https://getbootstrap.com/css/#images-responsive
-    $("#content img").addClass('img-responsive');
+    // Tipue Search results styling.
+    $("#tipue_search_results_count").addClass('text-muted small float-right');
+    $("#tipue_search_image_modal").addClass('d-none');
+    $(".tipue_search_result").addClass('border-bottom border-secondary mb-4 pb-3');
+    $(".tipue_search_content_title").addClass('h3');
+    $(".tipue_search_content_bold").addClass('bg-warning rounded px-1');
+    $(".tipue_search_content_url").addClass('small text-info');
+    $(".tipue_search_image").addClass('float-left border rounded');
+    $(".tipue_search_note").addClass('d-none');
 
     // Allow videos to take the full width of a page
     $(".container").fitVids();
-
-    // Apply masonry smart layout, only when all images are loaded
-    // Source: https://stackoverflow.com/a/7257177
-    // TODO: try to hide re-pagination animation
-    // TODO: enhance with bottom animation. See:
-    // https://github.com/codrops/GridLoadingEffects/blob/master/index2.html
-    var masonryref = $('.masonry');
-    if (masonryref.size() > 0) {
-        // Make sure pages that do not define a masonry class continue working
-        var $container = masonryref.masonry();
-        $container.imagesLoaded(function(){
-            $container.masonry({
-                itemSelector: '.thumbnail',
-            });
-        });
-    }
 
     // YouTube URL parser. Source: https://stackoverflow.com/questions/2964678/jquery-youtube-url-validation-with-regex/10315969#10315969
     function parse_youtube_url(url) {
@@ -56,8 +44,9 @@
       return (url.match(p)) ? RegExp.$1 : false;
     };
 
-    // Activate zoom on content images in the main column and add an icon overlay (but ignore icons)
-    $("#content img:not(.icon)").each(function(){
+    // Activate zoom on content images in the main column and add an icon overlay
+    // (but ignore link icons from the footer and emoji).
+    $("#content img:not(.link-icon,.emojione)").each(function(){
       // Until we properly generate thumbnails and their links on Pelican's side, we just link an image to itself.
       if ($(this).parents('a').length == 0) {
         $(this).wrap(

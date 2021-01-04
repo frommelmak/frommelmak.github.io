@@ -1,72 +1,301 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-          <title>frommelmak - ESXi: Snapshots en otro&nbsp;datastore</title>
-        <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>    ESXi: Snapshots en otro datastore
+ | frommelmak</title>
+
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+        <meta name="keywords" content="vmware, esxi, virtualization">
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
 
 
-    <meta name="tags" content="vmware" />
-    <meta name="tags" content="esxi" />
-    <meta name="tags" content="virtualization" />
+                </div>
 
-</head>
+            </nav>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark"
-         title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro&nbsp;datastore</a></h2>
- 
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="2010-11-04T00:22:40+01:00">
-      Thu 04 November 2010
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-    </address>
-    <div class="category">
-        Category: <a href="https://frommelmak.com/category/spanish.html">Spanish</a>
-    </div>
-    <div class="tags">
-        Tags:
-            <a href="https://frommelmak.com/tag/vmware.html">vmware</a>
-            <a href="https://frommelmak.com/tag/esxi.html">esxi</a>
-            <a href="https://frommelmak.com/tag/virtualization.html">virtualization</a>
-    </div>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
-    <p>Si al intentar hacer un snapshot de un guest nos dice que no tenemos espacio, tenemos dos opciones: La primera es añadir otro disco duro y añadirlo al datastore en el que reside la máquina, la segunda es hacer el snapshot en otro&nbsp;datastore.</p>
-<p>No obstante, hay escenarios en los que la primera opción puede no ser una solución. Por ejemplo: Si el guest dispone de dos discos duros virtuales, cada uno en un datastore con tamano de bloque diferente, podría ser que pese a tener espacio, el tamaño máximo del fichero permitido en el datastore en el que reside el disco principal no permita realizar el snapshot. En este y otros casos, la solución pasa por forzar el snapshot en otro&nbsp;datastore.</p>
-<p>Para ello, existe una variable que controla dónde se hacen los snapshots. Si esta variable no existe, se realizarán el el mismo folder dónde se encuentre el fichero <code>.vmx</code> que define la&nbsp;máquina.</p>
-<p>Para hacer los snapshots en otro&nbsp;datastore:</p>
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-9
+">
+    <h1>
+        <a href="https://frommelmak.com/esxi-snapshots-en-otro-datastore.html" rel="bookmark" title="Permalink to ESXi: Snapshots en otro datastore">ESXi: Snapshots en otro datastore</a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-9
+">
+    
+
+    <p>Si al intentar hacer un snapshot de un guest nos dice que no tenemos espacio, tenemos dos opciones: La primera es añadir otro disco duro y añadirlo al datastore en el que reside la máquina, la segunda es hacer el snapshot en otro datastore.</p>
+<p>No obstante, hay escenarios en los que la primera opción puede no ser una solución. Por ejemplo: Si el guest dispone de dos discos duros virtuales, cada uno en un datastore con tamano de bloque diferente, podría ser que pese a tener espacio, el tamaño máximo del fichero permitido en el datastore en el que reside el disco principal no permita realizar el snapshot. En este y otros casos, la solución pasa por forzar el snapshot en otro datastore.</p>
+<p>Para ello, existe una variable que controla dónde se hacen los snapshots. Si esta variable no existe, se realizarán el el mismo folder dónde se encuentre el fichero <code>.vmx</code> que define la máquina.</p>
+<p>Para hacer los snapshots en otro datastore:</p>
 <ul>
-<li>Paramos el&nbsp;guest.</li>
-<li>Conectamos por ssh al host y editamos el `.vmx del guest a&nbsp;snapshotear.</li>
-<li>Creamos un folder para los snapshots el el&nbsp;host</li>
+<li>Paramos el guest.</li>
+<li>Conectamos por ssh al host y editamos el `.vmx del guest a snapshotear.</li>
+<li>Creamos un folder para los snapshots el el host</li>
 <li>Añadimos la variable <code>workingDir=/vmfs/volumes/id-datastore/vm-snapshots</code></li>
-<li>Desregistramos la máquina: <em>Remove from&nbsp;invetory</em></li>
+<li>Desregistramos la máquina: <em>Remove from invetory</em></li>
 <li>La volvemos a registrar utilizando el fichero <code>.vmx (ver captura)</code>.</li>
 </ul>
-<p><img alt="vmx register" src="|filename|/images/old_blog/register_vmachine.png"></p>
-<p>Tras esto, veremos que el working dir es ahora otro el folder <code>vm-snapshots</code>. Este cambio afecta también al área de <em>swap</em> de esta máquina que pasa a estar en el nuevo&nbsp;datastore.</p>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+<p><img alt="vmx register" src="%7Cfilename%7C/images/old_blog/register_vmachine.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
+<p>Tras esto, veremos que el working dir es ahora otro el folder <code>vm-snapshots</code>. Este cambio afecta también al área de <em>swap</em> de esta máquina que pasa a estar en el nuevo datastore.</p>
+
+        <h3 class="mt-3">Related content</h3>
+        <div class="list-group bg-light text-dark">
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/de-vmware-server-a-esxi-con-vmware-converter.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>De VMware Server a ESXi con VMware Converter</h5>
+                        <abbr class="small published" title="2008-10-07T17:16:37+02:00">
+                            2008
+                        </abbr>
+                    </div>
+                    <small>Chuleta rápida para convertir una máquina VMware Server (.vmx) a formato appliance para VMware ESXi (.ova/.ovf). Inicio -&gt; Todos los programas -&gt; VMware -&gt; VMware Converter Convert Machine -&gt; Siguiente -&gt; Siguiente Select the type of source you want to use: Other (Siguiente) Source VM or Image: loquesea.vmx (Siguiente) Esperamos un rato …</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/anadir-discos-en-caliente-a-guest-debian-50-sobre-esxi-host.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>Añadir discos en caliente a guest Debian 5.0 sobre ESXi host</h5>
+                        <abbr class="small published" title="2010-04-21T13:36:51+02:00">
+                            2010
+                        </abbr>
+                    </div>
+                    <small>En primer lugar añadimos un nuevo disco al guest desde el host mediante vSphere. El disco aun no se ve en el guest: guest666@root:# cat /proc/scsi/scsi Attached devices: Host: scsi0 Channel: 00 Id: 01 Lun: 00 Vendor: VMware Model: Virtual disk Rev: 1.0 Type: Direct-Access ANSI …</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/udev-network-device-en-ubuntu-hardy-sobre-vmware.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>udev network device en Ubuntu Hardy sobre VMWare</h5>
+                        <abbr class="small published" title="2010-03-22T15:47:00+01:00">
+                            2010
+                        </abbr>
+                    </div>
+                    <small>Cuando clonamos una máquina Ubuntu Hardy para correr otra instancia en VMWare, udev detecta una nueva MAC y crea otra interfaz de red. Esto provoca que cada vez que restauramos una máquina basada en Ubuntu Hardy, el interfaz de red se incremente: eth0, eth1,… etc. Debian 5.0 (lenny) soluciona …</small>
+                </a>
+        </div>
+
+        <div class="comments mt-5">
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://frommelmak.com/esxi-snapshots-en-otro-datastore.html";
+                    this.page.identifier = "esxi-snapshots-en-otro-datastore.html";
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://frommelmak.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+        </div>
+
+                </div>
+
+                    <div class="col-md-3">
+    <div class="card bg-light text-dark">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <abbr title="2010-11-04T00:22:40+01:00"><i class="fas fa-calendar"></i> Thu 04 November 2010</abbr>
+            </li>
+
+                <li class="list-group-item">
+                    <address>
+                        <i class="fas fa-user"></i> By
+                            <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+                    </address>
+                </li>
+
+                <li class="list-group-item">
+                                <a href="https://frommelmak.com/category/spanish.html" rel="tag" data-toggle="tooltip" class="badge badge-info" title="56 articles in this category">Spanish</a>
+                            <a href="/tag/vmware.html" data-toggle="tooltip" class="badge badge-secondary" title="5 articles with this tag">vmware</a>
+                            <a href="/tag/esxi.html" data-toggle="tooltip" class="badge badge-secondary" title="2 articles with this tag">esxi</a>
+                            <a href="/tag/virtualization.html" data-toggle="tooltip" class="badge badge-secondary" title="2 articles with this tag">virtualization</a>
+                </li>
+
+                <li class="list-group-item">
+                    <p>Found a typo? Fix it now:</p>
+                    <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/esxi-snapshots-en-otro-datastore.md"><i class="fas fa-edit fa-fw"></i> Edit article on GitHub</a>
+                </li>
+
+                <li class="list-group-item">
+                    <nav class="nav nav-pills nav-fill">
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/backup-completo-de-un-guest-linux-mediante-tar.html" title="Backup completo de un guest Linux mediante tar" rel="prev">
+                            <span aria-hidden="true">←</span> Older
+                        </a>
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/couchdb-auth.html" title="Couchdb auth" rel="next">
+                            Newer <span aria-hidden="true">→</span>
+                        </a>
+                    </nav>
+                </li>
+
+        </ul>
+    </div>
+                        
+                    </div>
+
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

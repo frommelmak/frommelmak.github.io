@@ -1,185 +1,371 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-        <title>frommelmak - Articles by frommelmak</title>
-        <meta charset="utf-8" />
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content">
-<h2>Articles by frommelmak</h2>
+        <title>    Articles by frommelmak
+ | frommelmak</title>
 
-<ol id="post-list">
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/how-to-convert-your-server-into-a-video-streaming-server.html" rel="bookmark" title="Permalink to How to convert your server into a video streaming server">How to convert your server into a video streaming&nbsp;server</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2012-01-30T19:15:34+01:00"> Mon 30 January 2012 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Dependencies:</p>
-<div class="highlight"><pre><span></span><span class="go">apt-get install vlc-nox</span>
-</pre></div>
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
-<p>File to&nbsp;stream:</p>
-<div class="highlight"><pre><span></span><span class="go">cvlc -v file.mp4 --sout &#39;#standard{access=http,mux=asf,dst=0.0.0.0:8080}&#39;</span>
-</pre></div>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
 
 
-<p>Authenticated Stream to Stream (without&nbsp;audio)</p>
-<div class="highlight"><pre><span></span><span class="go">cvlc -v http://x.x.x.x:pppp/test --no-sout-audio --sout-http-user foo --sout-http-pwd foopass --sout &#39;#standard{access=http,mux=asf,dst …</span></pre></div> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html" rel="bookmark" title="Permalink to How to migrate from LAMP to Nginx + PHP-FPM">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-11-03T14:26:49+01:00"> Thu 03 November 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>This blog has been migrated from Apache2 + mod_php to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span>. In this entry I&#8217;m going to explain the whole process (just for&nbsp;fun).</p>
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
+
+
+                </div>
+
+            </nav>
+
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-12
+">
+    <h1>
+        <a href="https://frommelmak.com/author/frommelmak.html" rel="bookmark" title="Permalink to frommelmak's articles">Articles by frommelmak</a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-12
+">
+
+        <h2>Articles</h2>
+
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/how-to-convert-your-server-into-a-video-streaming-server.html" rel="bookmark" title="Permalink to How to convert your server into a video streaming server">How to convert your server into a video streaming server</a></h2>
+            </header>
+            <div><p>Dependencies:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">apt-get install vlc-nox</span>
+</code></pre></div>
+
+<p>File to stream:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">cvlc -v file.mp4 --sout '#standard{access=http,mux=asf,dst=0.0.0.0:8080}'</span>
+</code></pre></div>
+
+<p>Authenticated Stream to Stream (without audio)</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">cvlc -v http://x.x.x.x:pppp/test --no-sout-audio --sout-http-user foo --sout-http-pwd foopass --sout '#standard{access=http,mux=asf,dst …</span></code></pre></div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/how-to-convert-your-server-into-a-video-streaming-server.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html" rel="bookmark" title="Permalink to How to migrate from LAMP to Nginx + PHP-FPM">How to migrate from <span class="caps">LAMP</span> to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span></a></h2>
+            </header>
+            <div><p>This blog has been migrated from Apache2 + mod_php to Nginx + <span class="caps">PHP</span>-<span class="caps">FPM</span>. In this entry I’m going to explain the whole process (just for fun).</p>
 <p>The easiest way is just install the precompiled packages from <a href="">www.dotdeb.org</a> as explained <a href="http://www.codernotes.com/2011/7/install-nginx-and-php-fpm-on-debian-6-squeeze-2/">here</a>.
-Unfortunatelly my blog isn&#8217;t compatible with the …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/vpn-using-ssh.html" rel="bookmark" title="Permalink to VPN using SSH"><span class="caps">VPN</span> using <span class="caps">SSH</span></a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-09-12T19:29:21+02:00"> Mon 12 September 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Las versiones recientes del servidor OpenSSH permiten montar una <span class="caps">VPN</span> utilizando una conexinSSH. Esto nos permite, por ejemplo, tener acceso a todos los puertos del servidor incluso en aquellos casos en los que sólo nos dan acceso al puerto de <span class="caps">SSH</span>.</p>
-<p>Para montar una <span class="caps">VPN</span> utilizando el servidorSSHen Debian haremos …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/redis-cli-basics.html" rel="bookmark" title="Permalink to redis-cli basics">redis-cli&nbsp;basics</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-07-22T13:49:08+02:00"> Fri 22 July 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Redis es un servidor de datos Nosql (clave-valor) en memoria similar  a memcached. Redis puede almacenar -además de cadenas de texto-  estructuras ms complejas como: hashes, lists, sets u sorted sets. Es capaz de realizar diferentes tipos de operaciones atómicas sobre estas estructuras de datos, disponer de persistencia (pese a …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html" rel="bookmark" title="Permalink to How to use Gmail POP/SMTP services from unsecure clients">How to use Gmail <span class="caps">POP</span>/<span class="caps">SMTP</span> services from unsecure&nbsp;clients</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-05-23T22:15:55+02:00"> Mon 23 May 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Sometimes you may need to send or retrieve email notifications using <span class="caps">SMTP</span> or <span class="caps">POP</span> Gmail services, but your client does not support <span class="caps">SSL</span> connections. In such cases you can use a <span class="caps">SSL</span> proxy tunnel such as&nbsp;stunnel.</p>
-<p>stunnel is available as a Debian package, and probably in other modern Linux …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html" rel="bookmark" title="Permalink to Building CouchDB from sources in RHEL6">Building CouchDB from sources in <span class="caps">RHEL6</span></a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-04-18T19:00:48+02:00"> Mon 18 April 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Install Erlang from&nbsp;sources:</p>
+Unfortunatelly my blog isn’t compatible with the …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/how-to-migrate-from-lamp-to-nginx-php-fpm.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/vpn-using-ssh.html" rel="bookmark" title="Permalink to VPN using SSH"><span class="caps">VPN</span> using <span class="caps">SSH</span></a></h2>
+            </header>
+            <div><p>Las versiones recientes del servidor OpenSSH permiten montar una <span class="caps">VPN</span> utilizando una conexinSSH. Esto nos permite, por ejemplo, tener acceso a todos los puertos del servidor incluso en aquellos casos en los que sólo nos dan acceso al puerto de <span class="caps">SSH</span>.</p>
+<p>Para montar una <span class="caps">VPN</span> utilizando el servidorSSHen Debian haremos …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/vpn-using-ssh.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/redis-cli-basics.html" rel="bookmark" title="Permalink to redis-cli basics">redis-cli basics</a></h2>
+            </header>
+            <div><p>Redis es un servidor de datos Nosql (clave-valor) en memoria similar  a memcached. Redis puede almacenar -además de cadenas de texto-  estructuras ms complejas como: hashes, lists, sets u sorted sets. Es capaz de realizar diferentes tipos de operaciones atómicas sobre estas estructuras de datos, disponer de persistencia (pese a …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/redis-cli-basics.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html" rel="bookmark" title="Permalink to How to use Gmail POP/SMTP services from unsecure clients">How to use Gmail <span class="caps">POP</span>/<span class="caps">SMTP</span> services from unsecure clients</a></h2>
+            </header>
+            <div><p>Sometimes you may need to send or retrieve email notifications using <span class="caps">SMTP</span> or <span class="caps">POP</span> Gmail services, but your client does not support <span class="caps">SSL</span> connections. In such cases you can use a <span class="caps">SSL</span> proxy tunnel such as stunnel.</p>
+<p>stunnel is available as a Debian package, and probably in other modern Linux …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html" rel="bookmark" title="Permalink to Building CouchDB from sources in RHEL6">Building CouchDB from sources in <span class="caps">RHEL6</span></a></h2>
+            </header>
+            <div><p>Install Erlang from sources:</p>
 <p>Prerequisites: <code>unixODBC-devel-2.2.14-11.el6.i686.rpm</code></p>
-<div class="highlight"><pre><span></span><span class="go">wget http://www.erlang.org/download/otp_src_R14B02.tar.gz</span>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">wget http://www.erlang.org/download/otp_src_R14B02.tar.gz</span>
 <span class="go">tar zxvf otp_src_R14B02.tar.gz</span>
 <span class="go">cd otp_src_R14B02 LANG=C; export LANG</span>
 <span class="go">./configure --prefix=/opt/erlang</span>
 <span class="go">make</span>
 <span class="go">make install</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Install Mozilla SpiderMonkey from&nbsp;sources:</p>
-<p>Prerequisties: <code>libicu-devel-4.2.1-9.el6.i686.rpm …</code></p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/tareas-frecuentes-con-lvm.html" rel="bookmark" title="Permalink to Tareas frecuentes con LVM">Tareas frecuentes con <span class="caps">LVM</span></a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-02-15T17:25:01+01:00"> Tue 15 February 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Un par de apuntes rápidos sobre <span class="caps">LVM</span>:</p>
-<p>Juntar varios discos o particiones en un único volumen&nbsp;lógico:</p>
-<div class="highlight"><pre><span></span><span class="go">pvcreate /dev/sdb /dev/sdc</span>
+<p>Install Mozilla SpiderMonkey from sources:</p>
+<p>Prerequisties: <code>libicu-devel-4.2.1-9.el6.i686.rpm …</code></p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/building-couchdb-from-sources-in-rhel6.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/tareas-frecuentes-con-lvm.html" rel="bookmark" title="Permalink to Tareas frecuentes con LVM">Tareas frecuentes con <span class="caps">LVM</span></a></h2>
+            </header>
+            <div><p>Un par de apuntes rápidos sobre <span class="caps">LVM</span>:</p>
+<p>Juntar varios discos o particiones en un único volumen lógico:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">pvcreate /dev/sdb /dev/sdc</span>
 <span class="go">vgcreate -s 16M data /dev/sdb /dev/sdc</span>
 <span class="go">vgdisplay</span>
 <span class="go">lvcreate -l 25600 -n storage data</span>
 <span class="go">mkfs.ext3 /dev/data/storage</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Expandir en <span class="caps">100GB</span> un <span class="caps">LV</span> y el filesystem …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/configurar-fail2ban-para-notificaciones-por-email.html" rel="bookmark" title="Permalink to Configurar fail2ban para notificaciones por email">Configurar fail2ban para notificaciones por&nbsp;email</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-02-04T09:54:45+01:00"> Fri 04 February 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Por defecto fail2ban no notifica los baneos al servicio ssh por email. En las ultimas versiones (0.8.4) la config ha cambiado sustancialmente. Para habilitar el envio de emails hemos de crear el fichero <code>jail.local</code> en <code>/etc/fail2ban</code> con este&nbsp;contenido.</p>
-<div class="highlight"><pre><span></span><span class="go">[ssh]action = %(action_mw)s</span>
-</pre></div> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/authenticated-couchdb-admin-with-curl.html" rel="bookmark" title="Permalink to Authenticated Couchdb admin with Curl">Authenticated Couchdb admin with&nbsp;Curl</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2011-01-25T23:35:01+01:00"> Tue 25 January 2011 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Los principales parámetros de configuración de Couchdb se puede consultar y administrar mediante la interfaz web de Couchdb. No obstante hay algunas opciones interesantes que no están disponibles en dicha interfaz. Para cambiarlas es necesario modificar los valores directamente mediante un <span class="caps">PUT</span> <span class="caps">HTTP</span>. Para ello utilizaremos <code>curl</code>:</p>
-<p>Por ejemplo, cambiar …</p> </div><!-- /.entry-content -->
-        </article></li>
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="https://frommelmak.com/couchdb-auth.html" rel="bookmark" title="Permalink to Couchdb auth">Couchdb&nbsp;auth</a></h2> </header>
-                <footer class="post-info">
-                    <time class="published" datetime="2010-11-09T18:21:58+01:00"> Tue 09 November 2010 </time>
-                    <address class="vcard author">By
-                        <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-                    </address>
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> <p>Ojito con la autenticacin en Couchdb 0.11.0. Si la queremos deshabilitar, haremos&nbsp;esto:</p>
-<div class="highlight"><pre><span></span><span class="gp">#</span><span class="o">[</span>admins<span class="o">]</span>
-</pre></div>
-
+<p>Expandir en <span class="caps">100GB</span> un <span class="caps">LV</span> y el filesystem …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/tareas-frecuentes-con-lvm.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/configurar-fail2ban-para-notificaciones-por-email.html" rel="bookmark" title="Permalink to Configurar fail2ban para notificaciones por email">Configurar fail2ban para notificaciones por email</a></h2>
+            </header>
+            <div><p>Por defecto fail2ban no notifica los baneos al servicio ssh por email. En las ultimas versiones (0.8.4) la config ha cambiado sustancialmente. Para habilitar el envio de emails hemos de crear el fichero <code>jail.local</code> en <code>/etc/fail2ban</code> con este contenido.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="go">[ssh]action = %(action_mw)s</span>
+</code></pre></div></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/configurar-fail2ban-para-notificaciones-por-email.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/authenticated-couchdb-admin-with-curl.html" rel="bookmark" title="Permalink to Authenticated Couchdb admin with Curl">Authenticated Couchdb admin with Curl</a></h2>
+            </header>
+            <div><p>Los principales parámetros de configuración de Couchdb se puede consultar y administrar mediante la interfaz web de Couchdb. No obstante hay algunas opciones interesantes que no están disponibles en dicha interfaz. Para cambiarlas es necesario modificar los valores directamente mediante un <span class="caps">PUT</span> <span class="caps">HTTP</span>. Para ello utilizaremos <code>curl</code>:</p>
+<p>Por ejemplo, cambiar …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/authenticated-couchdb-admin-with-curl.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h2><a href="https://frommelmak.com/couchdb-auth.html" rel="bookmark" title="Permalink to Couchdb auth">Couchdb auth</a></h2>
+            </header>
+            <div><p>Ojito con la autenticacin en Couchdb 0.11.0. Si la queremos deshabilitar, haremos esto:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="gp">#</span><span class="o">[</span>admins<span class="o">]</span>
+</code></pre></div>
 
 <p><span class="caps">NO</span> <span class="caps">ESTO</span>!!!</p>
-<div class="highlight"><pre><span></span><span class="gp">#</span><span class="o">[</span>admins<span class="o">]</span>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code><span class="gp">#</span><span class="o">[</span>admins<span class="o">]</span>
 <span class="gp">#</span><span class="nv">user</span> <span class="o">=</span> -hashedlalkasdlfk....
-</pre></div>
+</code></pre></div>
+
+<p>Lo segundo hace que al arrancar couchdb de un error que hace que couchdb muera. Al rato se reinicia automaticamente (esto lo hace couchdb de saque) <em>respawn</em>. Por lo …</p></div>
+            <div><a class="btn btn-primary" href="https://frommelmak.com/couchdb-auth.html"><strong>➟ Read more</strong></a></div>
+        </article>
+        <hr>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="https://frommelmak.com/author/frommelmak.html" aria-label="Previous" rel="prev">
+                        <span aria-hidden="true">←</span>
+                    </a>
+                </li>
+
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak.html" rel="
+ first  prev ">
+                            1
+                        </a>
+                    </li>
+<li class="page-item active" aria-current="page">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak2.html" rel="
+">
+                            2
+                                <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak3.html" rel="
+ next ">
+                            3
+                        </a>
+                    </li>
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak7.html" rel="
+">
+                            7
+                        </a>
+                    </li>
+<li class="page-item ">
+                        <a class="page-link" href="https://frommelmak.com/author/frommelmak8.html" rel="
+ last ">
+                            8
+                        </a>
+                    </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="https://frommelmak.com/author/frommelmak3.html" aria-label="Next" rel="next">
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+
+                </div>
 
 
-<p>Lo segundo hace que al arrancar couchdb de un error que hace que couchdb muera. Al rato se reinicia automaticamente (esto lo hace couchdb de saque) <em>respawn</em>. Por lo …</p> </div><!-- /.entry-content -->
-        </article></li>
-</ol><!-- /#posts-list -->
-<p class="paginator">
-        <a href="https://frommelmak.com/author/frommelmak.html">&laquo;</a>
-    Page 2 / 8
-        <a href="https://frommelmak.com/author/frommelmak3.html">&raquo;</a>
-</p>
-</section><!-- /#content -->
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>

@@ -1,160 +1,382 @@
-<!DOCTYPE html>
 <html lang="es">
-<head>
-          <title>frommelmak - Utilizar certificados <span class="caps">SSL</span> en Amazon <span class="caps">ELB</span></title>
-        <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>    Utilizar certificados SSL en Amazon ELB
+ | frommelmak</title>
+
+        <meta name="author" content="Marcos Martinez">
+        <meta name="generator" content="Pelican v4.2.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="https://frommelmak.com/theme/css/main.min.css?3fd22780">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.2.0/jquery.fitvids.min.js" integrity="sha512-/2sZKAsHDmHNoevKR/xsUKe+Bpf692q4tHNQs9VWWz0ujJ9JBM67iFYbIEdfDV9I2BaodgT5MIg/FTUmUv3oyQ==" crossorigin="anonymous"></script>
+
+            <script src="https://frommelmak.com/theme/js/main.min.js?86e1c044"></script>
 
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#ffc40d">
+        <meta name="theme-color" content="#ffffff">
+
+        <!-- Feeds -->
+
+        <meta name="keywords" content="amazon, aws, elb, ssl">
+
+    </head>
+
+    <body class="bg-transparent pt-4">
+
+        <div class="container">
+
+                <a href="https://frommelmak.com" class="avatar-container float-left mx-4">
+                    <div class="avatar  animate ">
+                        <div class="side"><img src="images/avatar.png" class="img-fluid"></div>
+                            <div class="side back text-center pt-2 px-1 small">
+                                Alien Life Form
+                            </div>
+                    </div>
+                </a>
+
+            <h1>
+                <a href="https://frommelmak.com" class="text-dark text-decoration-none">frommelmak</a>
+                <small class="text-secondary"><small>Yet another Melmacian interested in technology...</small></small>
+            </h1>
+
+            <nav class="navbar d-block navbar-expand-lg navbar-light bg-light shadow rounded-lg">
+
+                <a class="navbar-brand d-none" href="https://frommelmak.com" title="Yet another Melmacian interested in technology...">frommelmak</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#plumage-navbar-collapse-1" aria-controls="plumage-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="plumage-navbar-collapse-1">
+
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<li class="nav-item ">
+                                <a class="nav-link" href="/">
+                                    Home
+                                </a>
+                            </li>
+<li class="nav-item ">
+                                    <a class="nav-link" href="https://frommelmak.com/pages/about.html">
+                                        About
+                                    </a>
+                                </li>
+                    </ul>
 
 
-    <meta name="tags" content="amazon" />
-    <meta name="tags" content="aws" />
-    <meta name="tags" content="elb" />
-    <meta name="tags" content="ssl" />
+                </div>
 
-</head>
+            </nav>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://frommelmak.com/">frommelmak <strong>Yet another Melmacian interested in technology...</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="https://frommelmak.com/pages/about.html">About</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
-  <header>
-    <h2 class="entry-title">
-      <a href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html" rel="bookmark"
-         title="Permalink to Utilizar certificados SSL en Amazon ELB">Utilizar certificados <span class="caps">SSL</span> en Amazon <span class="caps">ELB</span></a></h2>
- 
-  </header>
-  <footer class="post-info">
-    <time class="published" datetime="2015-02-26T19:03:23+01:00">
-      Thu 26 February 2015
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://frommelmak.com/author/frommelmak.html">frommelmak</a>
-    </address>
-    <div class="category">
-        Category: <a href="https://frommelmak.com/category/english.html">English</a>
-    </div>
-    <div class="tags">
-        Tags:
-            <a href="https://frommelmak.com/tag/amazon.html">amazon</a>
-            <a href="https://frommelmak.com/tag/aws.html">aws</a>
-            <a href="https://frommelmak.com/tag/elb.html">elb</a>
-            <a href="https://frommelmak.com/tag/ssl.html">ssl</a>
-    </div>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
+        </div>
+
+
+        <div class="container mt-5">
+
+
+            <div class="row">
+                <div class="
+                        col-md-9
+">
+    <h1>
+        <a href="https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html" rel="bookmark" title="Permalink to Utilizar certificados SSL en Amazon ELB">Utilizar certificados <span class="caps">SSL</span> en Amazon <span class="caps">ELB</span></a>
+    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div id="content" role="main" class="
+                        col-md-9
+">
+    
+
     <p>En esta entrada voy a tratar de explicar cómo utilizar el servicio de balanceo de carga de Amazon (<span class="caps">ELB</span>) como terminador de conexiones <span class="caps">SSL</span>.</p>
-<p>El escenario de partida sería&nbsp;este:</p>
-<p><img alt="ELB HTTP" src="/images/ELB_HTTP_server.png"></p>
+<p>El escenario de partida sería este:</p>
+<p><img alt="ELB HTTP" src="/images/ELB_HTTP_server.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
 <p>Como se observa en este diagrama, todo el tráfico va en plano. Desde el cliente <span class="caps">HTTP</span> del usuario/aplicación hasta las instancias que ofrecen el servicio <span class="caps">HTTP</span>.</p>
-<p>El objetivo es cifrar todo el tráfico entre la aplicación y nuestros servidores. Para ello, lo más sencillo es configurar nuestro balanceador de carga como terminador de las conexiones <span class="caps">SSL</span>. Así, conseguimos de forma transparente el acceso cifrado a los servicios <span class="caps">HTTP</span>, ya que evitamos tener que añadir el certificado a cada uno de los servicios a&nbsp;securizar.</p>
-<p>Otra ventaja es que el tráfico seguirá llegando en plano a las instancias, facilitando así el debug de posibles problemas que requieran analizar el&nbsp;tráfico. </p>
-<p><img alt="ELB" src="/images/ELB_SSL_HTTPS_server.png"></p>
-<p>El cifrado <span class="caps">SSL</span>/<span class="caps">TLS</span> utilizado por el protocolo <span class="caps">HTTPS</span>, utiliza criptografía de clave pública (o asimétrica) para autenticar la identidad del servidor con el que estamos comunicando. Esta, también se utiliza para intercambiar la clave simétrica que se utilizará para cifrar el&nbsp;tráfico.</p>
-<p>A grandes rasgos los pasos a seguir para añadir un certificado al balaceador de carga son&nbsp;estos:</p>
+<p>El objetivo es cifrar todo el tráfico entre la aplicación y nuestros servidores. Para ello, lo más sencillo es configurar nuestro balanceador de carga como terminador de las conexiones <span class="caps">SSL</span>. Así, conseguimos de forma transparente el acceso cifrado a los servicios <span class="caps">HTTP</span>, ya que evitamos tener que añadir el certificado a cada uno de los servicios a securizar.</p>
+<p>Otra ventaja es que el tráfico seguirá llegando en plano a las instancias, facilitando así el debug de posibles problemas que requieran analizar el tráfico. </p>
+<p><img alt="ELB" src="/images/ELB_SSL_HTTPS_server.png" class="img-fluid border rounded shadow image-process-article-photo"></p>
+<p>El cifrado <span class="caps">SSL</span>/<span class="caps">TLS</span> utilizado por el protocolo <span class="caps">HTTPS</span>, utiliza criptografía de clave pública (o asimétrica) para autenticar la identidad del servidor con el que estamos comunicando. Esta, también se utiliza para intercambiar la clave simétrica que se utilizará para cifrar el tráfico.</p>
+<p>A grandes rasgos los pasos a seguir para añadir un certificado al balaceador de carga son estos:</p>
 <ol>
 <li>Obtener el certificado <span class="caps">SSL</span><ul>
-<li>Generar una clave&nbsp;privada.</li>
-<li>Generar la solicitud del certificado (<a href="http://en.wikipedia.org/wiki/Certificate_signing_request"><span class="caps">CSR</span></a>) a partir de la clave&nbsp;privada.</li>
-<li>Solicitar un certificado <span class="caps">SSL</span> a nuestra autoridad certificadora (<a href="http://en.wikipedia.org/wiki/Certificate_authority"><span class="caps">CA</span></a>): <a href="https://www.godaddy.com">Goodady</a> en este&nbsp;ejemplo.</li>
+<li>Generar una clave privada.</li>
+<li>Generar la solicitud del certificado (<a href="http://en.wikipedia.org/wiki/Certificate_signing_request"><span class="caps">CSR</span></a>) a partir de la clave privada.</li>
+<li>Solicitar un certificado <span class="caps">SSL</span> a nuestra autoridad certificadora (<a href="http://en.wikipedia.org/wiki/Certificate_authority"><span class="caps">CA</span></a>): <a href="https://www.godaddy.com">Goodady</a> en este ejemplo.</li>
 </ul>
 </li>
-<li>Convertir el certificado al formato soportado por&nbsp;Amazon.</li>
-<li>Subir el certificado a&nbsp;Amazon. </li>
-<li>Añadir listener <span class="caps">HTTPS</span> al balanceador y configurarlo con el nuevo&nbsp;certificado.</li>
+<li>Convertir el certificado al formato soportado por Amazon.</li>
+<li>Subir el certificado a Amazon. </li>
+<li>Añadir listener <span class="caps">HTTPS</span> al balanceador y configurarlo con el nuevo certificado.</li>
 </ol>
 <h2>1 Obtener el certificado <span class="caps">SSL</span></h2>
-<p>Creamos una clave privada que utilizaremos para crear la solicitud de&nbsp;certificado. </p>
-<div class="highlight"><pre><span></span>openssl genrsa -out my-private-key-file.pem <span class="m">2048</span>
-</pre></div>
+<p>Creamos una clave privada que utilizaremos para crear la solicitud de certificado. </p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>openssl genrsa -out my-private-key-file.pem <span class="m">2048</span>
+</code></pre></div>
 
+<p>Creamos la solicitud de firma del certificado: Certificate Signing Request (<span class="caps">CSR</span>). La solicitud no es más que un fichero creado a partir de la clave privada que utilizaremos para solicitar un certificado <a href="http://en.wikipedia.org/wiki/X.509">X.509</a> a la autoridad certificadora.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>openssl req -sha256 -new -key my-private-key-file.pem -out csr.pem
+</code></pre></div>
 
-<p>Creamos la solicitud de firma del certificado: Certificate Signing Request (<span class="caps">CSR</span>). La solicitud no es más que un fichero creado a partir de la clave privada que utilizaremos para solicitar un certificado <a href="http://en.wikipedia.org/wiki/X.509">X.509</a> a la autoridad&nbsp;certificadora.</p>
-<div class="highlight"><pre><span></span>openssl req -sha256 -new -key my-private-key-file.pem -out csr.pem
-</pre></div>
-
-
-<p>Este proceso nos realizará un una serie de preguntas. Hemos de prestar especial atención al valor que introducimos&nbsp;para:</p>
+<p>Este proceso nos realizará un una serie de preguntas. Hemos de prestar especial atención al valor que introducimos para:</p>
 <ul>
-<li>Common&nbsp;Name</li>
+<li>Common Name</li>
 </ul>
-<p>Nos aseguraremos de que corresponda con el <a href="http://en.wikipedia.org/wiki/Fully_qualified_domain_name"><span class="caps">FQDN</span></a> que vamos a utilizar para nuestro&nbsp;dominio.</p>
-<p>Verificamos que la información que hemos introducido es&nbsp;correcta:</p>
-<div class="highlight"><pre><span></span>openssl req -in csr.pem -noout -text
-</pre></div>
+<p>Nos aseguraremos de que corresponda con el <a href="http://en.wikipedia.org/wiki/Fully_qualified_domain_name"><span class="caps">FQDN</span></a> que vamos a utilizar para nuestro dominio.</p>
+<p>Verificamos que la información que hemos introducido es correcta:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>openssl req -in csr.pem -noout -text
+</code></pre></div>
 
-
-<p>Con el fichero <code>csr.pem</code>  generado, solicitamos el certificado a nuestra <span class="caps">CA</span>. GoDaddy en este&nbsp;caso.</p>
-<h2>2 Convertir el certificado al formato soportado por&nbsp;Amazon</h2>
-<p>La <span class="caps">CA</span> nos retorna el certificado en dos ficheros con nombres similares a&nbsp;estos:</p>
+<p>Con el fichero <code>csr.pem</code>  generado, solicitamos el certificado a nuestra <span class="caps">CA</span>. GoDaddy en este caso.</p>
+<h2>2 Convertir el certificado al formato soportado por Amazon</h2>
+<p>La <span class="caps">CA</span> nos retorna el certificado en dos ficheros con nombres similares a estos:</p>
 <p>Goodady files: <code>a0cde33bcde324cd.crt</code> + <code>gd_bundle-g2-g1.crt</code></p>
-<p>El primer fichero es nuestro certificado. El segundo la certificate chain: una lista de certificados y el certificado raiz de&nbsp;Godaddy.</p>
-<p>Amazon requiere que estos fichero estén en un formato soportado por el servicio <span class="caps">AWS</span> <span class="caps">IAM</span>. Así que deberemos convertir el certificado al formato soportado: <span class="caps">PEM</span> X.509 en este&nbsp;caso.</p>
-<div class="highlight"><pre><span></span>openssl x509 -inform PEM -in a0cde33bcde324cd.crt &gt; my-public-key-file.pem
+<p>El primer fichero es nuestro certificado. El segundo la certificate chain: una lista de certificados y el certificado raiz de Godaddy.</p>
+<p>Amazon requiere que estos fichero estén en un formato soportado por el servicio <span class="caps">AWS</span> <span class="caps">IAM</span>. Así que deberemos convertir el certificado al formato soportado: <span class="caps">PEM</span> X.509 en este caso.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>openssl x509 -inform PEM -in a0cde33bcde324cd.crt &gt; my-public-key-file.pem
 openssl x509 -inform PEM -in gd_bundle-g2-g1.crt &gt; my-certificate-chain-file.pem
-</pre></div>
+</code></pre></div>
 
-
-<h2>3 Subir el certificado a&nbsp;Amazon</h2>
-<p>Ahora, con estos tres ficheros: La clave privada, nuestro certificado y los certificados de Goodady, podemos dar de alta el certificado en&nbsp;Amazon.</p>
-<div class="highlight"><pre><span></span>iMac: frommelmak$ aws iam upload-server-certificate --server-certificate-name my-server-certificate --certificate-body file://my-public-key-file.pem --private-key file://my-private-key-file.pem --certificate-chain file://my-certificate-chain-file.pem
+<h2>3 Subir el certificado a Amazon</h2>
+<p>Ahora, con estos tres ficheros: La clave privada, nuestro certificado y los certificados de Goodady, podemos dar de alta el certificado en Amazon.</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>iMac: frommelmak$ aws iam upload-server-certificate --server-certificate-name my-server-certificate --certificate-body file://my-public-key-file.pem --private-key file://my-private-key-file.pem --certificate-chain file://my-certificate-chain-file.pem
 <span class="o">{</span>
-    <span class="s2">&quot;ServerCertificateMetadata&quot;</span>: <span class="o">{</span>
-        <span class="s2">&quot;ServerCertificateId&quot;</span>: <span class="s2">&quot;ASC...............JJJ&quot;</span>,
-        <span class="s2">&quot;ServerCertificateName&quot;</span>: <span class="s2">&quot;my-server-certificate&quot;</span>,
-        <span class="s2">&quot;Expiration&quot;</span>: <span class="s2">&quot;2016-02-25T15:27:49Z&quot;</span>,
-        <span class="s2">&quot;Path&quot;</span>: <span class="s2">&quot;/&quot;</span>,
-        <span class="s2">&quot;Arn&quot;</span>: <span class="s2">&quot;arn:aws:iam::765165175371:server-certificate/my-server-certificate&quot;</span>,
-        <span class="s2">&quot;UploadDate&quot;</span>: <span class="s2">&quot;2015-02-26T12:27:59.876Z&quot;</span>
+    <span class="s2">"ServerCertificateMetadata"</span>: <span class="o">{</span>
+        <span class="s2">"ServerCertificateId"</span>: <span class="s2">"ASC...............JJJ"</span>,
+        <span class="s2">"ServerCertificateName"</span>: <span class="s2">"my-server-certificate"</span>,
+        <span class="s2">"Expiration"</span>: <span class="s2">"2016-02-25T15:27:49Z"</span>,
+        <span class="s2">"Path"</span>: <span class="s2">"/"</span>,
+        <span class="s2">"Arn"</span>: <span class="s2">"arn:aws:iam::765165175371:server-certificate/my-server-certificate"</span>,
+        <span class="s2">"UploadDate"</span>: <span class="s2">"2015-02-26T12:27:59.876Z"</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 
-
-<p>Mediante el siguiente comando, verificamos que se ha subido&nbsp;correctamente:</p>
-<div class="highlight"><pre><span></span>iMac: frommelmak$ aws iam get-server-certificate --server-certificate-name my-server-certificate
+<p>Mediante el siguiente comando, verificamos que se ha subido correctamente:</p>
+<div class="highlight pygments-style-monokai rounded shadow-sm mb-3"><pre><span></span><code>iMac: frommelmak$ aws iam get-server-certificate --server-certificate-name my-server-certificate
 <span class="o">{</span>
-        <span class="s2">&quot;ServerCertificate&quot;</span>: <span class="o">{</span>
-        <span class="s2">&quot;CertificateChain&quot;</span>: <span class="s2">&quot;-----BEGIN CERTIFICATE-----\nMI ... JCa\n-----END CERTIFICATE-----&quot;</span>,
-        <span class="s2">&quot;CertificateBody&quot;</span>: <span class="s2">&quot;-----BEGIN CERTIFICATE-----\nMI ... kkd\n-----END CERTIFICATE-----&quot;</span>,
-        <span class="s2">&quot;ServerCertificateMetadata&quot;</span>: <span class="o">{</span>
-            <span class="s2">&quot;ServerCertificateId&quot;</span>: <span class="s2">&quot;ASC...............JJJ&quot;</span>,
-            <span class="s2">&quot;ServerCertificateName&quot;</span>: <span class="s2">&quot;my-server-certificate&quot;</span>,
-            <span class="s2">&quot;Expiration&quot;</span>: <span class="s2">&quot;2016-02-25T15:27:49Z&quot;</span>,
-            <span class="s2">&quot;Path&quot;</span>: <span class="s2">&quot;/&quot;</span>,
-            <span class="s2">&quot;Arn&quot;</span>: <span class="s2">&quot;arn:aws:iam::76........71:server-certificate/my-server-certificate&quot;</span>,
-            <span class="s2">&quot;UploadDate&quot;</span>: <span class="s2">&quot;2015-02-26T12:27:59Z&quot;</span>
+        <span class="s2">"ServerCertificate"</span>: <span class="o">{</span>
+        <span class="s2">"CertificateChain"</span>: <span class="s2">"-----BEGIN CERTIFICATE-----\nMI ... JCa\n-----END CERTIFICATE-----"</span>,
+        <span class="s2">"CertificateBody"</span>: <span class="s2">"-----BEGIN CERTIFICATE-----\nMI ... kkd\n-----END CERTIFICATE-----"</span>,
+        <span class="s2">"ServerCertificateMetadata"</span>: <span class="o">{</span>
+            <span class="s2">"ServerCertificateId"</span>: <span class="s2">"ASC...............JJJ"</span>,
+            <span class="s2">"ServerCertificateName"</span>: <span class="s2">"my-server-certificate"</span>,
+            <span class="s2">"Expiration"</span>: <span class="s2">"2016-02-25T15:27:49Z"</span>,
+            <span class="s2">"Path"</span>: <span class="s2">"/"</span>,
+            <span class="s2">"Arn"</span>: <span class="s2">"arn:aws:iam::76........71:server-certificate/my-server-certificate"</span>,
+            <span class="s2">"UploadDate"</span>: <span class="s2">"2015-02-26T12:27:59Z"</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 
-
-<h2>4 Añadir listener <span class="caps">HTTPS</span> al balanceador y configurarlo con el nuevo&nbsp;certificado.</h2>
-<p>Ahora ya sólo tenemos que añadir un nuevo Listener mediante la consola de&nbsp;Amazon.</p>
-<p>En &#8220;Listener Configuration&#8221; del load balancer&nbsp;seleccionamos:</p>
+<h2>4 Añadir listener <span class="caps">HTTPS</span> al balanceador y configurarlo con el nuevo certificado.</h2>
+<p>Ahora ya sólo tenemos que añadir un nuevo Listener mediante la consola de Amazon.</p>
+<p>En “Listener Configuration” del load balancer seleccionamos:</p>
 <ul>
 <li>Load Balancer Protocol: <span class="caps">HTTPS</span>(Secure <span class="caps">HTTP</span>)</li>
-<li>Load Balancer Port:&nbsp;443</li>
-<li>Instance Protocol:&nbsp;80</li>
-<li>Instance Port:&nbsp;80</li>
+<li>Load Balancer Port: 443</li>
+<li>Instance Protocol: 80</li>
+<li>Instance Port: 80</li>
 </ul>
-<p>En el momento de seleccionar el certificado utilizaremos la opción: &#8220;Choose an existing <span class="caps">SSL</span> Certificate&#8221;. Veremos que ya aparece el que acabamos de&nbsp;publicar.</p>
+<p>En el momento de seleccionar el certificado utilizaremos la opción: “Choose an existing <span class="caps">SSL</span> Certificate”. Veremos que ya aparece el que acabamos de publicar.</p>
 <ul>
-<li>info: <a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html">Elastic Load Balancing: <span class="caps">SSL</span> Server&nbsp;Cert</a></li>
+<li>info: <a href="http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/ssl-server-cert.html">Elastic Load Balancing: <span class="caps">SSL</span> Server Cert</a></li>
 </ul>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
-</body>
+
+        <h3 class="mt-3">Related content</h3>
+        <div class="list-group bg-light text-dark">
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/increase-volume-size-using-elastic-volumes.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>Increase volume size using Elastic Volumes</h5>
+                        <abbr class="small published" title="2018-12-31T06:15:00+01:00">
+                            2018
+                        </abbr>
+                    </div>
+                    <small>On February 2017, AWS announced the availability of a new EBS feature called Elastic Volumes. The new feature allows you to increase the size, performance and type and of your EBS volumes while in use. In order to take adantage of this great feature some requisites needs to be done …</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/force-an-old-version-of-tls.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>Force an old version of <span class="caps">TLS</span></h5>
+                        <abbr class="small published" title="2020-01-20T16:06:00+01:00">
+                            2020
+                        </abbr>
+                    </div>
+                    <small>If you -for whatever reason- need to force the old TLS-1.0, you can put the folllowing line en the Apache’s /etc/apache2/mods-enabled/ssl.conf file. SSLProtocol All -TLSv1.1 -TLSv1.2 Note: TLS-1.0 is broken and is considered insecure. This version of the protocol …</small>
+                </a>
+                <a class="list-group-item list-group-item-action" href="https://frommelmak.com/how-to-use-gmail-popsmtp-services-from-unsecure-clients.html">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>How to use Gmail <span class="caps">POP</span>/<span class="caps">SMTP</span> services from unsecure clients</h5>
+                        <abbr class="small published" title="2011-05-23T22:15:55+02:00">
+                            2011
+                        </abbr>
+                    </div>
+                    <small>Sometimes you may need to send or retrieve email notifications using SMTP or POP Gmail services, but your client does not support SSL connections. In such cases you can use a SSL proxy tunnel such as stunnel. stunnel is available as a Debian package, and probably in other modern Linux …</small>
+                </a>
+        </div>
+
+        <div class="comments mt-5">
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function () {
+                    this.page.url = "https://frommelmak.com/utilizar-certificados-ssl-en-amazon-elb.html";
+                    this.page.identifier = "utilizar-certificados-ssl-en-amazon-elb.html";
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://frommelmak.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus</a>.</noscript>
+        </div>
+
+                </div>
+
+                    <div class="col-md-3">
+    <div class="card bg-light text-dark">
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item">
+                <abbr title="2015-02-26T19:03:23+01:00"><i class="fas fa-calendar"></i> Thu 26 February 2015</abbr>
+            </li>
+
+                <li class="list-group-item">
+                    <address>
+                        <i class="fas fa-user"></i> By
+                            <a href="https://frommelmak.com/author/frommelmak.html" rel="author">frommelmak</a>
+                    </address>
+                </li>
+
+                <li class="list-group-item">
+                                <a href="https://frommelmak.com/category/english.html" rel="tag" data-toggle="tooltip" class="badge badge-info" title="15 articles in this category">English</a>
+                            <a href="/tag/ssl.html" data-toggle="tooltip" class="badge badge-secondary" title="3 articles with this tag">ssl</a>
+                            <a href="/tag/aws.html" data-toggle="tooltip" class="badge badge-secondary" title="2 articles with this tag">aws</a>
+                            <a href="/tag/amazon.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">amazon</a>
+                            <a href="/tag/elb.html" data-toggle="tooltip" class="badge badge-secondary" title="1 article with this tag">elb</a>
+                </li>
+
+                <li class="list-group-item">
+                    <p>Found a typo? Fix it now:</p>
+                    <a class="btn btn-info btn-block" href="https://github.com/frommelmak/blog/edit/master/content/posts/utilizar-certificados-ssl-en-amazon-elb.md"><i class="fas fa-edit fa-fw"></i> Edit article on GitHub</a>
+                </li>
+
+                <li class="list-group-item">
+                    <nav class="nav nav-pills nav-fill">
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/lsof-practical-usage-examples.html" title="lsof: Practical usage examples" rel="prev">
+                            <span aria-hidden="true">←</span> Older
+                        </a>
+                        <a class="nav-link btn btn-outline-primary border-0 " href="https://frommelmak.com/modificar-ficheros-de-una-imagen-de-disco-particionada.html" title="Modificar ficheros de una imagen de disco particionada" rel="next">
+                            Newer <span aria-hidden="true">→</span>
+                        </a>
+                    </nav>
+                </li>
+
+        </ul>
+    </div>
+                        
+                    </div>
+
+            </div>
+
+        </div>
+
+        <footer class="container-fluid mt-5 p-4 small">
+            <div class="row mx-5">
+
+                    <div class="col-md-2">
+                            <h6>Social</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://twitter.com/frommelmak">
+        <i class="fab fa-twitter fa-fw"></i>
+    @frommelmak
+</a></li>
+                            </ul>
+                    </div>
+                    <div class="col-md-2">
+                            <h6>Links</h6>
+                            <ul class="list-unstyled">
+                                        <li><a href="http://linkedin.com/in/marcosmartinezjimenez">
+        <i class="fab fa-linkedin fa-fw"></i>
+    LinkedIn
+</a></li>
+                                        <li><a href="http://github.com/frommelmak">
+        <i class="fab fa-github fa-fw"></i>
+    GitHub
+</a></li>
+                                        <li><a href="http://www.youtube.com/user/melmak">
+        <img src="https://www.google.com/s2/favicons?domain=www.youtube.com" width="16" height="16" class="link-icon" alt="www.youtube.com icon">
+    Youtube
+</a></li>
+                            </ul>
+                    </div>
+
+                <div class="col-md-2">
+                    <h6>Browse content by</h6>
+                    <ul class="list-unstyled">
+                            <li><a href="https://frommelmak.com/categories/index.html"><i class="fas fa-th fa-fw"></i> Categories</a></li>
+                            <li><a href="https://frommelmak.com/archives/index.html"><i class="far fa-calendar-alt fa-fw"></i> Dates</a></li>
+                            <li><a href="https://frommelmak.com/tags/index.html"><i class="fas fa-tags fa-fw"></i> Tags</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Copyright notice</h6>
+                    <p class="small">
+                        © Copyright
+                        2005-2020
+                        Marcos Martinez.
+                    </p>
+                </div>
+
+                <div class="col-md-2 text-muted">
+                    <h6>Disclaimer</h6>
+                    <p class="small">
+                            All opinions expressed in this site are my own
+                            personal opinions and are not endorsed by, nor
+                            do they represent the opinions of my previous,
+                            current and future employers or any of its
+                            affiliates, partners or customers.
+                    </p>
+                </div>
+
+                <div class="col-md-2">
+                </div>
+
+            </div>
+            <div class="row mt-3">
+
+                <div class="offset-3 col-6 small text-muted text-center">
+                    Site generated by <a class="text-dark" href="https://getpelican.com">Pelican</a>.<br>
+                    <a class="text-dark" href="https://github.com/kdeldycke/plumage">Plumage</a>
+                    theme by <a class="text-dark" href="https://kevin.deldycke.com">Kevin Deldycke</a>.
+                </div>
+
+                <div class="col-3 text-right d-flex flex-column">
+                    <a class="mt-auto" href="#"><i class="fas fa-arrow-up"></i> Back to top</a>
+                </div>
+
+            </div>
+        </footer>
+
+    </body>
 </html>
